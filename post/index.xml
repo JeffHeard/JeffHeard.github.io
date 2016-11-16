@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Post-rsses on Jefferson Heard</title>
+    <link>https://localhost:1313/post/index.xml</link>
+    <description>Recent content in Post-rsses on Jefferson Heard</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016 Jefferson Heard</copyright>
+    <lastBuildDate>Sun, 13 Nov 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hydroshare: Experiences building a multidisciplinary software team</title>
+      <link>https://localhost:1313/post/hydroshare/</link>
+      <pubDate>Sun, 13 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://localhost:1313/post/hydroshare/</guid>
+      <description>
+
+&lt;p&gt;The last project I worked on at UNC was as Chief Software Architect of the
+&lt;a href=&#34;https://www.hydroshare.org&#34;&gt;Hydroshare&lt;/a&gt; project. It was the most challenging
+exercise I ever undertook at UNC, and I&amp;rsquo;m proudest of it, despite the fact that
+I can&amp;rsquo;t claim to have done everything &lt;em&gt;right&lt;/em&gt;. In fact I made some blunders,
+but ones I hope I&amp;rsquo;ve learned from.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-team&#34;&gt;The Team&lt;/h3&gt;
+
+&lt;p&gt;I would say my greatest challenge, professionally, is learning how to train
+people. No project before or since Hydroshare has ever given me as much
+experience training people to work together on a software project.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

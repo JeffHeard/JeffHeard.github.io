@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://localhost:1313/</loc>
+    <lastmod>2016-11-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/post/hydroshare/</loc>
+    <lastmod>2016-11-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/project/example-external-project/</loc>
+    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/about/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/publications_selected/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/publications/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/posts/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/projects/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/consulting/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/home/contact/</loc>
+    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>
