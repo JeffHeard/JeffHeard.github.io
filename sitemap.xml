@@ -7,7 +7,22 @@
   </url>
   
   <url>
+    <loc>https://localhost:1313/project/django_irods/</loc>
+    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://localhost:1313/project/example-external-project/</loc>
+    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/project/terrapyn/</loc>
+    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/project/ga_ows/</loc>
     <lastmod>2016-11-04T00:00:00+00:00</lastmod>
   </url>
   
