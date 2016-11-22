@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Project-rsses on Jefferson Heard</title>
-    <link>https://localhost:1313/project/index.xml</link>
+    <link>https://jeffersonheard.github.io/project/index.xml</link>
     <description>Recent content in Project-rsses on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -12,37 +12,37 @@
     
     <item>
       <title>Sondra</title>
-      <link>https://localhost:1313/project/sondra/</link>
+      <link>https://jeffersonheard.github.io/project/sondra/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://localhost:1313/project/sondra/</guid>
+      <guid>https://jeffersonheard.github.io/project/sondra/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Terrapyn</title>
-      <link>https://localhost:1313/project/terrapyn/</link>
+      <link>https://jeffersonheard.github.io/project/terrapyn/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://localhost:1313/project/terrapyn/</guid>
+      <guid>https://jeffersonheard.github.io/project/terrapyn/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ga_ows</title>
-      <link>https://localhost:1313/project/ga_ows/</link>
+      <link>https://jeffersonheard.github.io/project/ga_ows/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://localhost:1313/project/ga_ows/</guid>
+      <guid>https://jeffersonheard.github.io/project/ga_ows/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Django - IRODS</title>
-      <link>https://localhost:1313/project/django_irods/</link>
+      <link>https://jeffersonheard.github.io/project/django_irods/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://localhost:1313/project/django_irods/</guid>
+      <guid>https://jeffersonheard.github.io/project/django_irods/</guid>
       <description></description>
     </item>
     

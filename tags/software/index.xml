@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jefferson Heard</title>
-    <link>https://localhost:1313/tags/software/index.xml</link>
+    <link>https://jeffersonheard.github.io/tags/software/index.xml</link>
     <description>Recent content on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Hydroshare Part 1: Experiences building software with a multidisciplinary team</title>
-      <link>https://localhost:1313/post/hydroshare-1/</link>
+      <link>https://jeffersonheard.github.io/post/hydroshare-1/</link>
       <pubDate>Sun, 13 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://localhost:1313/post/hydroshare-1/</guid>
+      <guid>https://jeffersonheard.github.io/post/hydroshare-1/</guid>
       <description>
 
 &lt;p&gt;The last project I worked on at UNC was as Chief Software Architect of the
