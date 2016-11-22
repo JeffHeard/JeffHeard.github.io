@@ -3,66 +3,41 @@
   
   <url>
     <loc>https://jeffersonheard.github.io/</loc>
-    <lastmod>2016-11-21T00:00:00+00:00</lastmod>
+    <lastmod>2016-11-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jeffersonheard.github.io/post/hydroshare-1/</loc>
-    <lastmod>2016-11-21T00:00:00+00:00</lastmod>
+    <loc>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-4/</loc>
+    <lastmod>2016-11-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jeffersonheard.github.io/home/about/</loc>
+    <loc>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/</loc>
+    <lastmod>2016-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/</loc>
+    <lastmod>2016-11-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-1/</loc>
+    <lastmod>2016-11-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffersonheard.github.io/2016/10/sondra-schema-validated-api-and-orm-for-rethinkdb/</loc>
+    <lastmod>2016-10-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffersonheard.github.io/about/</loc>
     <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jeffersonheard.github.io/project/sondra/</loc>
-    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/publications_selected/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/project/terrapyn/</loc>
-    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/publications/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/project/ga_ows/</loc>
-    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/posts/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/project/django_irods/</loc>
-    <lastmod>2016-11-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/projects/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/consulting/</loc>
-    <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/home/contact/</loc>
+    <loc>https://jeffersonheard.github.io/consulting/</loc>
     <lastmod>2016-04-20T00:00:00+00:00</lastmod>
   </url>
   

@@ -1,0 +1,792 @@
+
+
+  
+    
+  
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.17">
+    <title>An Intro to Sondra: Part 4</title>
+    <meta name="author" content="Jefferson Heard">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://jeffersonheard.github.io/favicon.png">
+    
+
+    
+    <meta name="description" content="Adding data in Python The simplest way to add data is through Python. Data can be added from Python even to private collections, and methods can be called without authentication. This means that code that calls methods and creates objects, perhaps as part of other methods, should do sufficient permission checking to cover both itself and the potential mutations to data caused by the methods and collections it calls.">
+    <meta property="og:description" content="Adding data in Python The simplest way to add data is through Python. Data can be added from Python even to private collections, and methods can be called without authentication. This means that code that calls methods and creates objects, perhaps as part of other methods, should do sufficient permission checking to cover both itself and the potential mutations to data caused by the methods and collections it calls.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="An Intro to Sondra: Part 4">
+    <meta property="og:url" content="/2016/11/an-intro-to-sondra-part-4/">
+    <meta property="og:site_name" content="Jefferson Heard">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Jefferson Heard">
+    <meta name="twitter:description" content="Adding data in Python The simplest way to add data is through Python. Data can be added from Python even to private collections, and methods can be called without authentication. This means that code that calls methods and creates objects, perhaps as part of other methods, should do sufficient permission checking to cover both itself and the potential mutations to data caused by the methods and collections it calls.">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="https://jeffersonheard.github.io/img/portrait.jpg">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://jeffersonheard.github.io/css/style-zfzvxnwixwz6qe7xv3xz1eyvlzc7cdfoxrgduk75zpqxib0hatbphiq9sddx.min.css" />
+    
+    
+    
+      
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://jeffersonheard.github.io/">Jefferson Heard</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://jeffersonheard.github.io/about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://jeffersonheard.github.io/img/portrait.jpg" alt="Author's picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://jeffersonheard.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://jeffersonheard.github.io/img/portrait.jpg" alt="Author's picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Jefferson Heard</h4>
+        
+          <h5 class="sidebar-profile-bio">Technologist, CTO, experimental cook, hiker</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/jeffersonheard" target="_blank">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/jeffersonheard" target="_blank">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/sondra">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <span class="sidebar-button-desc">Sondra Docs</span>
+    </a>
+  </li>
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://jeffersonheard.github.io/consulting">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-briefcase"></i>
+      <span class="sidebar-button-desc">Consulting</span>
+    </a>
+  </li>
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      An Intro to Sondra: Part 4
+    </h1>
+  
+  <div class="post-meta">
+  <time itemprop="datePublished" datetime="2016-11-20T00:00:00Z">
+    Nov 20, 2016
+  </time>
+  
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://jeffersonheard.github.io/categories/professional">professional</a>
+    
+  
+
+
+</div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<h2 id="adding-data-in-python">Adding data in Python</h2>
+
+<p>The simplest way to add data is through Python.  Data can be added from Python
+even to private collections, and methods can be called without authentication.
+This means that code that calls methods and creates objects, perhaps as part of
+other methods, should do sufficient permission checking to cover both itself and
+the potential mutations to data caused by the methods and collections it calls.</p>
+
+<p>Assuming our suite is in an object called <code>api</code>, this is how we add data:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; api['todo-app']['items'].create({
+...     &quot;title&quot;: &quot;Remember the milk.&quot;,
+...     &quot;created&quot;: datetime.utcnow()
+... })
+&lt;examples.todo.Item object at 0x10f611160&gt;
+
+&gt;&gt;&gt; next(iter(api['todo-app']['items']))
+'642478b1-03bb-45e2-9f6d-e90e90d1b7cf'
+</code></pre>
+
+<p>The second line demonstrates that Sondra indeed follows the dict pattern closely.  Getting an
+iterator over the collection returns a generator that yields keys. This is done via a single
+cursor, and is thus very efficient.  You can also use <code>.keys()</code> and <code>.values()</code> and even <code>.items()</code>
+as you expect to, yielding primary keys, Document objects, and pairs as they are supposed to.</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; items = api['todo-app']['items']
+&gt;&gt;&gt; len(items)
+1
+&gt;&gt;&gt; items.keys()
+KeysView(&lt;examples.todo.Items object at 0x110d40a90&gt;)
+&gt;&gt;&gt; items.values()
+ValuesView(&lt;examples.todo.Items object at 0x110d40a90&gt;)
+&gt;&gt;&gt; items.items()
+ItemsView(&lt;examples.todo.Items object at 0x110d40a90&gt;)
+&gt;&gt;&gt; '642478b1-03bb-45e2-9f6d-e90e90d1b7cf' in items
+True
+&gt;&gt;&gt; items['642478b1-03bb-45e2-9f6d-e90e90d1b7cf'] in items
+True
+&gt;&gt;&gt; first_item = items['642478b1-03bb-45e2-9f6d-e90e90d1b7cf']
+&gt;&gt;&gt; first_item
+&lt;examples.todo.Item object at 0x10f611160&gt;
+&gt;&gt;&gt; first_item.obj
+OrderedDict([('complete', False), ('created', '2016-10-13T18:45:08.255000+00:00'),
+    ('title', 'Remember the milk.'), ('id', '642478b1-03bb-45e2-9f6d-e90e90d1b7cf')])
+&gt;&gt;&gt; first_item == '642478b1-03bb-45e2-9f6d-e90e90d1b7cf'
+True
+</code></pre>
+
+<p>The last line deserves some explanation. An item is always equal to its primary key, even though we
+are really comparing strings and objects. This may be counterintuitive, but it makes for fewer
+queries internally and is thus more efficient than the obvious implementation.</p>
+
+<p>Another thing to note is that Sondra takes care to map data to its proper datatype whenever possible.
+There&rsquo;s a little &ldquo;magic&rdquo; in this, but it is explained deeper in the documentation.  For example,
+let&rsquo;s look at our &ldquo;created&rdquo; attribute:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; first_item['created']
+
+datetime.datetime(2016, 10, 20, 16, 21, 54, 546629)
+</code></pre>
+
+<p>Sondra uses &ldquo;value handlers&rdquo;, found in the <code>sondra.documents.valuehandlers</code> section of the sondra
+code to translate between Python datatypes, JSON datatypes, and RethinkDB datatypes. To determine
+the datatype, you need look no further than the schema itself. The following shows what schema
+attributes  Sondra uses to treat values specially:</p>
+
+<ul>
+<li><code>{... &quot;format&quot;: &quot;date-time&quot;}</code> - Handled as a Python datetime, JSON string, RethinkDB date.</li>
+<li><code>{... &quot;geo&quot;: true}</code> - Handled as a Python dict-like object (a geometry object if Shapely is installed,
+otherwise it will fall back to a dict), JSON object (as GeoJSON geometry), RethinkDB geometry
+type.</li>
+</ul>
+
+<p>Sondra is compatible with the base datetime library and with <a href="http://crsmithdev.com/arrow/">arrow</a></p>
+
+<h2 id="adding-and-accessing-data-over-http-s">Adding and accessing data over HTTP(S)</h2>
+
+<p>For this section, we&rsquo;re going to assume you will get around to authentication. A basic
+authentication and authorization app exists in the Sondra codebase, but you will probably want to
+use other, more well-tested frameworks to handle authentication and authorization of web requests in
+Flask. This is just fine and well supported. For now, we will assume that a POST will work without
+authorization, so you can follow the tutorial without reading extra material.</p>
+
+<p>Sondra is fairly standard when it comes to REST metaphors, but for reference, here is how HTTP
+commands map to operations on the API:</p>
+
+<ul>
+<li><code>GET</code> - <strong>Retrieve</strong>
+
+<ul>
+<li>Retrieve a document,</li>
+<li>list of documents, or</li>
+<li>make a simple method call</li>
+</ul></li>
+<li><code>POST</code> - <strong>Add or Replace</strong>
+
+<ul>
+<li>Add items to a collection.</li>
+<li>Replace an existing document.</li>
+<li>Make a more complex method call.</li>
+<li>As a special case, you can use JSON to map any of the other commands to a POST. More details in
+the source code or the detailed documentation to come.</li>
+</ul></li>
+<li><code>PUT</code> - <strong>Replace</strong>
+
+<ul>
+<li>Replace items in a collection.</li>
+<li>Replace an existing document.</li>
+</ul></li>
+<li><code>PATCH</code> - <strong>Update in Place</strong>
+
+<ul>
+<li>Make updates to items in a collection.</li>
+<li>Make updates to a single document. (Merges dicts to create updates)</li>
+</ul></li>
+<li><code>DELETE</code> - <strong>Delete</strong>
+
+<ul>
+<li>Delete items from a collection. Delete a single document.</li>
+</ul></li>
+</ul>
+
+<p>We&rsquo;ll use the Python requests library. By default, Flask exposes itself over port 5000 on localhost,
+so that&rsquo;s the assumption we will make. We will also make the assumption that you are <em>not</em> changing
+the default api base path, which is simply <code>api</code>.  First, let&rsquo;s get the record we&rsquo;ve already
+created:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; rsp = requests.get('http://localhost:5000/api/todo-app/items')
+&gt;&gt;&gt; rsp.json
+
+[{'id': '642478b1-03bb-45e2-9f6d-e90e90d1b7cf', 'complete': False,
+  'created': '2016-10-13T18:45:08.255000+00:00', 'title', 'Remember the milk.'}]
+
+&gt;&gt;&gt; requests.get('http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf').json()
+
+{'id': '642478b1-03bb-45e2-9f6d-e90e90d1b7cf', 'complete': False,
+ 'created': '2016-10-13T18:45:08.255000+00:00', 'title', 'Remember the milk.'}
+</code></pre>
+
+<p>Now how about adding data?  Let&rsquo;s actually use an example in Javascript, since that&rsquo;s how an API
+like this will most commonly be used.  Here we&rsquo;re using the &ldquo;fetch&rdquo; API, but you could do the same
+with a standard XMLHttpRequest.</p>
+
+<pre><code class="language-Javascript">fetch('http://localhost:5000/api/todo-app/items', {
+  method: 'POST',
+  mode: 'cors',
+  body: JSON.stringify({
+    title: 'Remember the cheese',
+    complete: false,
+    created: new Date()
+  })
+});
+</code></pre>
+
+<h3 id="replace-the-document-on-the-server">Replace the document on the server</h3>
+
+<pre><code class="language-Javascript">fetch('http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf', {
+  method: 'POST',
+  mode: 'cors',
+  body: JSON.stringify({
+    title: 'Remember the milk',
+    complete: true,
+    created: new Date()
+  })
+});
+</code></pre>
+
+<p>This will actually replace the document with the given ID. If you omit any properties from the
+document, they will be omitted in the replacement, since this effectively destroys the old copy and
+puts a new one in its place on the database.  What if we just want to say that the item has been
+completed?  After all, we don&rsquo;t want to update the &ldquo;created&rdquo; field, since now the data is wrong.</p>
+
+<h3 id="update-properties-on-the-document-on-the-server">Update properties on the document on the server.</h3>
+
+<pre><code class="language-Javascript">fetch('http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf', {
+  method: 'PATCH',
+  mode: 'cors',
+  body: JSON.stringify({complete: true})
+});
+</code></pre>
+
+<p>The <code>PATCH</code> method only updates the properties that you give to the request, leaving the others
+unchanged.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+              
+                <div class="post-footer-tags">
+                  <span class="text-color-light text-small">TAGGED IN</span><br/>
+                  
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/sondra/">sondra</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/python/">python</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/rethinkdb/">rethinkdb</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/flask/">flask</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/rest/">rest</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/tutorials/">tutorials</a>
+
+  <a class="tag tag--primary tag--small" href="https://jeffersonheard.github.io/tags/open-source/">open source</a>
+
+                </div>
+              
+            
+            <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--disabled">
+        
+          <i class="fa fa-angle-left"></i>
+          <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+        </a>
+      </li>
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default tooltip--top" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/" data-tooltip="An Intro to Sondra: Part 3">
+        
+          <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <ul class="post-actions post-action-share">
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+        <i class="fa fa-share-alt"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-google-plus"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-facebook-official"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    Copyrights &copy; 2016 Jefferson Heard. All Rights Reserved.
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--disabled">
+        
+          <i class="fa fa-angle-left"></i>
+          <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+        </a>
+      </li>
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default tooltip--top" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/" data-tooltip="An Intro to Sondra: Part 3">
+        
+          <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <ul class="post-actions post-action-share">
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+        <i class="fa fa-share-alt"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-google-plus"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-facebook-official"></i>
+      </a>
+    </li>
+    <li class="post-action hide-xs">
+      <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <ul class="share-options">
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-google-plus"></i><span>Share on Google Plus</span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fjeffersonheard.github.io%2f2016%2f11%2fan-intro-to-sondra-part-4%2f">
+        <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://jeffersonheard.github.io/img/portrait.jpg" alt="Author's picture" />
+    
+    <h4 id="about-card-name">Jefferson Heard</h4>
+    
+      <div id="about-card-bio">Technologist, CTO, experimental cook, hiker</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        CTO, <a href="https://www.365pronto.com">365 Pronto</a>
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        France
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search "
+          autofocus="autofocus"/>
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-4/">
+                <h3 class="media-heading">An Intro to Sondra: Part 4</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Adding data in Python The simplest way to add data is through Python. Data can be added from Python even to private collections, and methods can be called without authentication. This means that code that calls methods and creates objects, perhaps as part of other methods, should do sufficient permission checking to cover both itself and the potential mutations to data caused by the methods and collections it calls.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/">
+                <h3 class="media-heading">An Intro to Sondra: Part 3</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Accessing Schemas If you missed them, see my previous tutorials covering first steps into Sondra and exposing your API to the web. This tutorial will cover accessing the JSON-Schema that underlies the API. All Sondra APIs are based on JSON-Schema, and dictate not only what the documents must look like coming in and out of Sondra, but also how to access method calls and query datasets.
+First, let&rsquo;s start out with a simple call to the schema endpoint.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/">
+                <h3 class="media-heading">An Intro to Sondra: Part 2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Part 2 of our tutorials on Sondra build on our sample application from part 1 and covers exposing the API on the web. Basically we will add one more module, which creates a Flask app. The app I show below does very little more than the basic Flask app. It adds compression, because that&rsquo;s pretty standard these days and supported by almost all browsers. It&rsquo;s also a good idea with APIs where responses can get very long.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-1/">
+                <h3 class="media-heading">An Intro to Sondra: Part 1</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This tutorial serves as a basic introduction to Sondra, its data model, and how you can create an API. The classic example web API is that of a to-do list application. Our tutorial will build it up in stages, starting with the basic structure of an application, followed by data modeling, and then we&rsquo;ll add exposed methods to see how those work.
+Finally, you&rsquo;ll work through accessing the API via Javascript (ES2015) and Python.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://jeffersonheard.github.io/2016/10/sondra-schema-validated-api-and-orm-for-rethinkdb/">
+                <h3 class="media-heading">Sondra: Schema validated API and ORM for RethinkDB</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Note I have just gotten the news that the company behind RethinkDB is shutting down. They are committed and I am committed to RethinkDB continuing as a robust Open Source project. In the next week, there will be a general polishing of the Sondra documentation and a pruning / cleanup of Sondra. This will precede a 1.0.0 release of Sondra. In the future, we will concentrate on supporting multiple databases, asynchronous communication (websockets!</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         5 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://jeffersonheard.github.io/images/cover-blueridge-4.jpg');"></div>
+  
+
+
+    
+<script src="https://jeffersonheard.github.io/js/script-lrchyhb5kddxeiejst2qhr1sqb7vhfxkdhrigadzb4moxbk6your91edbeqz.min.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight').each(function(i, block) {
+    var code = "";
+    hljs.highlightAuto(block.innerText).value.split(/\r\n|\r|\n/).forEach(function(line) {
+      code += "<span class=\"line\">" + line + "</span><br>";
+    });
+    if (code.length > 0) {
+      block.innerHTML = code;  
+    }
+  });
+  $('pre > code').each(function(i, block) {
+    $(this).addClass('codeblock');
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/jeffersonheard.github.io\/2016\/11\/an-intro-to-sondra-part-4\/';
+          
+            this.page.identifier = '\/2016\/11\/an-intro-to-sondra-part-4\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'jefferson-heard';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+  </body>
+</html>
