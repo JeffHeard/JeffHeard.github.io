@@ -6,8 +6,219 @@
     <description>Recent content in Post-rsses on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Nov 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Nov 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://jeffersonheard.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hydroshare, Part 1: Overview of a long project</title>
+      <link>https://jeffersonheard.github.io/2016/11/hydroshare-part-1-overview-of-a-long-project/</link>
+      <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/hydroshare-part-1-overview-of-a-long-project/</guid>
+      <description>
+
+&lt;p&gt;The last project I worked on at UNC was as Chief Software Architect of the
+&lt;a href=&#34;https://www.hydroshare.org&#34;&gt;Hydroshare&lt;/a&gt; project. It was the most challenging
+exercise I ever undertook at UNC, and I&amp;rsquo;m proudest of it, despite the fact that
+I can&amp;rsquo;t claim to have done everything &lt;em&gt;right&lt;/em&gt;. In fact I made some blunders,
+but ones I hope I&amp;rsquo;ve learned from.&lt;/p&gt;
+
+&lt;p&gt;I left the Hydroshare project after I believed that it was on the right path,
+and handed my role off to two of the brightest people I know in software
+management and development at &lt;a href=&#34;http://www.renci.org&#34;&gt;Renci&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This will be the first post in a series of posts about the unique experiences of
+Hydroshare, and what I think it can teach us about building and organizing
+better teams.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-hydroshare-system&#34;&gt;The Hydroshare System&lt;/h2&gt;
+
+&lt;p&gt;Hydroshare is essentially a content management system (CMS), like WordPress or
+Drupal, but on a particular brand of steroids. Where most CMSes are backed by a
+CDN (content distribution network) and a database and possibly a block store
+such as Amazon S3, this one had to be different to accommodate distributed
+computing resources and the management and curation of datasets and real-time
+data streams that sometimes breach the terabyte size boundary.&lt;/p&gt;
+
+&lt;p&gt;Because of these and their consequent hosting requirements, nearness to compute
+resources, and rules about data provenance, developing a truly custom solution
+was essential.&lt;/p&gt;
+
+&lt;h2 id=&#34;challenge-a-distributed-fluid-heterogenous-team&#34;&gt;Challenge: A distributed, fluid, heterogenous team&lt;/h2&gt;
+
+&lt;p&gt;I would say my greatest challenge professionally is learning how to train
+people. No project before or since Hydroshare has ever given me as much
+experience training people to work together on a software project.&lt;/p&gt;
+
+&lt;p&gt;Let me start off by saying that the Hydroshare team was in most ways
+exceptional. The team and the experience with Hydroshare taught me the value of
+building teams that include non-software people in development roles, just as
+they are often included in &amp;ldquo;high-level&amp;rdquo; roles. My experience with including
+&amp;ldquo;gifted amateurs&amp;rdquo; on the Hydroshare team was that they often thought and thus
+wrote code in fundamentally different ways from the seasoned developers did, and
+that even on those occasions (not as often as you might think) that we rewrote
+their code to fit into the overall vision, we learned what assumptions we were
+making and built more usable, well-thought out software.&lt;/p&gt;
+
+&lt;p&gt;The Hydroshare team was scattered across universities in every timezone in the
+US. San Diego, two Utah locations, Indiana, North Carolina, and Virginia (and
+I might be missing one!). Software development was mostly by graduate students
+and postdocs in hydrology, not computer science.&lt;/p&gt;
+
+&lt;p&gt;The team, therefore, consisted largely of people doing their own research and
+devoting only a small part of their time to Hydroshare. Most team members
+initially wanted to contribute their hydrology research to the project and avoid
+core software development. To be clear, advanced software development &lt;em&gt;was&lt;/em&gt; a
+distraction from their work. Why would a hydrologist need to know anything about
+building web-services or integrating with a content management system?&lt;/p&gt;
+
+&lt;p&gt;Every person on our team who was not a software person was an eventual end-user
+of the application. I think that, if nothing else, gave people the motivation to
+learn more about writing code than they normally would. Our team consisted
+largely of data scientists. All of them had some rudimentary or even intermediate
+knowledge of R or Python and understood the purpose of self-contained scripts.&lt;/p&gt;
+
+&lt;p&gt;In addition, most everyone had a development environment of &lt;em&gt;some&lt;/em&gt; sort set up
+on their laptops by the time that we got going. This proved both a help and a
+hindrance, as the team knew enough to code their way, and in their own
+environment, which saved time explaining basics.  But the major challenge it
+left was the complete lack of portability of one person&amp;rsquo;s development
+environment to the next.&lt;/p&gt;
+
+&lt;h3 id=&#34;running-while-we-learned-to-walk&#34;&gt;Running while we learned to walk&lt;/h3&gt;
+
+&lt;p&gt;One of the key points I will stress is that there &lt;strong&gt;is&lt;/strong&gt; an effective way to
+manage a team like this, and that including non-software people does not equate
+to a slower development process.&lt;/p&gt;
+
+&lt;p&gt;Hydroshare, when I came to it, was 18 months along. Another way to put this was
+that it was 18 months behind, but that isn&amp;rsquo;t entirely accurate. The team had
+assembled a prototype from Drupal, but had gone as far as they could with it.
+It would be necessary for the success of Hydroshare to scrap the prototype and
+take things in a different direction, now that everyone knew what it was they
+wanted, at a basic level.&lt;/p&gt;
+
+&lt;p&gt;Initially, the leaders were loathe to &amp;ldquo;throw so much away,&amp;rdquo; but in the end the
+enthusiasm of the core team for the new direction convinced everyone that we
+were doing the right thing. This meant &amp;ldquo;starting from scratch&amp;rdquo; 18 months into a
+five year project, but the team caught up and delivered on its milestones after
+the retooling.&lt;/p&gt;
+
+&lt;p&gt;The keys to this success were:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Use distributed project management tools &lt;strong&gt;effectively&lt;/strong&gt;&lt;/strong&gt;. (I stress the
+word &amp;ldquo;effectively&amp;rdquo; because for a time we over-used these tools and leaned on
+them too heavily, exaggerating their weaknesses as well as their strengths.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Use the overlap&lt;/strong&gt; between the knowledge our developers already had through
+their domain work, and the needs of full-stack software development.**&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Spend in-person time wisely&lt;/strong&gt;, on training and &amp;ldquo;code crunches&amp;rdquo; based around
+features or details that require lots of coordination.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Not that we got all of that right. In particular, the last part was hard to get
+to. The project&amp;rsquo;s overall leadership was terrified of being 18 months behind,
+and I spent a lot of time in &amp;ldquo;weekly agile standup postmortems&amp;rdquo; I don&amp;rsquo;t even
+know what that means, still, but they were generally two to three hour meetings
+where the leadership went painstakingly over every item in the project
+management system (something some consultant put us onto whose name I don&amp;rsquo;t
+recall, but was well loved by Agile consultants at the time) whether or not
+anything changed or even if it wasn&amp;rsquo;t supposed to.&lt;/p&gt;
+
+&lt;h3 id=&#34;managing-distributed-development&#34;&gt;Managing distributed development&lt;/h3&gt;
+
+&lt;p&gt;We used a number of project management tools meant for Agile development. I have
+to say I was not that fond of any of them. In the end, I think our best toolset
+was a combination of:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;List building on &lt;a href=&#34;https://www.trello.com&#34;&gt;Trello&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A shared document and discussion space. We used Drive and Google Docs, but now
+that Slack is around I&amp;rsquo;d probably choose that.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A weekly developer meeting separate from the management meeting, where all
+questions were fair game, and managers didn&amp;rsquo;t have to feel anxious about the
+&amp;ldquo;sausage making&amp;rdquo;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Trello is sophisticated enough for most isolated projects. Actually, it&amp;rsquo;s hard
+to imagine a project where Trello can&amp;rsquo;t be made to work, but I think Hydroshare
+and projects like it is its sweet spot.  We could assign tasks, create due dates,
+use the API to generate reports and even integrate Trello and GitHub a bit. It
+worked.&lt;/p&gt;
+
+&lt;p&gt;Despite the fact that I couldn&amp;rsquo;t get the management meeting pared down below two
+hours, we did manage to come to the consensus that taking up valuable developer
+time in managerial sausage-making was unproductive. The developers got split out
+from the project leaders, and were spared from having to listen to planning that
+was irrelevant to the thing they were working on.&lt;/p&gt;
+
+&lt;h3 id=&#34;finding-and-using-the-overlap&#34;&gt;Finding and Using the Overlap&lt;/h3&gt;
+
+&lt;p&gt;I&amp;rsquo;ll go over this in more detail on a later post, but I want to highlight that
+everyone on our team had some, even if only minimal, software development
+experience or interest. Some people were comfortable with R. Others wrote
+extensive models using Excel. Still others wrote high performance code in C
+surrounding simulation and environmental process modeling. But all of these
+people shared the ability to look at a problem methodically and break it down
+into tasks and sequence those tasks into steps.&lt;/p&gt;
+
+&lt;p&gt;This common ground proved the essential thing that made us work together as
+developer and scientist alike. In the end, it was a matter of polling the group
+for the technologies the most felt most comfortable with, and making sure that
+everyone knew that programming knowledge and insights were for sharing. The
+scientists were encouraged to learn from each other and not treat the coders as
+&amp;ldquo;special&amp;rdquo; or &amp;ldquo;keepers of the keys.&amp;rdquo; I think this encouraged a more collegial
+atmosphere, and prevented two-thirds of our team from being &amp;ldquo;requirements-
+generators&amp;rdquo; instead of &amp;ldquo;contributors&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;This way, the team was often self-training. There were concepts that the
+software engineers had to introduce, and had to direct development on a broad
+level, but for day to day work, it was of little importance that an individual
+scientist was unaware of certain algorithms, scalability issues, or other
+fundamentals. We were able to architect the software at a high level to be
+forgiving of ongoing contributions.&lt;/p&gt;
+
+&lt;p&gt;The training we did do brought everyone together and focused on specific
+technologies that were needed to do the job, and stressed their importance as
+part of the whole. Because of the way it was contexualized, it was more of a
+training of &amp;ldquo;how to develop Hydroshare&amp;rdquo; than &amp;ldquo;full stack development 101,&amp;rdquo; or
+&amp;ldquo;Javascript basics,&amp;rdquo; or &amp;ldquo;A complete beginner&amp;rsquo;s guide to Django.&amp;rdquo;&lt;/p&gt;
+
+&lt;h3 id=&#34;spending-in-person-time-wisely&#34;&gt;Spending In-Person Time Wisely.&lt;/h3&gt;
+
+&lt;p&gt;We had a few &amp;ldquo;code crunches&amp;rdquo; or &amp;ldquo;hackathons&amp;rdquo; as part of the Hydroshare project.
+These varied in their effectiveness, but I want to talk the effective ones
+from a software development point of view.&lt;/p&gt;
+
+&lt;p&gt;Where we were most effective, we broke into small teams centered around a
+feature, including at least one &amp;ldquo;software person&amp;rdquo; with each team of scientists.
+The features and functionalities that lent themselves most to code crunches were
+things that were not yet fleshed out, and that required detail and in-person
+conversation to understand. Often these were things that the scientists
+understood in terms of their methods, but had never thought of procedurally or
+functionally.&lt;/p&gt;
+
+&lt;p&gt;Then the conversation became both &amp;ldquo;speccing&amp;rdquo; and a certain amount of training
+(two ways) as the scientist-developers engaged with the software  developers.
+For the software developers, understanding from a deeper level about the users
+and the processes we were modeling was helpful in deciding metaphors for
+usability and for deciding whether the overall architecture would accommodate
+the cases they brought up. For the domain professionals, the scientists,
+learning more about coding both helped their ability to express features and
+requirements in a software-friendly way, and of course it improved their ability
+to contribute directly.&lt;/p&gt;
+
+&lt;h2 id=&#34;next&#34;&gt;Next&lt;/h2&gt;
+
+&lt;p&gt;To make an effective software team, we needed an effective toolchain. The next
+post will cover the toolchain, my reasons for selecting and promoting the
+technologies I did, and what went well and what was challenging about the stack.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>An Intro to Sondra: Part 4</title>

@@ -6,15 +6,14 @@
     <description>Recent content on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2016 Jefferson Heard</copyright>
-    <atom:link href="/tags/management/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jeffersonheard.github.io/tags/management/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Hydroshare Part 1: Experiences building software with a multidisciplinary team</title>
-      <link>https://jeffersonheard.github.io/post/hydroshare-1/</link>
+      <title>Hydroshare, Part 1: Overview of a long project</title>
+      <link>https://jeffersonheard.github.io/2016/11/hydroshare-part-1-overview-of-a-long-project/</link>
       <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://jeffersonheard.github.io/post/hydroshare-1/</guid>
+      <guid>https://jeffersonheard.github.io/2016/11/hydroshare-part-1-overview-of-a-long-project/</guid>
       <description>
 
 &lt;p&gt;The last project I worked on at UNC was as Chief Software Architect of the
@@ -50,7 +49,7 @@ was essential.&lt;/p&gt;
 people. No project before or since Hydroshare has ever given me as much
 experience training people to work together on a software project.&lt;/p&gt;
 
-&lt;p&gt;Let me start off by saying that the Hydroshare team was in every way
+&lt;p&gt;Let me start off by saying that the Hydroshare team was in most ways
 exceptional. The team and the experience with Hydroshare taught me the value of
 building teams that include non-software people in development roles, just as
 they are often included in &amp;ldquo;high-level&amp;rdquo; roles. My experience with including
@@ -118,6 +117,15 @@ their domain work, and the needs of full-stack software development.**&lt;/p&gt;
 features or details that require lots of coordination.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;Not that we got all of that right. In particular, the last part was hard to get
+to. The project&amp;rsquo;s overall leadership was terrified of being 18 months behind,
+and I spent a lot of time in &amp;ldquo;weekly agile standup postmortems&amp;rdquo; I don&amp;rsquo;t even
+know what that means, still, but they were generally two to three hour meetings
+where the leadership went painstakingly over every item in the project
+management system (something some consultant put us onto whose name I don&amp;rsquo;t
+recall, but was well loved by Agile consultants at the time) whether or not
+anything changed or even if it wasn&amp;rsquo;t supposed to.&lt;/p&gt;
+
 &lt;h3 id=&#34;managing-distributed-development&#34;&gt;Managing distributed development&lt;/h3&gt;
 
 &lt;p&gt;We used a number of project management tools meant for Agile development. I have
@@ -134,6 +142,18 @@ that Slack is around I&amp;rsquo;d probably choose that.&lt;/p&gt;&lt;/li&gt;
 questions were fair game, and managers didn&amp;rsquo;t have to feel anxious about the
 &amp;ldquo;sausage making&amp;rdquo;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;Trello is sophisticated enough for most isolated projects. Actually, it&amp;rsquo;s hard
+to imagine a project where Trello can&amp;rsquo;t be made to work, but I think Hydroshare
+and projects like it is its sweet spot.  We could assign tasks, create due dates,
+use the API to generate reports and even integrate Trello and GitHub a bit. It
+worked.&lt;/p&gt;
+
+&lt;p&gt;Despite the fact that I couldn&amp;rsquo;t get the management meeting pared down below two
+hours, we did manage to come to the consensus that taking up valuable developer
+time in managerial sausage-making was unproductive. The developers got split out
+from the project leaders, and were spared from having to listen to planning that
+was irrelevant to the thing they were working on.&lt;/p&gt;
 
 &lt;h3 id=&#34;finding-and-using-the-overlap&#34;&gt;Finding and Using the Overlap&lt;/h3&gt;
 
@@ -170,7 +190,7 @@ training of &amp;ldquo;how to develop Hydroshare&amp;rdquo; than &amp;ldquo;full
 &lt;h3 id=&#34;spending-in-person-time-wisely&#34;&gt;Spending In-Person Time Wisely.&lt;/h3&gt;
 
 &lt;p&gt;We had a few &amp;ldquo;code crunches&amp;rdquo; or &amp;ldquo;hackathons&amp;rdquo; as part of the Hydroshare project.
-These varied in their effectiveness, but I want to analyze the effective ones
+These varied in their effectiveness, but I want to talk the effective ones
 from a software development point of view.&lt;/p&gt;
 
 &lt;p&gt;Where we were most effective, we broke into small teams centered around a
