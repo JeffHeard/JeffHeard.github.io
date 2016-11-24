@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jefferson Heard</title>
+    <link>https://jeffersonheard.github.io/categories/coding/index.xml</link>
+    <description>Recent content on Jefferson Heard</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://jeffersonheard.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>An Intro to Sondra: Part 4</title>
+      <link>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-4/</link>
+      <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-4/</guid>
+      <description>
+
+&lt;h2 id=&#34;adding-data-in-python&#34;&gt;Adding data in Python&lt;/h2&gt;
+
+&lt;p&gt;The simplest way to add data is through Python.  Data can be added from Python
+even to private collections, and methods can be called without authentication.
+This means that code that calls methods and creates objects, perhaps as part of
+other methods, should do sufficient permission checking to cover both itself and
+the potential mutations to data caused by the methods and collections it calls.&lt;/p&gt;
+
+&lt;p&gt;Assuming our suite is in an object called &lt;code&gt;api&lt;/code&gt;, this is how we add data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; api[&#39;todo-app&#39;][&#39;items&#39;].create({
+...     &amp;quot;title&amp;quot;: &amp;quot;Remember the milk.&amp;quot;,
+...     &amp;quot;created&amp;quot;: datetime.utcnow()
+... })
+&amp;lt;examples.todo.Item object at 0x10f611160&amp;gt;
+
+&amp;gt;&amp;gt;&amp;gt; next(iter(api[&#39;todo-app&#39;][&#39;items&#39;]))
+&#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The second line demonstrates that Sondra indeed follows the dict pattern closely.  Getting an
+iterator over the collection returns a generator that yields keys. This is done via a single
+cursor, and is thus very efficient.  You can also use &lt;code&gt;.keys()&lt;/code&gt; and &lt;code&gt;.values()&lt;/code&gt; and even &lt;code&gt;.items()&lt;/code&gt;
+as you expect to, yielding primary keys, Document objects, and pairs as they are supposed to.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; items = api[&#39;todo-app&#39;][&#39;items&#39;]
+&amp;gt;&amp;gt;&amp;gt; len(items)
+1
+&amp;gt;&amp;gt;&amp;gt; items.keys()
+KeysView(&amp;lt;examples.todo.Items object at 0x110d40a90&amp;gt;)
+&amp;gt;&amp;gt;&amp;gt; items.values()
+ValuesView(&amp;lt;examples.todo.Items object at 0x110d40a90&amp;gt;)
+&amp;gt;&amp;gt;&amp;gt; items.items()
+ItemsView(&amp;lt;examples.todo.Items object at 0x110d40a90&amp;gt;)
+&amp;gt;&amp;gt;&amp;gt; &#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39; in items
+True
+&amp;gt;&amp;gt;&amp;gt; items[&#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;] in items
+True
+&amp;gt;&amp;gt;&amp;gt; first_item = items[&#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;]
+&amp;gt;&amp;gt;&amp;gt; first_item
+&amp;lt;examples.todo.Item object at 0x10f611160&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; first_item.obj
+OrderedDict([(&#39;complete&#39;, False), (&#39;created&#39;, &#39;2016-10-13T18:45:08.255000+00:00&#39;),
+    (&#39;title&#39;, &#39;Remember the milk.&#39;), (&#39;id&#39;, &#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;)])
+&amp;gt;&amp;gt;&amp;gt; first_item == &#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The last line deserves some explanation. An item is always equal to its primary key, even though we
+are really comparing strings and objects. This may be counterintuitive, but it makes for fewer
+queries internally and is thus more efficient than the obvious implementation.&lt;/p&gt;
+
+&lt;p&gt;Another thing to note is that Sondra takes care to map data to its proper datatype whenever possible.
+There&amp;rsquo;s a little &amp;ldquo;magic&amp;rdquo; in this, but it is explained deeper in the documentation.  For example,
+let&amp;rsquo;s look at our &amp;ldquo;created&amp;rdquo; attribute:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; first_item[&#39;created&#39;]
+
+datetime.datetime(2016, 10, 20, 16, 21, 54, 546629)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sondra uses &amp;ldquo;value handlers&amp;rdquo;, found in the &lt;code&gt;sondra.documents.valuehandlers&lt;/code&gt; section of the sondra
+code to translate between Python datatypes, JSON datatypes, and RethinkDB datatypes. To determine
+the datatype, you need look no further than the schema itself. The following shows what schema
+attributes  Sondra uses to treat values specially:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;{... &amp;quot;format&amp;quot;: &amp;quot;date-time&amp;quot;}&lt;/code&gt; - Handled as a Python datetime, JSON string, RethinkDB date.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{... &amp;quot;geo&amp;quot;: true}&lt;/code&gt; - Handled as a Python dict-like object (a geometry object if Shapely is installed,
+otherwise it will fall back to a dict), JSON object (as GeoJSON geometry), RethinkDB geometry
+type.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sondra is compatible with the base datetime library and with &lt;a href=&#34;http://crsmithdev.com/arrow/&#34;&gt;arrow&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;adding-and-accessing-data-over-http-s&#34;&gt;Adding and accessing data over HTTP(S)&lt;/h2&gt;
+
+&lt;p&gt;For this section, we&amp;rsquo;re going to assume you will get around to authentication. A basic
+authentication and authorization app exists in the Sondra codebase, but you will probably want to
+use other, more well-tested frameworks to handle authentication and authorization of web requests in
+Flask. This is just fine and well supported. For now, we will assume that a POST will work without
+authorization, so you can follow the tutorial without reading extra material.&lt;/p&gt;
+
+&lt;p&gt;Sondra is fairly standard when it comes to REST metaphors, but for reference, here is how HTTP
+commands map to operations on the API:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GET&lt;/code&gt; - &lt;strong&gt;Retrieve&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Retrieve a document,&lt;/li&gt;
+&lt;li&gt;list of documents, or&lt;/li&gt;
+&lt;li&gt;make a simple method call&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;POST&lt;/code&gt; - &lt;strong&gt;Add or Replace&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add items to a collection.&lt;/li&gt;
+&lt;li&gt;Replace an existing document.&lt;/li&gt;
+&lt;li&gt;Make a more complex method call.&lt;/li&gt;
+&lt;li&gt;As a special case, you can use JSON to map any of the other commands to a POST. More details in
+the source code or the detailed documentation to come.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PUT&lt;/code&gt; - &lt;strong&gt;Replace&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replace items in a collection.&lt;/li&gt;
+&lt;li&gt;Replace an existing document.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PATCH&lt;/code&gt; - &lt;strong&gt;Update in Place&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Make updates to items in a collection.&lt;/li&gt;
+&lt;li&gt;Make updates to a single document. (Merges dicts to create updates)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DELETE&lt;/code&gt; - &lt;strong&gt;Delete&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Delete items from a collection. Delete a single document.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use the Python requests library. By default, Flask exposes itself over port 5000 on localhost,
+so that&amp;rsquo;s the assumption we will make. We will also make the assumption that you are &lt;em&gt;not&lt;/em&gt; changing
+the default api base path, which is simply &lt;code&gt;api&lt;/code&gt;.  First, let&amp;rsquo;s get the record we&amp;rsquo;ve already
+created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; rsp = requests.get(&#39;http://localhost:5000/api/todo-app/items&#39;)
+&amp;gt;&amp;gt;&amp;gt; rsp.json
+
+[{&#39;id&#39;: &#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;, &#39;complete&#39;: False,
+  &#39;created&#39;: &#39;2016-10-13T18:45:08.255000+00:00&#39;, &#39;title&#39;, &#39;Remember the milk.&#39;}]
+
+&amp;gt;&amp;gt;&amp;gt; requests.get(&#39;http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;).json()
+
+{&#39;id&#39;: &#39;642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;, &#39;complete&#39;: False,
+ &#39;created&#39;: &#39;2016-10-13T18:45:08.255000+00:00&#39;, &#39;title&#39;, &#39;Remember the milk.&#39;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now how about adding data?  Let&amp;rsquo;s actually use an example in Javascript, since that&amp;rsquo;s how an API
+like this will most commonly be used.  Here we&amp;rsquo;re using the &amp;ldquo;fetch&amp;rdquo; API, but you could do the same
+with a standard XMLHttpRequest.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Javascript&#34;&gt;fetch(&#39;http://localhost:5000/api/todo-app/items&#39;, {
+  method: &#39;POST&#39;,
+  mode: &#39;cors&#39;,
+  body: JSON.stringify({
+    title: &#39;Remember the cheese&#39;,
+    complete: false,
+    created: new Date()
+  })
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;replace-the-document-on-the-server&#34;&gt;Replace the document on the server&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Javascript&#34;&gt;fetch(&#39;http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;, {
+  method: &#39;POST&#39;,
+  mode: &#39;cors&#39;,
+  body: JSON.stringify({
+    title: &#39;Remember the milk&#39;,
+    complete: true,
+    created: new Date()
+  })
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will actually replace the document with the given ID. If you omit any properties from the
+document, they will be omitted in the replacement, since this effectively destroys the old copy and
+puts a new one in its place on the database.  What if we just want to say that the item has been
+completed?  After all, we don&amp;rsquo;t want to update the &amp;ldquo;created&amp;rdquo; field, since now the data is wrong.&lt;/p&gt;
+
+&lt;h3 id=&#34;update-properties-on-the-document-on-the-server&#34;&gt;Update properties on the document on the server.&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Javascript&#34;&gt;fetch(&#39;http://localhost:5000/api/todo-app/items/642478b1-03bb-45e2-9f6d-e90e90d1b7cf&#39;, {
+  method: &#39;PATCH&#39;,
+  mode: &#39;cors&#39;,
+  body: JSON.stringify({complete: true})
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;PATCH&lt;/code&gt; method only updates the properties that you give to the request, leaving the others
+unchanged.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Intro to Sondra: Part 3</title>
+      <link>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/</link>
+      <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/</guid>
+      <description>
+
+&lt;h2 id=&#34;accessing-schemas&#34;&gt;Accessing Schemas&lt;/h2&gt;
+
+&lt;p&gt;If you missed them, see my previous tutorials covering
+&lt;a href=&#34;tutorial-1&#34;&gt;first steps into Sondra&lt;/a&gt; and &lt;a href=&#34;tutorial-2&#34;&gt;exposing your API to the web&lt;/a&gt;.
+This tutorial will cover accessing the JSON-Schema that underlies the API. All Sondra
+APIs are based on JSON-Schema, and dictate not only what the documents must look like
+coming in and out of Sondra, but also how to access method calls and query datasets.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s start out with a simple call to the schema endpoint. A schema endpoint can
+be accessed from every level of the API including suite, application, collection, and
+document (although document schemas are typically the same as collection schemas).&lt;/p&gt;
+
+&lt;h3 id=&#34;schema-endpoints&#34;&gt;Schema Endpoints&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at this in a browser. Run the module in a terminal window, open your favorite browser, and
+surf to &lt;a href=&#34;http://localhost:5000/api;schema&#34;&gt;http://localhost:5000/api;schema&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+    &amp;quot;title&amp;quot;: &amp;quot;Sondra-Based API&amp;quot;,
+    &amp;quot;definitions&amp;quot;: {
+        &amp;quot;filterOps&amp;quot;: {
+            &amp;quot;enum&amp;quot;: [
+                &amp;quot;with_fields&amp;quot;,
+                &amp;quot;count&amp;quot;,
+                &amp;quot;max&amp;quot;,
+                &amp;quot;min&amp;quot;,
+                &amp;quot;avg&amp;quot;,
+                &amp;quot;sample&amp;quot;,
+                &amp;quot;sum&amp;quot;,
+                &amp;quot;distinct&amp;quot;,
+                &amp;quot;contains&amp;quot;,
+                &amp;quot;pluck&amp;quot;,
+                &amp;quot;without&amp;quot;,
+                &amp;quot;has_fields&amp;quot;,
+                &amp;quot;order_by&amp;quot;,
+                &amp;quot;between&amp;quot;
+            ]
+        },
+        &amp;quot;timedelta&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+            &amp;quot;required&amp;quot;: [
+                &amp;quot;start&amp;quot;,
+                &amp;quot;end&amp;quot;
+            ],
+            &amp;quot;properties&amp;quot;: {
+                &amp;quot;hours&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+                },
+                &amp;quot;days&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+                },
+                &amp;quot;seconds&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;number&amp;quot;
+                },
+                &amp;quot;minutes&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+                }
+            }
+        },
+        &amp;quot;spatialOps&amp;quot;: {
+            &amp;quot;enum&amp;quot;: [
+                &amp;quot;distance&amp;quot;,
+                &amp;quot;get_intersecting&amp;quot;,
+                &amp;quot;get_nearest&amp;quot;
+            ]
+        }
+    },
+    &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;http://localhost:5000/api;schema&amp;quot;,
+    &amp;quot;applications&amp;quot;: {
+        &amp;quot;todo-app&amp;quot;: &amp;quot;http://localhost:5000/api/todo-app&amp;quot;
+    },
+    &amp;quot;description&amp;quot;: &amp;quot;*No description provided.*&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s pretty neat! A few basic datatypes exist in the definitions, mainly to define how filtering
+and query-sets work. We&amp;rsquo;ll get into those later.  For now, we&amp;rsquo;ll focus on what we just created.  The
+suite schema doesn&amp;rsquo;t show us the data-type that we defined, but it does show a list of applications
+and their endpoints in &lt;code&gt;.applications&lt;/code&gt;. Note that our application is no longer CamelCase, but has
+been turned into kabob-case. This is the default, but it can be configured otherwise. All levels
+of the API are turned from CamelCase or underscore_separation into kabob-case by default, for
+consistency, and because this is more typical of url patterns than the other case types.&lt;/p&gt;
+
+&lt;h3 id=&#34;application-schema&#34;&gt;Application Schema&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s check out the schema to todo-app.  We&amp;rsquo;ll use the url
+in the schema followed by &lt;code&gt;;schema&lt;/code&gt;. Sondra is very regular about the way it treats urls. Formatting
+and pragmas are handled using url parameters. This is different than changing the endpoint for the
+file-type, which is typical of many other frameworks. The reason for this is that often, there are
+multiple ways to render data and keep it in the same file type.  For instance, the &lt;code&gt;schema&lt;/code&gt; and
+&lt;code&gt;json&lt;/code&gt; types allow you to control the ordering and whether data is pretty-printed with lines and
+indentations. Other formats allow other parameters as we&amp;rsquo;ll see later on.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;id&amp;quot;: &amp;quot;http://localhost:5000/api/todo-app;schema&amp;quot;,
+  &amp;quot;definitions&amp;quot;: {},
+  &amp;quot;collections&amp;quot;: {
+    &amp;quot;items&amp;quot;: &amp;quot;http://localhost:5000/api/todo-app/items&amp;quot;
+  },
+  &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+  &amp;quot;title&amp;quot;: &amp;quot;Todo App&amp;quot;,
+  &amp;quot;methods&amp;quot;: {},
+  &amp;quot;description&amp;quot;: &amp;quot;*No description provided.*&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is the application schema.  Once again, this is rather succinct. There&amp;rsquo;s not a lot of
+information in here, but if there were methods defined at the application level we would see them
+show up here.  One can also add application level schema fragment definitions in the class and
+they would show up here.&lt;/p&gt;
+
+&lt;h3 id=&#34;collection-schema&#34;&gt;Collection Schema&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s move on to the items themselves. Go to &lt;a href=&#34;http://localhost:5000/api/todo-app/items;schema;indent=2&#34;&gt;http://localhost:5000/api/todo-app/items;schema;indent=2&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+  &amp;quot;properties&amp;quot;: {
+    &amp;quot;title&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Title&amp;quot;,
+      &amp;quot;description&amp;quot;: &amp;quot;The title of the item&amp;quot;
+    },
+    &amp;quot;complete&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Complete&amp;quot;,
+      &amp;quot;default&amp;quot;: false
+    },
+    &amp;quot;created&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Created&amp;quot;,
+      &amp;quot;format&amp;quot;: &amp;quot;date-time&amp;quot;
+    },
+    &amp;quot;id&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;ID&amp;quot;,
+      &amp;quot;description&amp;quot;: &amp;quot;The primary key.&amp;quot;
+    }
+  },
+  &amp;quot;methods&amp;quot;: {
+    &amp;quot;count&amp;quot;: {
+      &amp;quot;id&amp;quot;: &amp;quot;count&amp;quot;,
+      &amp;quot;oneOf&amp;quot;: [
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_request&amp;quot;
+        },
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_response&amp;quot;
+        }
+      ],
+      &amp;quot;title&amp;quot;: &amp;quot;Object Count&amp;quot;,
+      &amp;quot;definitions&amp;quot;: {
+        &amp;quot;method_request&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;null&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Object Count&amp;quot;,
+          &amp;quot;side_effects&amp;quot;: false,
+          &amp;quot;description&amp;quot;: &amp;quot;The number of objects in the collection.&amp;quot;
+        },
+        &amp;quot;method_response&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Object Count&amp;quot;,
+          &amp;quot;properties&amp;quot;: {
+            &amp;quot;\_&amp;quot;: {
+              &amp;quot;type&amp;quot;: &amp;quot;number&amp;quot;
+            }
+          },
+          &amp;quot;description&amp;quot;: &amp;quot;The number of objects in the collection.&amp;quot;
+        }
+      },
+      &amp;quot;description&amp;quot;: &amp;quot;The number of objects in the collection.&amp;quot;
+    },
+    &amp;quot;key-list&amp;quot;: {
+      &amp;quot;id&amp;quot;: &amp;quot;key-list&amp;quot;,
+      &amp;quot;oneOf&amp;quot;: [
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_request&amp;quot;
+        },
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_response&amp;quot;
+        }
+      ],
+      &amp;quot;title&amp;quot;: &amp;quot;Keys&amp;quot;,
+      &amp;quot;definitions&amp;quot;: {
+        &amp;quot;method_request&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;null&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Keys&amp;quot;,
+          &amp;quot;side_effects&amp;quot;: false,
+          &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+        },
+        &amp;quot;method_response&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;array&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Keys&amp;quot;,
+          &amp;quot;items&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+          },
+          &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+        }
+      },
+      &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+    },
+    &amp;quot;autocomplete&amp;quot;: {
+      &amp;quot;id&amp;quot;: &amp;quot;autocomplete&amp;quot;,
+      &amp;quot;oneOf&amp;quot;: [
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_request&amp;quot;
+        },
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_response&amp;quot;
+        }
+      ],
+      &amp;quot;title&amp;quot;: &amp;quot;Autocomplete&amp;quot;,
+      &amp;quot;definitions&amp;quot;: {
+        &amp;quot;method_request&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Autocomplete&amp;quot;,
+          &amp;quot;properties&amp;quot;: {
+            &amp;quot;partial&amp;quot;: {
+              &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+              &amp;quot;title&amp;quot;: &amp;quot;Partial&amp;quot;,
+              &amp;quot;description&amp;quot;: &amp;quot;A regular expression to match on any and all of the autocomplete fields.&amp;quot;
+            }
+          },
+          &amp;quot;side_effects&amp;quot;: false,
+          &amp;quot;description&amp;quot;: &amp;quot;Search results based on a partial input as a regex&amp;quot;
+        },
+        &amp;quot;method_response&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;array&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Autocomplete&amp;quot;,
+          &amp;quot;items&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+            &amp;quot;properties&amp;quot;: {
+              &amp;quot;k&amp;quot;: {
+                &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+              },
+              &amp;quot;v&amp;quot;: {
+                &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+              }
+            }
+          },
+          &amp;quot;description&amp;quot;: &amp;quot;Search results based on a partial input as a regex&amp;quot;
+        }
+      },
+      &amp;quot;description&amp;quot;: &amp;quot;Search results based on a partial input as a regex&amp;quot;
+    },
+    &amp;quot;key-map&amp;quot;: {
+      &amp;quot;id&amp;quot;: &amp;quot;key-map&amp;quot;,
+      &amp;quot;oneOf&amp;quot;: [
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_request&amp;quot;
+        },
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_response&amp;quot;
+        }
+      ],
+      &amp;quot;title&amp;quot;: &amp;quot;Key Map&amp;quot;,
+      &amp;quot;definitions&amp;quot;: {
+        &amp;quot;method_request&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;null&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Key Map&amp;quot;,
+          &amp;quot;side_effects&amp;quot;: false,
+          &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+        },
+        &amp;quot;method_response&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+          &amp;quot;title&amp;quot;: &amp;quot;Key Map&amp;quot;,
+          &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+        }
+      },
+      &amp;quot;description&amp;quot;: &amp;quot;*No description provided*&amp;quot;
+    }
+  },
+  &amp;quot;definitions&amp;quot;: {
+    &amp;quot;filterOps&amp;quot;: {
+      &amp;quot;enum&amp;quot;: [
+        &amp;quot;with_fields&amp;quot;,
+        &amp;quot;count&amp;quot;,
+        &amp;quot;max&amp;quot;,
+        &amp;quot;min&amp;quot;,
+        &amp;quot;avg&amp;quot;,
+        &amp;quot;sample&amp;quot;,
+        &amp;quot;sum&amp;quot;,
+        &amp;quot;distinct&amp;quot;,
+        &amp;quot;contains&amp;quot;,
+        &amp;quot;pluck&amp;quot;,
+        &amp;quot;without&amp;quot;,
+        &amp;quot;has_fields&amp;quot;,
+        &amp;quot;order_by&amp;quot;,
+        &amp;quot;between&amp;quot;
+      ]
+    },
+    &amp;quot;timedelta&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [
+        &amp;quot;start&amp;quot;,
+        &amp;quot;end&amp;quot;
+      ],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;hours&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+        },
+        &amp;quot;days&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+        },
+        &amp;quot;seconds&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;number&amp;quot;
+        },
+        &amp;quot;minutes&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;
+        }
+      }
+    },
+    &amp;quot;spatialOps&amp;quot;: {
+      &amp;quot;enum&amp;quot;: [
+        &amp;quot;distance&amp;quot;,
+        &amp;quot;get_intersecting&amp;quot;,
+        &amp;quot;get_nearest&amp;quot;
+      ]
+    }
+  },
+  &amp;quot;template&amp;quot;: &amp;quot;{id}&amp;quot;,
+  &amp;quot;documentMethods&amp;quot;: {
+    &amp;quot;rel&amp;quot;: {
+      &amp;quot;id&amp;quot;: &amp;quot;\*rel&amp;quot;,
+      &amp;quot;oneOf&amp;quot;: [
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_request&amp;quot;
+        },
+        {
+          &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/method_response&amp;quot;
+        }
+      ],
+      &amp;quot;title&amp;quot;: &amp;quot;Related Documents&amp;quot;,
+      &amp;quot;definitions&amp;quot;: {
+        &amp;quot;method_request&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+          &amp;quot;properties&amp;quot;: {
+            &amp;quot;app&amp;quot;: {
+              &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+              &amp;quot;title&amp;quot;: &amp;quot;App&amp;quot;,
+              &amp;quot;description&amp;quot;: &amp;quot;The slug of the application ``coll`` is in.&amp;quot;
+            },
+            &amp;quot;coll&amp;quot;: {
+              &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+              &amp;quot;title&amp;quot;: &amp;quot;Coll&amp;quot;,
+              &amp;quot;description&amp;quot;: &amp;quot;The slug of the collection to search for documents in.&amp;quot;
+            },
+            &amp;quot;related_key&amp;quot;: {
+              &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+              &amp;quot;title&amp;quot;: &amp;quot;Related Key&amp;quot;,
+              &amp;quot;description&amp;quot;: &amp;quot;The name of the key to search for this document in.If none, defaults to the first matching foreign key element.&amp;quot;
+            }
+          },
+          &amp;quot;required&amp;quot;: [
+            &amp;quot;app&amp;quot;,
+            &amp;quot;coll&amp;quot;
+          ],
+          &amp;quot;title&amp;quot;: &amp;quot;Related Documents&amp;quot;,
+          &amp;quot;description&amp;quot;: &amp;quot;Reverse relation.  Get a query set of all documents in a collection that have foreign keys that point to this document.&amp;quot;,
+          &amp;quot;side_effects&amp;quot;: false
+        },
+        &amp;quot;method_response&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+          &amp;quot;properties&amp;quot;: {},
+          &amp;quot;title&amp;quot;: &amp;quot;Related Documents&amp;quot;,
+          &amp;quot;description&amp;quot;: &amp;quot;Reverse relation.  Get a query set of all documents in a collection that have foreign keys that point to this document.&amp;quot;
+        }
+      },
+      &amp;quot;description&amp;quot;: &amp;quot;...&amp;quot;
+    }
+  },
+  &amp;quot;primary_key&amp;quot;: &amp;quot;id&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;No Description Provided.&amp;quot;,
+  &amp;quot;title&amp;quot;: &amp;quot;Item&amp;quot;,
+  &amp;quot;id&amp;quot;: &amp;quot;http://localhost:5000/api/todo-app/items;schema&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s a lot more information!. This may look very dense, but it contains all the methods and inherits
+all the schema from the application and suite objects as well. This allows buggy JSON schema parsers
+to find references without having to fetch other documents in the course of resolving references.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s remove the methods for a moment and see what we have:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;template&amp;quot;: &amp;quot;{id}&amp;quot;,
+  &amp;quot;primary_key&amp;quot;: &amp;quot;id&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;No Description Provided.&amp;quot;,
+  &amp;quot;title&amp;quot;: &amp;quot;Item&amp;quot;,
+  &amp;quot;id&amp;quot;: &amp;quot;http://localhost:5000/api/todo-app/items;schema&amp;quot;,
+  &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+  &amp;quot;required&amp;quot;: [&amp;quot;title&amp;quot;],
+  &amp;quot;properties&amp;quot;: {
+    &amp;quot;title&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Title&amp;quot;,
+      &amp;quot;description&amp;quot;: &amp;quot;The title of the item&amp;quot;
+    },
+    &amp;quot;complete&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Complete&amp;quot;,
+      &amp;quot;default&amp;quot;: false
+    },
+    &amp;quot;created&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;Created&amp;quot;,
+      &amp;quot;format&amp;quot;: &amp;quot;date-time&amp;quot;
+    },
+    &amp;quot;id&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+      &amp;quot;title&amp;quot;: &amp;quot;ID&amp;quot;,
+      &amp;quot;description&amp;quot;: &amp;quot;The primary key.&amp;quot;
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JSON-Schema tells us what we&amp;rsquo;re looking at here, but just to be clear, all Sondra has done is
+translated the code into JSON for the client. There are a few properties that are extra to JSON
+Schema, such as &lt;code&gt;template&lt;/code&gt; and &lt;code&gt;primary_key&lt;/code&gt;. These are defined by Sondra. Template describes how
+one would create a visual representation for a record. Primary key lets you know what data field to
+use to address documents as endpoints. If you had a document with id &lt;code&gt;00ab-00ac-00ad-00ae&lt;/code&gt; then you
+would access it via the API as &lt;code&gt;http://localhost:5000/api/todo-app/items/00ab-00ac-00ad-00ae&lt;/code&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Intro to Sondra: Part 2</title>
+      <link>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/</link>
+      <pubDate>Tue, 15 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/</guid>
+      <description>&lt;p&gt;Part 2 of our tutorials on Sondra build on our sample application from part 1
+and covers exposing the API on the web. Basically we will add one more module,
+which creates a Flask app. The app I show below does very little more
+than the basic Flask app. It adds compression, because that&amp;rsquo;s pretty standard
+these days and supported by almost all browsers.  It&amp;rsquo;s also a good idea with
+APIs where responses can get very long.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from flask import Flask
+from flask.ext.compress import Compress
+from sondra.flask import api_tree, init
+
+# Create the Flask instance and the suite.
+app = Flask(__name__)
+Compress(app)  # This is not necessary, but I find it generally helpful.
+app.debug = True
+app.suite = TodoSuite()
+init(app)
+
+# Register all the applications.
+TodoApp(app.suite)
+
+# Create all databases and tables.
+app.suite.validate()  # remember this call?
+app.suite.ensure_database_objects()  # and this one?
+
+# Attach the API to the /api/ endpoint.
+app.register_blueprint(api_tree, url_prefix=&#39;/api&#39;)
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It&amp;rsquo;s probably pretty obvious what&amp;rsquo;s going on here.  This is the typical look of a Flask app, after
+all. The additional things we have to do are, in order:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Attach the suite to the Flask app as &lt;code&gt;app.suite&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;init&lt;/code&gt; the app. This sets up CORS if it&amp;rsquo;s been configured and makes sure that logging is handled correctly.&lt;/li&gt;
+&lt;li&gt;Ensure the application objects exist in the database.&lt;/li&gt;
+&lt;li&gt;Register the &lt;code&gt;api_tree&lt;/code&gt; blueprint with Flask, typically at &lt;code&gt;/api&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Intro to Sondra: Part 1</title>
+      <link>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-1/</link>
+      <pubDate>Sun, 13 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-1/</guid>
+      <description>
+
+&lt;p&gt;This tutorial serves as a basic introduction to Sondra, its data model, and how you
+can create an API. The classic example web API is that of a to-do list application. Our tutorial
+will build it up in stages, starting with the basic structure of an application, followed by data
+modeling, and then we&amp;rsquo;ll add exposed methods to see how those work.&lt;/p&gt;
+
+&lt;p&gt;Finally, you&amp;rsquo;ll work through accessing the API via Javascript (ES2015) and Python.&lt;/p&gt;
+
+&lt;p&gt;To do this tutorial, you will need the following installed and ready to go:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sondra - &lt;a href=&#34;https://github.com/JeffHeard/sondra.git&#34;&gt;https://github.com/JeffHeard/sondra.git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;RethinkDB - &lt;a href=&#34;https://rethinkdb.com&#34;&gt;https://rethinkdb.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3 - &lt;a href=&#34;https://www.python.org&#34;&gt;https://www.python.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Your favorite text editor or IDE. I like &lt;a href=&#34;https://www.atom.io/&#34;&gt;Atom&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;first-steps&#34;&gt;First Steps&lt;/h3&gt;
+
+&lt;p&gt;First thing&amp;rsquo;s first. Let&amp;rsquo;s make sure Sondra has all its requirements.  Assuming you have a virtual
+environment setup already, all you have to do is install requirements.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cd sondra
+$ pip install -r requirements.txt
+$ export PYTHONPATH=$PYTHONPATH:$PWD  # if you want to develop in a different directory or run the examples.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with some imports.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sondra.collection import Collection
+from sondra.document import Document
+from sondra.application import Application
+from sondra.suite import Suite
+from sondra.schema import S
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These imports serve to introduce us to the basic building blocks of Sondra: Application, Collection,
+and Document. We will subclass each to create our application.  The &lt;strong&gt;Document&lt;/strong&gt; subclass defines
+the schema of a record in &lt;a href=&#34;https://rethinkdb.com/&#34;&gt;RethinkDB&lt;/a&gt; and all the methods that operate
+directly on a record instance.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;Collection&lt;/strong&gt; subclass defines the way a document relates to the database. It defines things
+such as primary key and indexes and methods that operate on the collection as a whole. Methods
+defined on the collection class are conceptually similar to class methods in Python.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;Application&lt;/strong&gt; subclass defines a group of collections that serve a common purpose.  The
+application will often contain schema fragment definitions that are common across multiple related
+collections and methods that apply to multiple collections across the application.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;Suite&lt;/strong&gt; subclass defines the complete API suite, including configurations and database
+connections. Applications are added to the Suite.&lt;/p&gt;
+
+&lt;p&gt;Finally &lt;strong&gt;S&lt;/strong&gt; is a utility module whose functions return dictionaries that fit the format of
+&lt;a href=&#34;http://json-schema.org/&#34;&gt;JSON Schema&lt;/a&gt; and hyper-schema.&lt;/p&gt;
+
+&lt;h3 id=&#34;modeling-data&#34;&gt;Modeling Data&lt;/h3&gt;
+
+&lt;p&gt;So let&amp;rsquo;s start by creating a Document that models a to-do list item:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sondra.collection import Collection
+from sondra.document import Document
+from sondra.application import Application
+from sondra.suite import Suite
+from sondra.schema import S
+
+class Item(Document):
+    schema = {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [&amp;quot;title&amp;quot;],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;title&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;description&amp;quot;: &amp;quot;The title of the item&amp;quot;},
+        &amp;quot;complete&amp;quot; {&amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;, &amp;quot;default&amp;quot;: False},
+        &amp;quot;created&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;format&amp;quot;: &amp;quot;date-time&amp;quot;}
+      }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ve defined a simple item that has a title, a space to mark whether the to-do item is
+complete, and a creation date.  Note that schemas are just Python dicts. As long as your dictionary
+and all its elements are compatible with the built-in &lt;code&gt;json&lt;/code&gt; package, your schema will work.
+However, this syntax is rather verbose and prone to typo-induced bugs. Therefore the &lt;code&gt;S&lt;/code&gt; package
+provides a bunch of utility functions that generate schema objects. These functions return plain old
+dicts, so there&amp;rsquo;s functionally no difference between the two syntaxes, but the S module is safer:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Item(Document):
+    schema = S.object(
+        required=[&#39;Title&#39;],
+        properties=S.props(
+            (&amp;quot;title&amp;quot;, S.string(description=&amp;quot;The title of the item&amp;quot;)),
+            (&amp;quot;complete&amp;quot;, S.boolean(default=False)),
+            (&amp;quot;created&amp;quot;, S.datetime()),
+    ))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s much shorter! Again, there&amp;rsquo;s no magic to the &lt;code&gt;S.*&lt;/code&gt; functions. They&amp;rsquo;re just shorthand and
+provide a bit more checking.  It&amp;rsquo;s the same schema as above.  One difference is that the first
+example does not enforce any order (except in Python 3.6!) on the dictionary elements.  The version
+in the most recent example does, because &lt;code&gt;S.props&lt;/code&gt; uses an &lt;code&gt;OrderedDict&lt;/code&gt; instead of a plain &lt;code&gt;dict&lt;/code&gt;
+Now let&amp;rsquo;s see how to get it into a collection and an application, and thus into the database. The
+next three classes define the collection (RethinkDB table), application (RethinkDB database), and
+the suite (the full group of applications, served on a single tree from a single domain):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Items(Collection):
+    document_class = Item  # this is the class that as instances per-record
+    indexes = [&amp;quot;title&amp;quot;, &amp;quot;complete&amp;quot;]  # the fields to build indexes on.
+    order_by = [&amp;quot;created&amp;quot;]  # Sondra treats &amp;quot;format&amp;quot;: &amp;quot;date-time&amp;quot; as a RethinkDB Date.
+
+class TodoApp(Application):
+    collections = (Items,)  # For now we&#39;ll just define the collections
+
+class TodoSuite(Suite):
+    cross_origin = True  # append CORS headers
+    debug = True  # extra logging
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;getting-it-into-rethinkdb&#34;&gt;Getting it into RethinkDB&lt;/h3&gt;
+
+&lt;p&gt;Now that we have all the definitions set up, let&amp;rsquo;s get our data into the database:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; todo = TodoSuite()
+&amp;gt;&amp;gt;&amp;gt; TodoApp(todo)
+&amp;gt;&amp;gt;&amp;gt; todo.validate()
+&amp;gt;&amp;gt;&amp;gt; todo.ensure_database_objects()
+
+INFO:TodoSuite:Connection established to &#39;default&#39;
+INFO:TodoSuite:Suite base url is: &#39;http://localhost:5000/api&#39;
+INFO:TodoSuite:Docstring processor is {0}
+INFO:TodoApp:Registering application todo-app
+INFO:TodoSuite:Registered application TodoApp to http://localhost:5000/api/todo-app
+INFO:TodoApp:Creating collection for todo-app/items
+INFO:TodoSuite:Checking schemas for validity
+INFO:TodoSuite:+ todo-app
+INFO:TodoSuite:--- items
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The call to &lt;code&gt;todo.ensure_database_objects()&lt;/code&gt; creates / ensures the existence of tables and indexes and even
+databases for everything that&amp;rsquo;s a part of the suite.  It should always be called once when your
+application initializes. At the most basic level, you&amp;rsquo;re now ready to expose your API to your
+clients now (we&amp;rsquo;ll handle authentication later), and you can play around with it in Python as well.
+In Python, Sondra tries to be as pythonic as possible. All levels of the API are exposed as
+dictionary-like objects. The keys are dash-cased versions of the classnames (this can be overridden,
+  but is the default).&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sondra: Schema validated API and ORM for RethinkDB</title>
+      <link>https://jeffersonheard.github.io/2016/10/sondra-schema-validated-api-and-orm-for-rethinkdb/</link>
+      <pubDate>Mon, 03 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/10/sondra-schema-validated-api-and-orm-for-rethinkdb/</guid>
+      <description>
+
+&lt;div class=&#34;alert info &#34;&gt;
+  &lt;p&gt;
+
+Note I have just gotten the news that the company behind RethinkDB is shutting
+down. They are committed and I am committed to RethinkDB continuing as a robust
+Open Source project. In the next week, there will be a general polishing of the
+Sondra documentation and a pruning / cleanup of Sondra. This will precede a
+1.0.0 release of Sondra. In the future, we will concentrate on supporting
+multiple databases, asynchronous communication (websockets!) and OAuth-based API
+authentication.  I wish the RethinkDB folks the best of luck, and want to
+reiterate my continued commitment to what I think is the best NoSQL database out
+there.
+
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;what-is-sondra&#34;&gt;What is Sondra?&lt;/h2&gt;
+
+&lt;p&gt;Sondra is an &amp;ldquo;ORM&amp;rdquo; and REST-ful webservice framework for Python 3.x, Flask, and
+RethinkDB with some unique features. Sondra&amp;rsquo;s goal is to aid full stack
+developers by letting them focus on data models and functionality instead of
+writing workarounds and glue code. It embraces common &amp;ldquo;shortcuts&amp;rdquo; developers
+take in common full-stack web applications, e.g. merging &amp;ldquo;Model&amp;rdquo; and
+&amp;ldquo;Controller&amp;rdquo; in the oft-used MVC pattern.&lt;/p&gt;
+
+&lt;p&gt;Sondra does not currently support asynchronous access to RethinkDB.  The goal
+is to eventually support &lt;code&gt;Tornado&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A clear, DRY heirarchical application structure that emphasizes convention over configuration.&lt;/li&gt;
+&lt;li&gt;Authentication via JSON Web Tokens (JWT)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.json-schema.org&#34;&gt;JSON-Schema&lt;/a&gt; validation for documents.&lt;/li&gt;
+&lt;li&gt;Expose methods on documents, collections, and applications, complete with schemas for call and return.&lt;/li&gt;
+&lt;li&gt;A clear, predictable URL scheme for all manner of API calls, covering a broad set of use-cases.&lt;/li&gt;
+&lt;li&gt;Self documenting APIs with both human-readable help based on docstrings and schemas for every call.&lt;/li&gt;
+&lt;li&gt;Use API idiomatically over HTTP and native Python without writing boilerplate code&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;concept&#34;&gt;Concept&lt;/h2&gt;
+
+&lt;p&gt;A Sondra API is exposed in Flask as a suite of applications.  Each application
+contains a number of document collections, and each collection contains a
+number of documents.&lt;/p&gt;
+
+&lt;p&gt;Sondra tries to take advantage of all manner of Python idioms in a sane manner.
+It generates as much as possible, while avoiding &amp;ldquo;magic tricks&amp;rdquo; or introducing
+conventions that are already covered by Python idioms. This means that:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Online documentation is generated at every level from reStructuredText or Google style docstrings.&lt;/li&gt;
+&lt;li&gt;Method schemas are generated from annotated function signatures&lt;/li&gt;
+&lt;li&gt;All URL features that &lt;code&gt;urllib.parse&lt;/code&gt; recognizes are taken advantage of to
+create a regular URL scheme that encompasses all manner of calls.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;web-services&#34;&gt;Web Services&lt;/h3&gt;
+
+&lt;p&gt;Sondra uses a regular URL scheme for its web services. See the docs directory for more details:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Underscores in Python identifiers are replaced with more web-friendly dashes (slugs)&lt;/li&gt;
+&lt;li&gt;Paths address app / collection / instance (document)&lt;/li&gt;
+&lt;li&gt;The last path element include an optional separator, (by deafult a dot or a colon) which separates the object being addressed and a method being
+called.&lt;/li&gt;
+&lt;li&gt;Fragments allow the caller to address sub-documents in JSON responses. Fragments delimted with &lt;code&gt;#&lt;/code&gt; are not passed by
+browsers to the server. The alternative for delimiting fragments is &lt;code&gt;@!&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Path parameters (on the last element, with a &amp;ldquo;;&amp;rdquo;, see the URL spec or &lt;code&gt;urlparse&lt;/code&gt; docs) are used to specify output
+format or content directives. Currently supported:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;json&lt;/code&gt; or &lt;code&gt;format=json&lt;/code&gt; retrieves data in JSON format.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geojson&lt;/code&gt; or &lt;code&gt;format=geojson&lt;/code&gt; retrieves data in GeoJSON feature or feature collection format.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;help&lt;/code&gt; or &lt;code&gt;format=help&lt;/code&gt; retrieves HTML autogenerated help.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;schema&lt;/code&gt; or &lt;code&gt;format=schema&lt;/code&gt; retrieves a JSON-Schema document for the service call.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;documents&#34;&gt;Documents&lt;/h3&gt;
+
+&lt;p&gt;A &lt;code&gt;Document&lt;/code&gt; is a single document that conforms to a JSON-Schema &lt;code&gt;object&lt;/code&gt; type.
+That is, it is never a simple type nor an array of items.&lt;/p&gt;
+
+&lt;p&gt;Documents may expose methods to the HTTP api.  These are similar to instance
+methods in Python.  They operate on an individual document in a collection
+instead. Document methods might include operations that combine multiple
+documents to make a third (add, multiply, divide, subtract, or similar) or they
+might provide specific views of a document.  Anything that you would write as
+an &amp;ldquo;instance method&amp;rdquo; in Python.&lt;/p&gt;
+
+&lt;h3 id=&#34;collections&#34;&gt;Collections&lt;/h3&gt;
+
+&lt;p&gt;A &lt;code&gt;Collection&lt;/code&gt; is a RethinkDB table that contains a specific subclass of
+&lt;code&gt;Document&lt;/code&gt;, which is defined by a single JSON-Schema. The collection class
+defines additionally:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The primary key name (defaults to the RethinkDB default of &amp;ldquo;id&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Indexes&lt;/li&gt;
+&lt;li&gt;Any document properties that require &amp;ldquo;special treatment&amp;rdquo; in RethinkDB such as geographical and date/time types.&lt;/li&gt;
+&lt;li&gt;Relations to other Collections&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;Application&lt;/code&gt; class it belongs to.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Collections may expose methods to the HTTP api.  These are similar to class
+methods in Python, as they operate on the collection itself and not the
+individual documents. Collection methods might provide special filtering,
+create documents according to a specific template, or set properties on the
+collection itself. Anything you would write as a &amp;ldquo;class method&amp;rdquo; in Python&lt;/p&gt;
+
+&lt;h3 id=&#34;applications&#34;&gt;Applications&lt;/h3&gt;
+
+&lt;p&gt;An &lt;code&gt;Application&lt;/code&gt; is a reusable grouping of collections and a set of optional
+&lt;em&gt;application methods&lt;/em&gt;, which operate a bit like globally available functions.
+Applications are bound to a single database within RethinkDB.&lt;/p&gt;
+
+&lt;p&gt;Applications may expose methods to the HTTP api.  These are similar to the
+functions that are defined at the module level in Python.  They are not
+specific to a particular class or instance, but instead are defined to provide
+broad functionality for the whole application.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-suite&#34;&gt;The Suite&lt;/h3&gt;
+
+&lt;p&gt;A &lt;code&gt;Suite&lt;/code&gt; defines the environment of applications, including database
+connections and provides some basic functionality. Every application is
+registered with the global &lt;code&gt;Suite&lt;/code&gt; object, which itself implements Python&amp;rsquo;s
+Mapping protocol to provide dictionary-like lookup of application objects.  The
+&amp;ldquo;Suite&amp;rdquo; object determines the base path of all Application APIs. Suites are
+similar in nature to Django&amp;rsquo;s &lt;code&gt;settings.py&lt;/code&gt; except that they are class-based.
+There may be only &lt;em&gt;one&lt;/em&gt; concrete class of Suite in your Flask app, although it
+may derive from any number of abstract Suite mixins.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

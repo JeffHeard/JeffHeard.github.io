@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jefferson Heard</title>
+    <link>https://jeffersonheard.github.io/tags/react/index.xml</link>
+    <description>Recent content on Jefferson Heard</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://jeffersonheard.github.io/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Creating new fields and widgets for Mozilla&#39;s react-jsonschema-form</title>
+      <link>https://jeffersonheard.github.io/2016/11/creating-new-fields-and-widgets-for-mozillas-react-jsonschema-form/</link>
+      <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/creating-new-fields-and-widgets-for-mozillas-react-jsonschema-form/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/mozilla-services/react-jsonschema-form&#34;&gt;Mozilla&amp;rsquo;s react-jsonschema-form&lt;/a&gt;
+is my favorite tool to build forms. Its forms play well with REST APIs, they
+look good, and  they are easy to work with and extend. In the most basic usage,
+you take a &lt;a href=&#34;http://json-schema.org/&#34;&gt;JSON-Schema&lt;/a&gt; and simply pass it to the
+component like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import React, { PropTypes } from &#39;react&#39;;
+import Form from &#39;react-jsonschema-form&#39;;
+
+const mySchema = { ... }
+const changeHandler = ({formData}) =&amp;gt; { ... }; // formData is JSON that conforms to your schema.
+
+const MyForm = (props) =&amp;gt; (&amp;lt;Form schema={mySchema} onChange={changeHandler} /&amp;gt;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which yields a form like the one on the right:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://camo.githubusercontent.com/a491e6355cc814b195bc0060c93b023dfe8a72ac/687474703a2f2f692e696d6775722e636f6d2f626d5133486c4f2e706e67&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can define either &lt;code&gt;onChange&lt;/code&gt; or &lt;code&gt;onSubmit&lt;/code&gt; properties as functions that
+accept an object with a &lt;code&gt;formData&lt;/code&gt; attribute. The &lt;code&gt;formData&lt;/code&gt; will be an object
+that conforms to your schema.&lt;/p&gt;
+
+&lt;p&gt;Customizing the form is as simple as defining a uiSchema. This post, after
+introducing the component, will cover customization using fields and widgets,
+and when each is appropriate.&lt;/p&gt;
+
+&lt;h3 id=&#34;behaviors-i-had-to-figure-out&#34;&gt;Behaviors I had to figure out&lt;/h3&gt;
+
+&lt;p&gt;The documentation for &lt;code&gt;react-jsonschema-form&lt;/code&gt; is really quite good; there are a
+few things that you will run into that may not be obvious.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Fields that are left empty by the user will be omitted from the JSON &lt;em&gt;unless&lt;/em&gt;
+a default is defined in the schema.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Booleans that are required need to have a custom widget defined in the
+&lt;code&gt;uiSchema&lt;/code&gt; (radio works fine), otherwise they come up as checkboxes, whose
+&lt;code&gt;formData&lt;/code&gt; is always either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;undefined&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Arrays defined in the schema will &lt;em&gt;always&lt;/em&gt; create headings in the form, even
+if there are no items in the array. That&amp;rsquo;s fine, but it can be confusing
+to read the form when there are arrays nested in objects. You may need custom
+CSS or to define a post-processing function to make the form clearer to the
+user.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Arrays marked as &lt;code&gt;readOnly&lt;/code&gt; will create buttons, even though they&amp;rsquo;re disabled.&lt;br /&gt;
+Use the schema to&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import React, { PropTypes } from &#39;react&#39;;
+import { FormGroup, ControlLabel, FormControl, Image, HelpBlock, ListGroup, ListGroupItem } from &#39;react-bootstrap&#39;;
+import { HOST, BASE_API_PATH } from &#39;settings.js&#39;;
+import _ from &#39;lodash&#39;;
+
+export const PictureSelectionWidget = React.createClass({
+  propTypes: {
+    uploadPath: PropTypes.string,
+    overwrite: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      overwrite: false
+    };
+  },
+
+  getInitialState() {
+    return {
+      uploadInProgress: false
+    };
+  },
+
+  changeHandler(event) {
+    const { uploadPath, onChange, overwrite, uploadHost, schema } = this.props;
+    const f = event.target.files[0];
+    const hostname = uploadHost ? uploadHost : HOST;
+    const uploadTo = uploadPath ? uploadPath : schema.upload_path;
+
+    if (f.type.match(&#39;image.*&#39;)) {
+      // let reader = new FileReader();
+      // reader.onload = (body) =&amp;gt; {
+      //   const b64Image = btoa(String.fromCharCode(...new Uint8Array(body)));
+
+      let headers = new Headers();
+      const authToken = localStorage.auth_token;  // the user&#39;s authorization token if it is present.
+      if(authToken) {
+        headers.append(&#39;Authorization&#39;, `Bearer ${authToken}`);
+      }
+
+      let formData = new FormData();
+      formData.append(&#39;overwrite&#39;, overwrite);
+      formData.append(&#39;file&#39;, f);
+
+      const requestOptions = {
+        mode: &#39;cors&#39;,
+        compress: true,
+        method: &#39;POST&#39;,
+        body: formData,
+
+        headers
+      };
+      this.setState({uploadInProgress: true});
+      fetch(`${hostname}/upload${uploadTo}`, requestOptions).then((rsp) =&amp;gt; {
+        if(rsp.ok) {
+          rsp.text().then(downloadPath =&amp;gt; {
+            this.setState({uploadInProgress: false});
+            onChange(`${hostname}${downloadPath}`);
+          });
+        } else {
+          console.log(rsp);
+        }
+      }).catch(err =&amp;gt; console.log(err));
+
+      //onChange(b64Image);
+      //};
+      //reader.readAsArrayBuffer(f);
+    }
+  },
+
+  render() {
+    // Check for the various File API support.
+    if (window.File &amp;amp;&amp;amp; window.FileReader &amp;amp;&amp;amp; window.FileList &amp;amp;&amp;amp; window.Blob) {
+      // Great success! All the File APIs are supported.
+    } else {
+      console.error(&#39;The File APIs are not fully supported in this browser.&#39;);
+    }
+
+    const { schema, uiSchema, placeholder, formData, value, readonly } = this.props;
+    //const label = !_.isNil(schema.title) ? schema.title : &#39;Picture&#39;;
+    const imageUrl = formData || value;
+
+    let img = (&amp;lt;div&amp;gt;No Image&amp;lt;/div&amp;gt;);
+    if(imageUrl) {
+      img = (&amp;lt;Image src={imageUrl} thumbnail /&amp;gt;);
+    }
+
+    let helpBlock = (&amp;lt;HelpBlock&amp;gt;{placeholder}&amp;lt;/HelpBlock&amp;gt;);
+    if(!_.isNil(schema.description)) {
+      helpBlock = (&amp;lt;HelpBlock&amp;gt;{schema.description}&amp;lt;/HelpBlock&amp;gt;);
+    }
+
+    const inputControl = readonly ? [] : (&amp;lt;FormControl type=&#39;file&#39; onChange={this.changeHandler} /&amp;gt;);
+    return (&amp;lt;FormGroup&amp;gt;
+      {img}
+      {inputControl}
+      {helpBlock}
+    &amp;lt;/FormGroup&amp;gt;);
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
