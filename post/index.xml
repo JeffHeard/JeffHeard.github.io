@@ -55,8 +55,8 @@ seem like they&amp;rsquo;ll also be useful in future projects. JSON Schema is on
 technology.&lt;/p&gt;
 
 &lt;p&gt;If you want a totally extensible, general case schema language, JSON Schema
-probably isn&amp;rsquo;t your best language. I, however, want to use it to declaratively
-define documents to be stored in a NoSQL database &lt;a href=&#34;https://rethinkdb.com&#34;&gt;RethinkDB&lt;/a&gt;
+probably isn&amp;rsquo;t your best language. I however want to use it to declaratively
+define documents to be stored in a NoSQL database (&lt;a href=&#34;https://rethinkdb.com&#34;&gt;RethinkDB&lt;/a&gt;)
 and to interact with those documents in mobile apps and on web forms. I want to
 do minimal processing and work on the client and server side to make the simple
 things work, as there&amp;rsquo;s only so much time in the day, and most of that time is
@@ -101,7 +101,7 @@ few things that you will run into that may not be obvious on first use.&lt;/p&gt
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Fields that are left empty by the user will be omitted from the JSON &lt;em&gt;unless&lt;/em&gt;
-a default is defined in the schema. If, during data entry, a user clears
+a default is defined in the schema. If during data entry a user clears
 a field, that field will be omitted from the JSON. &lt;em&gt;&lt;strong&gt;This is the cause of a
 common coder error&lt;/strong&gt;&lt;/em&gt;. If you use an API method
 that updates records in place, rather than replaces them, this can cause
