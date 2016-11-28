@@ -6,8 +6,437 @@
     <description>Recent content in Post-rsses on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Nov 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Nov 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://jeffersonheard.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Simplifying complex business logic with Python&#39;s Kanren</title>
+      <link>https://jeffersonheard.github.io/2016/11/simplifying-complex-business-logic-with-pythons-kanren/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2016/11/simplifying-complex-business-logic-with-pythons-kanren/</guid>
+      <description>
+
+&lt;p&gt;So-called &amp;ldquo;logic programming&amp;rdquo; has been a niche programming topic since Prolog
+was introduced in the 80s. In my experience, most posts that cover logic
+programming introduce the core concepts and stop there. The examples they
+give are mostly toy problems. This post, then, will start with &amp;ldquo;what you can do
+with logic programming in Python&amp;rdquo; and move toward the core concepts that way.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re looking for an explanation of &lt;strong&gt;unification&lt;/strong&gt; or a history of logic
+programming, and why you should even write web-servers this way, there are
+plenty of posts that will extoll the virtues of logic programming over other
+methods. This is not that post. I&amp;rsquo;m aware of these things, but my goal in this
+post is to help you take the part of your code that is &lt;em&gt;least&lt;/em&gt; maintainable as
+written in a traditional Python style and make it cleaner, clearer, and less
+prone to bugs using logic programming via the
+&lt;a href=&#34;https://github.com/logpy/logpy&#34;&gt;Kanren&lt;/a&gt; library.&lt;/p&gt;
+
+&lt;h2 id=&#34;not-what-it-is-but-what-is-it-for&#34;&gt;Not what it &lt;em&gt;is&lt;/em&gt;, but what is it &lt;em&gt;for&lt;/em&gt;?&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/logpy/logpy&#34;&gt;Kanren&lt;/a&gt; provides you a way to simplify the way
+you specify and make your code respond to &amp;ldquo;business logic.&amp;rdquo; Business logic is an
+ill defined term, but in my experience it consists of all those if-then-else
+statements, nested cases, and rats&amp;rsquo; warrens of callbacks that evolve over time
+in complex applications that focus either on complex data processing, or on
+responding to users who are themselves experts at something.&lt;/p&gt;
+
+&lt;p&gt;Kanren lets you express this logic in terms of rules and facts. I use Kanren to
+do things like consistency checks in entered data, validity checks for records
+that are POSTed to my APIs, and to perform complex filtering on users and
+records that don&amp;rsquo;t translate well into database queries.&lt;/p&gt;
+
+&lt;p&gt;Before we get started, you might want to do a quick:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ pip install kanren
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;for-if-not-then-else-what&#34;&gt;For if not then-else, what?&lt;/h2&gt;
+
+&lt;p&gt;Although I will work to something more substantial, let&amp;rsquo;s start with a Hello
+World. I start here because logic-programming is different enough to the way
+most programmers think that a tiny, self-contained example will illustrate
+some basic points.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; from kanren import run, eq, var
+&amp;gt;&amp;gt;&amp;gt; x = var()
+&amp;gt;&amp;gt;&amp;gt; run(1, x, eq(x, 5))
+(5,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;ll skip the import and focus on the next statement. &lt;code&gt;x = var()&lt;/code&gt; declares a
+variable, which &lt;code&gt;run&lt;/code&gt; will try to find one or more values for. &lt;code&gt;run&lt;/code&gt; is a
+function that takes the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The number of results you want.&lt;/li&gt;
+&lt;li&gt;The variables whose values you are interested in.&lt;/li&gt;
+&lt;li&gt;The set of rules that defines the space of valid values for your variables.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The third bit is the most important, because it gives us a clue as to what
+&lt;code&gt;eq(x, 5)&lt;/code&gt; means. It does &lt;em&gt;not&lt;/em&gt; mean &amp;ldquo;assign 5 to x&amp;rdquo;. Instead it &lt;em&gt;constrains&lt;/em&gt;
+the result set so that it only includes results where &lt;code&gt;x&lt;/code&gt; is equal to 5. What&amp;rsquo;s
+the difference?&lt;/p&gt;
+
+&lt;p&gt;It will take a more complex example to truly show the difference, but for now
+suffice to say that &lt;code&gt;eq(x, 5)&lt;/code&gt; works much more like the condition part of an
+&lt;code&gt;if&lt;/code&gt; statement than a statement inside the if:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x, y, z in all_possibilities:
+  if other_logic:
+    # ...
+    if x == 5:
+      yield (x,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In reality, Kanren is a highly efficient, optimizing evaluator of logical
+expressions. There is (usually) no loop, but for illustration purposes, this is
+what our example &amp;ldquo;means&amp;rdquo;. You can already see that we&amp;rsquo;ve taken a hairball of
+potentially nested &lt;code&gt;ifs&lt;/code&gt; and &lt;code&gt;fors&lt;/code&gt; to a flat, sequential code structure in our
+example.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-slightly-more-illustrative-example&#34;&gt;A (slightly) more illustrative example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; set_a = {1, 2, 3}
+&amp;gt;&amp;gt;&amp;gt; set_b = {2, 3, 4}
+&amp;gt;&amp;gt;&amp;gt; run(2, x, (membero, x, set_a),  # x is a member of (1, 2, 3)
+              (membero, x, set_b))  # x is a member of (2, 3, 4)
+(2, 3)
+&amp;gt;&amp;gt;&amp;gt; run(1, x, (membero, x, set_a),  # x is a member of (1, 2, 3)
+              (membero, x, set_b))  # x is a member of (2, 3, 4)
+(2,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This example, taken from the Kanren &lt;code&gt;README&lt;/code&gt; is a little more illustrative. It
+uses a new (to us) primitive, &lt;code&gt;membero&lt;/code&gt; to require that &lt;code&gt;x&lt;/code&gt; be a member of a
+set. Note that the structure we&amp;rsquo;re checking membership of only has to be
+iterable. It does not have to be a literal python set. Kanren operates on
+primitive python types and their analogues, so if it swims like a duck and
+quacks like a duck, then it&amp;rsquo;s a duck for Kanren purposes. There are no new data
+structures to learn, conversions to make, or classes to unpack.&lt;/p&gt;
+
+&lt;p&gt;I also introduced a different way to write the predicate. Instead of
+&lt;code&gt;membero(x, set_a)&lt;/code&gt;, I wrote &lt;code&gt;(membero, x, set_a)&lt;/code&gt;. Although possibly a bit less
+readable at first, nested structures are more readable this way, and I find that
+after using the library in my own projects for a year or two, I like this style
+better than the other.&lt;/p&gt;
+
+&lt;p&gt;Now we see a new behavior of &lt;code&gt;run&lt;/code&gt;. It takes any number of clauses at the end
+of the parameter list, and provides the logical and of all of them.  For our
+purposes, we want two values of &lt;code&gt;x&lt;/code&gt; that satisfy all the predicates.&lt;/p&gt;
+
+&lt;p&gt;Satisfying the first predicate, &lt;code&gt;(membero, x, set_a)&lt;/code&gt; are the values 1, 2, and 3,
+since these are the members of &lt;code&gt;set_a&lt;/code&gt;. Satisfying the second predicate are the
+values 2, 3, and 4, the members of &lt;code&gt;set_b&lt;/code&gt;. The only results shared between the
+two are 2 and 3, so these are the results of our call to &lt;code&gt;run&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the first instance of run, we ask for two results. Each result is a single
+value of x (as opposed to one set of members that match) and so we get a tuple
+consisting of both matching numbers. If we ask for only one result, we get just
+one number. This is important, because as I said earlier, Kanren works on so-
+called duck typing (walks, swims, quacks, therefore serves the purposes of a
+duck even if you happen to call it a swan). This means results can be a tuple of
+numbers, dicts, tuples, lists, or custom types &amp;ndash; anything that can be compared
+in the way the predicates do comparisons. This makes Kanren very pythonic and
+very useful.&lt;/p&gt;
+
+&lt;h2 id=&#34;making-it-more-relatable&#34;&gt;Making it more relatable&lt;/h2&gt;
+
+&lt;p&gt;This is all fine, but it&amp;rsquo;s hardly something that by itself will make our logic
+more readable. For that, we need to talk about relations and facts. Here is
+an example adapted from the Kanren README:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; from kanren import Relation, facts
+&amp;gt;&amp;gt;&amp;gt; parent = Relation()
+&amp;gt;&amp;gt;&amp;gt; facts(parent, (&amp;quot;Homer&amp;quot;, &amp;quot;Bart&amp;quot;),
+...               (&amp;quot;Marge&amp;quot;, &amp;quot;Bart&amp;quot;),
+...               (&amp;quot;Homer&amp;quot;, &amp;quot;Lisa&amp;quot;),
+...               (&amp;quot;Marge&amp;quot;, &amp;quot;Lisa&amp;quot;),
+...               (&amp;quot;Homer&amp;quot;, &amp;quot;Maggie&amp;quot;),
+...               (&amp;quot;Marge&amp;quot;, &amp;quot;Maggie&amp;quot;),
+...               (&amp;quot;Abe&amp;quot;,  &amp;quot;Homer&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s get one of the parents of Bart:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; run(1, x, (parent, x, &amp;quot;Bart&amp;quot;))
+(&#39;Marge&#39;,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Two of Homer&amp;rsquo;s children:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; run(2, x, parent(&amp;quot;Homer&amp;quot;, x))
+(&#39;Bart&#39;, &#39;Lisa&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that there&amp;rsquo;s no order. The answer could have easily been &amp;ldquo;Homer&amp;rdquo; to the
+first one or Lisa and Maggie to the second statement.&lt;/p&gt;
+
+&lt;p&gt;Now, to show that relations are more than just fancy ways to construct tuples,
+let&amp;rsquo;s figure out grandparents. We use an intermediate variable, &lt;code&gt;y&lt;/code&gt; to represent
+the parent of Bart. Then &lt;code&gt;x&lt;/code&gt; is then the parent of the parent of bart.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; y = var()
+&amp;gt;&amp;gt;&amp;gt; run(1, x, parent(x, y),
+              parent(y, &#39;Bart&#39;))
+(&#39;Abe&#39;,)
+
+&amp;gt;&amp;gt;&amp;gt; run(1, (x, y), parent(x, y),
+                   parent(y, &#39;Bart&#39;))
+((&#39;Abe&#39;, &#39;Homer&#39;),)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This shows off Kanren&amp;rsquo;s advanced form of pattern matching known as &amp;ldquo;unification.&amp;rdquo;
+Unification and backtracking are really not in the scope of this tutorial, but
+you may find it helps to understand them in detail as you use Kanren in your own
+programs. In that case, start with Kanren&amp;rsquo;s README and work from there.  For now
+it is enough to consider that this works and its implications for writing
+cleaner Python code.&lt;/p&gt;
+
+&lt;p&gt;Note we can list more than one variable we are interested in the value of. This
+will create a nested tuple of variable values in the same respective order as
+they are listed in run.&lt;/p&gt;
+
+&lt;p&gt;How might we have written this reasonably (if naïvely) in non-Kanren Python?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;&amp;gt;&amp;gt;&amp;gt; parent_child = {
+...   &amp;quot;Homer&amp;quot;: (&amp;quot;Bart&amp;quot;, &amp;quot;Lisa&amp;quot;, &amp;quot;Maggie&amp;quot;),
+...   &amp;quot;Marge&amp;quot;: (&amp;quot;Bart&amp;quot;, &amp;quot;Lisa&amp;quot;, &amp;quot;Maggie&amp;quot;),
+...   &amp;quot;Abe&amp;quot;: (&amp;quot;Homer&amp;quot;,)
+... }
+
+# getting homer&#39;s children is simple.
+&amp;gt;&amp;gt;&amp;gt; parent_child[&#39;Homer&#39;][0:2]
+(&amp;quot;Bart&amp;quot;, &amp;quot;Lisa&amp;quot;)
+
+# figuring out Bart&#39;s parents looks completely different (or we have to store
+# and maintain two dicts)
+&amp;gt;&amp;gt;&amp;gt; barts_parents = []
+&amp;gt;&amp;gt;&amp;gt; for parent in parent_child:
+...   if &#39;Bart&#39; in parent_child[parent]:
+...     barts_parents.append(parent)
+
+# grandparents is even uglier, and requires we first compute parents.
+&amp;gt;&amp;gt;&amp;gt; barts_grandparents = []
+&amp;gt;&amp;gt;&amp;gt; for parent in barts_parents:  ## we computed this in the previous loop.
+...   for grandparent in parent_child:
+...     if parent in parent_child[grandparent]:
+...       barts_grandparents.append(grandparent)  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The difference in legibility between the Kanren example and its admittedly
+naïve Python equivalent should be obvious. In the Kanren example, we describe
+relationships and assume they&amp;rsquo;re transitive. This not only serves to help us
+work from either direction in the relationship with the same statement, it also
+allows us to build these relationships up over time without having to maintain
+multiple dictionaries or describe relationships in terms of iteration and if
+statements.&lt;/p&gt;
+
+&lt;p&gt;For simple logic that will never grow, it may be that the above is acceptable,
+but it does tend to create code that people put big comments around warning the
+interns off touching it.&lt;/p&gt;
+
+&lt;h2 id=&#34;applying-it-to-a-real-world-example&#34;&gt;Applying it to a real-world example&lt;/h2&gt;
+
+&lt;p&gt;Now for a more &amp;ldquo;real-world&amp;rdquo; test of Kanren.  Let&amp;rsquo;s create a consistency test for
+a complex piece of JSON. First we&amp;rsquo;ll specify the JSON Schema for items in a
+coffee shop order:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+  &amp;quot;required&amp;quot;: [&amp;quot;order_destination&amp;quot;],
+  &amp;quot;properties&amp;quot;: {
+    &amp;quot;order_destination&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;espresso_machine&amp;quot;, &amp;quot;pastry_counter&amp;quot;]},
+  },
+  &amp;quot;definitions&amp;quot;: {
+    &amp;quot;drink&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [&amp;quot;size&amp;quot;, &amp;quot;order_type&amp;quot;],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;size&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;sm&amp;quot;, &amp;quot;md&amp;quot;, &amp;quot;lg&amp;quot;, &amp;quot;xl&amp;quot;]},
+        &amp;quot;drink_type&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;drip&amp;quot;, &amp;quot;espresso&amp;quot;, &amp;quot;latte&amp;quot;, &amp;quot;cappuccino&amp;quot;, &amp;quot;americano&amp;quot;]},
+        &amp;quot;extras&amp;quot;: {&amp;quot;array&amp;quot;: { &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/extras&amp;quot; }},
+      }
+    },
+    &amp;quot;pastry&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [&amp;quot;quantity&amp;quot;, &amp;quot;item&amp;quot;],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;item&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;donut&amp;quot;, &amp;quot;sandwich&amp;quot;, &amp;quot;bagel&amp;quot;, &amp;quot;danish&amp;quot;]},
+        &amp;quot;quantity&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;, &amp;quot;minValue&amp;quot;: 1, &amp;quot;maxValue&amp;quot;: 144},
+        &amp;quot;heated&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;, &amp;quot;default&amp;quot;: false}
+      }
+    },
+    &amp;quot;extras&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;flavoring&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;},
+        &amp;quot;milk_type&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;soy&amp;quot;, &amp;quot;almond&amp;quot;, &amp;quot;skim&amp;quot;]}
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One thing that schema languages cannot often handle well are conditional
+requirements. Conditional requirements occur when:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The presence of a value in one field limits the valid values in another field, or&lt;/li&gt;
+&lt;li&gt;The presence of a value in one field requires the presence of another field.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In our case, the above schema defines an order at a coffee shop, but there are
+valid JSON documents that nevertheless will not contain all the information
+needed to complete an order.  We need some extra validation steps.  In particular,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Depending on the order type, we need to ensure the presence of one of the
+optional sections, &lt;code&gt;espresso_machine&lt;/code&gt; or &lt;code&gt;pastry_counter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Shots of espresso can only be small or medium - no large or xl&lt;/li&gt;
+&lt;li&gt;Cappuccinos can only be small, medium, or large. (we&amp;rsquo;re picky)&lt;/li&gt;
+&lt;li&gt;Shots of espresso do not have milk in them (or they&amp;rsquo;d be something else)&lt;/li&gt;
+&lt;li&gt;Americanos do not have milk.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can create logic with Kanren that validates our JSON beyond what can simply
+be done with basic schema validation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from kanren import *
+
+def validate_order(order):
+
+  # validate conditional presence of section for order routing.
+  must_contain_section = Relation()
+  facts(must_contain_section, (&#39;espresso_machine&#39;, &#39;drink&#39;),
+                              (&#39;pastry_counter&#39;, &#39;pastry&#39;))
+
+  x = var()
+  valid = run(1, x, must_contain_section(order[&#39;order_destination&#39;], x),
+                    membero(x, set(order.keys())))  # See Note 1.
+
+  if len(valid) == 0:
+    raise ValidationError(&amp;quot;Required section not present&amp;quot;)
+  elif order[&#39;order_destination&#39;] == &#39;espresso_machine&#39;:  # validate expresso orders
+    drink = order[&#39;drink&#39;]
+
+    # specify whether milk comes with each drink or not.
+    # these could be specified once instead of every time the function is called.
+    milk_comes_with = Relation(&#39;milk_comes_with&#39;)
+    facts(milk_comes_with, (&#39;drip&#39;, True),
+                           (&#39;latte&#39;, True),
+                           (&#39;cappuccino&#39;, True),
+                           (&#39;espresso&#39;, False),   # no milk for straight espresso
+                           (&#39;americano&#39;, False))  # no milk in an americano
+
+    drink_sizes = Relation(&#39;drink_size&#39;)
+
+    # specify which sizes are valid for which drink.
+    # these could be specified once instead of every time the function is called.
+    facts(drink_sizes, *((&#39;drip&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;latte&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;americano&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;cappuccino&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;]),
+                       *((&#39;espresso&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;]))
+
+    # specify our drink type.
+    drink_type = drink[&#39;drink_type&#39;]
+
+    # check if if any of the extras specified a type of milk.
+    specified_milk = False  
+    for e in drink.get(&#39;extras&#39;, []):
+      if &#39;milk_type&#39; in e:
+        specified_milk = True
+        break
+
+    # these could run separately to come out with different errors.
+    y = var()    
+    valid = run(1, y,
+      drink_sizes(drink_type, drink[&#39;size&#39;]),  # drink is a valid size
+      # drink has a valid type of milk
+      lany(  # any of the sub-clauses passing passes this.
+        eq(specified_milk, False),  # drink has no milk
+        # drink has milk and is of a valid drink type
+        milk_comes_with(drink_type, specified_milk)))  
+
+    if len(valid) == 0:
+      raise ValidationError(&amp;quot;Drink size too large for drink type or milk included in non milk drink&amp;quot;)
+  else:
+    pass  # we may validate pastry orders next.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This results in the following passing validation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;sm&amp;quot;}})
+
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;latte&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;,
+                          &amp;quot;extras&amp;quot;: [{&amp;quot;milk_type&amp;quot;: &amp;quot;soy&amp;quot;}]}})        
+
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;latte&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;}})            
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the following will not pass validation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# no large espressos at this coffee shop. You&#39;ve had enough!
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;}})
+
+# added a custom milk type to a non-milk drink
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+      &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                &amp;quot;size&amp;quot;: &amp;quot;sm&amp;quot;,
+                &amp;quot;extras&amp;quot;: [{&amp;quot;milk_type&amp;quot;: &amp;quot;soy&amp;quot;}]}})
+
+
+# required section not present
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;notes&#34;&gt;Notes&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Here we make a set out of the properties of our &amp;ldquo;order&amp;rdquo; document. The full
+test makes sure that both clauses are true. So &lt;code&gt;x&lt;/code&gt; must be the required section
+for our order type, and it must be present as a named property in our document.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Thus this is valid:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;, &amp;quot;drink&amp;quot;: {...}}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And this is not:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;, &amp;quot;pastry&amp;quot;: {...}}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;further-thoughts&#34;&gt;Further thoughts&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Reusability is your friend.&lt;/strong&gt; So far we&amp;rsquo;ve only seen interactive usage of Kanren.
+What about embedding it in software? It&amp;rsquo;s probably obvious that you can wrap the
+&lt;code&gt;run&lt;/code&gt; call in a function and work with the results, but it turns out you can
+wrap up and make relations and predicates reusable as well. &lt;a href=&#34;https://github.com/logpy/logpy/blob/master/examples/corleone.py&#34;&gt;See the Godfather example in Kanren&amp;rsquo;s source&lt;/a&gt;.
+You can even make &lt;a href=&#34;https://github.com/logpy/logpy/blob/master/examples/user_classes.py&#34;&gt;custom types usable&lt;/a&gt;
+within Kanren&amp;rsquo;s logical relations.&lt;/p&gt;
+
+&lt;p&gt;There are things missing from the complex example. It&amp;rsquo;s possible to create much
+more complex validations using Kanren and all its primitives. There are also
+other ways to express logic more succinctly than we did in the example, however
+for an introduction, I think these can be too dense to be readily digested.
+Best to experiment with your code and see what works.&lt;/p&gt;
+
+&lt;p&gt;For further reading, I suggest starting with the &lt;a href=&#34;http://minikanren.org/&#34;&gt;specification of miniKanren&lt;/a&gt;,
+which was originally written in Scheme, and then &lt;a href=&#34;https://github.com/logpy/logpy&#34;&gt;the Python Kanren repo&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Saturday Night Dinner: Three-Alarm Plate of Awesome</title>
