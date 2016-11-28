@@ -236,7 +236,204 @@ statements.&lt;/p&gt;
 but it does tend to create code that people put big comments around warning the
 interns off touching it.&lt;/p&gt;
 
-&lt;h2 id=&#34;reusability-is-your-friend&#34;&gt;Reusability is your friend&lt;/h2&gt;
+&lt;h2 id=&#34;applying-it-to-a-real-world-example&#34;&gt;Applying it to a real-world example&lt;/h2&gt;
+
+&lt;p&gt;Now for a more &amp;ldquo;real-world&amp;rdquo; test of Kanren.  Let&amp;rsquo;s create a consistency test for
+a complex piece of JSON. First we&amp;rsquo;ll specify the JSON Schema for items in a
+coffee shop order:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+  &amp;quot;required&amp;quot;: [&amp;quot;order_destination&amp;quot;],
+  &amp;quot;properties&amp;quot;: {
+    &amp;quot;order_destination&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;espresso_machine&amp;quot;, &amp;quot;pastry_counter&amp;quot;]},
+  },
+  &amp;quot;definitions&amp;quot;: {
+    &amp;quot;drink&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [&amp;quot;size&amp;quot;, &amp;quot;order_type&amp;quot;],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;size&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;sm&amp;quot;, &amp;quot;md&amp;quot;, &amp;quot;lg&amp;quot;, &amp;quot;xl&amp;quot;]},
+        &amp;quot;drink_type&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;drip&amp;quot;, &amp;quot;espresso&amp;quot;, &amp;quot;latte&amp;quot;, &amp;quot;cappuccino&amp;quot;, &amp;quot;americano&amp;quot;]},
+        &amp;quot;extras&amp;quot;: {&amp;quot;array&amp;quot;: { &amp;quot;$ref&amp;quot;: &amp;quot;#/definitions/extras&amp;quot; }},
+      }
+    },
+    &amp;quot;pastry&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;required&amp;quot;: [&amp;quot;quantity&amp;quot;, &amp;quot;item&amp;quot;],
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;item&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;donut&amp;quot;, &amp;quot;sandwich&amp;quot;, &amp;quot;bagel&amp;quot;, &amp;quot;danish&amp;quot;]},
+        &amp;quot;quantity&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;, &amp;quot;minValue&amp;quot;: 1, &amp;quot;maxValue&amp;quot;: 144},
+        &amp;quot;heated&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;, &amp;quot;default&amp;quot;: false}
+      }
+    },
+    &amp;quot;extras&amp;quot;: {
+      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+      &amp;quot;properties&amp;quot;: {
+        &amp;quot;flavoring&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;},
+        &amp;quot;milk_type&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;, &amp;quot;enum&amp;quot;: [&amp;quot;soy&amp;quot;, &amp;quot;almond&amp;quot;, &amp;quot;skim&amp;quot;]}
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One thing that schema languages cannot often handle well are conditional
+requirements. Conditional requirements occur when:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The presence of a value in one field limits the valid values in another field, or&lt;/li&gt;
+&lt;li&gt;The presence of a value in one field requires the presence of another field.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In our case, the above schema defines an order at a coffee shop, but there are
+valid JSON documents that nevertheless will not contain all the information
+needed to complete an order.  We need some extra validation steps.  In particular,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Depending on the order type, we need to ensure the presence of one of the
+optional sections, &lt;code&gt;espresso_machine&lt;/code&gt; or &lt;code&gt;pastry_counter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Shots of espresso can only be small or medium - no large or xl&lt;/li&gt;
+&lt;li&gt;Cappuccinos can only be small, medium, or large. (we&amp;rsquo;re picky)&lt;/li&gt;
+&lt;li&gt;Shots of espresso do not have milk in them (or they&amp;rsquo;d be something else)&lt;/li&gt;
+&lt;li&gt;Americanos do not have milk.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can create logic with Kanren that validates our JSON beyond what can simply
+be done with basic schema validation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from kanren import *
+
+def validate_order(order):
+
+  # validate conditional presence of section for order routing.
+  must_contain_section = Relation()
+  facts(must_contain_section, (&#39;espresso_machine&#39;, &#39;drink&#39;),
+                              (&#39;pastry_counter&#39;, &#39;pastry&#39;))
+
+  x = var()
+  valid = run(1, x, must_contain_section(order[&#39;order_destination&#39;], x),
+                    membero(x, set(order.keys())))  # See Note 1.
+
+  if len(valid) == 0:
+    raise ValidationError(&amp;quot;Required section not present&amp;quot;)
+  elif order[&#39;order_destination&#39;] == &#39;espresso_machine&#39;:  # validate expresso orders
+    drink = order[&#39;drink&#39;]
+
+    # specify whether milk comes with each drink or not.
+    # these could be specified once instead of every time the function is called.
+    milk_comes_with = Relation(&#39;milk_comes_with&#39;)
+    facts(milk_comes_with, (&#39;drip&#39;, True),
+                           (&#39;latte&#39;, True),
+                           (&#39;cappuccino&#39;, True),
+                           (&#39;espresso&#39;, False),   # no milk for straight espresso
+                           (&#39;americano&#39;, False))  # no milk in an americano
+
+    drink_sizes = Relation(&#39;drink_size&#39;)
+
+    # specify which sizes are valid for which drink.
+    # these could be specified once instead of every time the function is called.
+    facts(drink_sizes, *((&#39;drip&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;latte&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;americano&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;, &#39;xl&#39;]),
+                       *((&#39;cappuccino&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;, &#39;lg&#39;]),
+                       *((&#39;espresso&#39;, sz) for sz in [&#39;sm&#39;, &#39;md&#39;]))
+
+    # specify our drink type.
+    drink_type = drink[&#39;drink_type&#39;]
+
+    # check if if any of the extras specified a type of milk.
+    specified_milk = False  
+    for e in drink.get(&#39;extras&#39;, []):
+      if &#39;milk_type&#39; in e:
+        specified_milk = True
+        break
+
+    # these could run separately to come out with different errors.
+    y = var()    
+    valid = run(1, y,
+      drink_sizes(drink_type, drink[&#39;size&#39;]),  # drink is a valid size
+      # drink has a valid type of milk
+      lany(  # any of the sub-clauses passing passes this.
+        eq(specified_milk, False),  # drink has no milk
+        # drink has milk and is of a valid drink type
+        milk_comes_with(drink_type, specified_milk)))  
+
+    if len(valid) == 0:
+      raise ValidationError(&amp;quot;Drink size too large for drink type or milk included in non milk drink&amp;quot;)
+  else:
+    pass  # we may validate pastry orders next.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This results in the following passing validation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;sm&amp;quot;}})
+
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;latte&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;,
+                          &amp;quot;extras&amp;quot;: [{&amp;quot;milk_type&amp;quot;: &amp;quot;soy&amp;quot;}]}})        
+
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;latte&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;}})            
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the following will not pass validation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# no large espressos at this coffee shop. You&#39;ve had enough!
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+                &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                          &amp;quot;size&amp;quot;: &amp;quot;lg&amp;quot;}})
+
+# added a custom milk type to a non-milk drink
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;,
+      &amp;quot;drink&amp;quot;: {&amp;quot;drink_type&amp;quot;: &amp;quot;espresso&amp;quot;,
+                &amp;quot;size&amp;quot;: &amp;quot;sm&amp;quot;,
+                &amp;quot;extras&amp;quot;: [{&amp;quot;milk_type&amp;quot;: &amp;quot;soy&amp;quot;}]}})
+
+
+# required section not present
+validate_order({&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;notes&#34;&gt;Notes&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Here we make a set out of the properties of our &amp;ldquo;order&amp;rdquo; document. The full
+test makes sure that both clauses are true. So &lt;code&gt;x&lt;/code&gt; must be the required section
+for our order type, and it must be present as a named property in our document.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Thus this is valid:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;, &amp;quot;drink&amp;quot;: {...}}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And this is not:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&amp;quot;order_destination&amp;quot;: &amp;quot;espresso_machine&amp;quot;, &amp;quot;pastry&amp;quot;: {...}}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;further-thoughts&#34;&gt;Further thoughts&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Reusability is your friend.&lt;/strong&gt; So far we&amp;rsquo;ve only seen interactive usage of Kanren.
+What about embedding it in software? It&amp;rsquo;s probably obvious that you can wrap the
+&lt;code&gt;run&lt;/code&gt; call in a function and work with the results, but it turns out you can
+wrap up and make relations and predicates reusable as well. &lt;a href=&#34;https://github.com/logpy/logpy/blob/master/examples/corleone.py&#34;&gt;See the Godfather example in Kanren&amp;rsquo;s source&lt;/a&gt;.
+You can even make &lt;a href=&#34;https://github.com/logpy/logpy/blob/master/examples/user_classes.py&#34;&gt;custom types usable&lt;/a&gt;
+within Kanren&amp;rsquo;s logical relations.&lt;/p&gt;
+
+&lt;p&gt;There are things missing from the complex example. It&amp;rsquo;s possible to create much
+more complex validations using Kanren and all its primitives. There are also
+other ways to express logic more succinctly than we did in the example, however
+for an introduction, I think these can be too dense to be readily digested.
+Best to experiment with your code and see what works.&lt;/p&gt;
+
+&lt;p&gt;For further reading, I suggest starting with the &lt;a href=&#34;http://minikanren.org/&#34;&gt;specification of miniKanren&lt;/a&gt;,
+which was originally written in Scheme, and then &lt;a href=&#34;https://github.com/logpy/logpy&#34;&gt;the Python Kanren repo&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
