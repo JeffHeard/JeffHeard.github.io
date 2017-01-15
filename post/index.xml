@@ -66,18 +66,18 @@
 
 &lt;ul&gt;
 &lt;li&gt;Visual presentation trumps &amp;ldquo;source&amp;rdquo; and it&amp;rsquo;s often hard to find formulae and harder even to see what cells are being referenced by a formula.&lt;/li&gt;
-&lt;li&gt;Adding a variable or somtimes a column or a row can cause you to need to update multiple cells on multiple sheets to make all the calculations come out right, which is error prone.&lt;/li&gt;
+&lt;li&gt;Adding a variable or sometimes a column or a row can cause you to need to update multiple cells on multiple sheets to make all the calculations come out right, which is error prone.&lt;/li&gt;
 &lt;li&gt;You get in the situation where &amp;ldquo;it works, but I no longer know &lt;em&gt;why&lt;/em&gt; it works&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;Plugging in different data is not simple.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;performance-on-large-or-unusual-datasets&#34;&gt;Performance on Large or Unusual Datasets.&lt;/h3&gt;
 
-&lt;p&gt;&amp;ldquo;Big Data&amp;rdquo; means something different to everyone, but generally it is unmanagable or hard to run your models on because running the model takes too long. When this happens, someone with an expertise in coding and data science can rewrite a scientist&amp;rsquo;s model so that they can manage data separately from managing the model, and so that they can run their model efficiently on appropriate hardware.&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Big Data&amp;rdquo; means something different to everyone, but generally it is unmanageable or hard to run your models on because running the model takes too long. When this happens, someone with an expertise in coding and data science can rewrite a scientist&amp;rsquo;s model so that they can manage data separately from managing the model, and so that they can run their model efficiently on appropriate hardware.&lt;/p&gt;
 
 &lt;h3 id=&#34;cleaning-and-data-preparation&#34;&gt;Cleaning and Data Preparation.&lt;/h3&gt;
 
-&lt;p&gt;There is a heirarchy we often talked about in information and knowledge management. Information &amp;lt; Data &amp;lt; Knowledge. Within that heirarchy are levels. Scanned paper documents. OCR-ed documents. Spreadsheets with commentary littered all over them and inconsistent representations of what&amp;rsquo;s &amp;ldquo;missing.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;There is a heirarchy we often talked about in information and knowledge management. Information &amp;lt; Data &amp;lt; Knowledge. Within that hierarchy are levels. Scanned paper documents. OCR-ed documents. Spreadsheets with commentary littered all over them and inconsistent representations of what&amp;rsquo;s &amp;ldquo;missing.&amp;rdquo;&lt;/p&gt;
 
 &lt;h3 id=&#34;creating-algorithms-from-methods&#34;&gt;Creating Algorithms from Methods.&lt;/h3&gt;
 
