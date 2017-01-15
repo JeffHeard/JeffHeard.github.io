@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+
+<!-- 
+Strata by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Being a Data Scientist: My Experience and Toolset &middot; Jefferson Heard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<meta name="description" content="Personal and professional website of Jefferson Heard">
+		<meta http-equiv="content-language" content="en-us" />
+
+		
+		<meta name="og:site_name" content="Jefferson Heard">
+		<meta name="og:title" content="Being a Data Scientist: My Experience and Toolset">
+		<meta name="og:url" content="https://jeffersonheard.github.io/2017/01/being-a-data-scientist-my-experience-and-toolset/">
+		<meta name="og:image" content="https://jeffersonheard.github.io/images/portrait.jpg">
+		
+
+		<meta name="generator" content="Hugo 0.17" />
+
+		<!--[if lte IE 8]><script src='https://jeffersonheard.github.io/js/ie/html5shiv.js'></script><![endif]-->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://jeffersonheard.github.io/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="https://jeffersonheard.github.io//css/ie8.css"><![endif]-->
+
+		
+		
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+
+	<body id="top">
+		<!-- Header -->
+<header id="header">
+	<a href="https://jeffersonheard.github.io/" class="image avatar"><img src="https://jeffersonheard.github.io/images/portrait.jpg" alt="" /></a>
+	
+		<h1><strong>CTO. Software Consultant.</strong></h1>
+	
+
+	
+		<nav id="sidebar">
+			<ul>
+			
+				<li><a href="https://jeffersonheard.github.io/">Home</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/about">About</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/post">Blog</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/resume.pdf">Resume</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/cv.pdf">CV</a></li>
+			
+				<li><a href="https://www.365pronto.com">365 Pronto</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/sondra">Sondra Docs</a></li>
+			
+			</ul>
+		</nav>
+	
+</header>
+
+
+		<!-- Main -->
+		<div id="main">
+			
+	<span>
+		<h1>Being a Data Scientist: My Experience and Toolset</h1>
+
+		<i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2017-01-14 00:00:00 &#43;0000 UTC">2017-01-14</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/data-science">data science</a>
+       
+       
+   
+
+
+	</span>
+
+	<p>
+	    
+
+<p>If I had to use a few words to give myself a title for my position at UNC, I might not have said I was a data scientist. When I was starting my career there was no such thing, but looking at my CV / Resume, I have:</p>
+
+<ul>
+<li>Worked at a billion dollar company, writing the integration process that pushed 40+ large datasets through complex models and analytics to produce one large modeled data product.</li>
+<li>Done graduate work in text mining and data mining.</li>
+<li>Wrote a innovative search engine from scratch and worked to commercialize it with two professors (it was their patent, but I was the programmer in the end).</li>
+<li>Worked at UNC, Duke, and NC State University through <a href="http://www.renci.org">Renci</a> doing data mining, cartography, and interactive and static information visualization for various domain scientists.</li>
+</ul>
+
+<p>I have done dozens of projects, and apparently I&rsquo;ve amassed a fair bit of knowledge along the way that in some ways I have totally missed. Sometimes I answer a question and I think, &ldquo;How did I know that, anyway?&rdquo;</p>
+
+<p>Well, yesterday I started mentoring at <a href="https://thinkful.com">Thinkful</a> in their <a href="https://www.thinkful.com/bootcamp/data-science/flexible/">Flexible Data Science Bootcamp</a>, and I have to say that I love it already.  I like their approach, because it blends 1-on-1 time with remote learning and goes out of its way to support its mentors in being good educators and not just experts.</p>
+
+<p>But as I dig through my data science know-how I want to share it with more than just one student at a time, so this is the first in a series of posts about what it&rsquo;s like to be a data scientist, or more accurately perhaps what <em>I</em> did as a data scientist and how that might relate to a new person doing data science in the field.</p>
+
+<p>Some of it will include direct examples of doing data science projects in Python, and some of it will be more about the tools of the trade and how to work with open source tools to do data science. And some posts, like this one, will be more about &ldquo;life as a data scientist,&rdquo;</p>
+
+<h2 id="what-i-did-as-a-data-scientist-at-renci">What I did as a Data Scientist at Renci</h2>
+
+<p>I would say that most of what I did at Renci fell into two camps.</p>
+
+<ol>
+<li>Take a set of requirements from a domain scientist and work, typically from an experimental methods section (published or in progress) and translate that into code.</li>
+<li>Develop systems for collaboration, dataset sharing, and access to HPC resources for research groups of <strong>domain scientists</strong>.</li>
+</ol>
+
+<h3 id="what-s-a-domain-scientist">What&rsquo;s a Domain Scientist?</h3>
+
+<p>When I think of a domain scientist, or a domain <em>expert</em> I typically think of someone outside general computer science, who may know something about programming, but need not, but has a question they&rsquo;re trying to answer, a requirement they need to fulfill, or a body of work that they add to over time. They typically require scientific methods or knowledge of the science of information classification, accessibility, and archiving (think librarians). These include:</p>
+
+<ul>
+<li>Academic scientists at research institutions doing basic or applied research in any of the sciences: biology, medicine, public health, psychology, chemistry, physics, and so on.</li>
+<li>Journalists who deal with polls, data, infographics, or who are science journalists who have to read, understand, and <em>fact-check</em> the articles they published.</li>
+<li>Corporate or independent consulting scientists of all flavors from geologists working in minerals to pharmacologists to compliance organizations like UL and Rand Corporation.</li>
+<li>Nonprofit and NGOs like the World Bank employ scientists to rigorously analyze the effectiveness of their programs.</li>
+<li>Scientists working at government labs or consortiums (like NIST or the FDA) on standards, testing, and auditing procedures.</li>
+<li>Historians, librarians, and archivists concerned with preserving aging documents, bodies of records, and providing sound systems for accessing, referencing, and searching these records.</li>
+</ul>
+
+<p>Any of these domain scientists can also be <em>data scientists</em>, but they are different hats to wear and data science distinctly requires a focus on computation and algorithms.</p>
+
+<h2 id="when-does-a-domain-scientist-need-a-data-scientist">When does a Domain Scientist need a Data Scientist?</h2>
+
+<h3 id="outgrowing-excel">Outgrowing Excel.</h3>
+
+<p>After you reach 100,000 rows, or when you have sheets with &ldquo;lookup keys&rdquo;, pivot tables, and formulae that rely on hidden sheets, you have likely outgrown Excel.  It&rsquo;s not that Excel can&rsquo;t handle it (although there <em>is</em> a practical row limit). It&rsquo;s that Excel sheets have a tendency to turn into <em>spaghetti code</em> for a variety of reasons:</p>
+
+<ul>
+<li>Visual presentation trumps &ldquo;source&rdquo; and it&rsquo;s often hard to find formulae and harder even to see what cells are being referenced by a formula.</li>
+<li>Adding a variable or somtimes a column or a row can cause you to need to update multiple cells on multiple sheets to make all the calculations come out right, which is error prone.</li>
+<li>You get in the situation where &ldquo;it works, but I no longer know <em>why</em> it works&rdquo;</li>
+<li>Plugging in different data is not simple.</li>
+</ul>
+
+<h3 id="performance-on-large-or-unusual-datasets">Performance on Large or Unusual Datasets.</h3>
+
+<p>&ldquo;Big Data&rdquo; means something different to everyone, but generally it is unmanagable or hard to run your models on because running the model takes too long. When this happens, someone with an expertise in coding and data science can rewrite a scientist&rsquo;s model so that they can manage data separately from managing the model, and so that they can run their model efficiently on appropriate hardware.</p>
+
+<h3 id="cleaning-and-data-preparation">Cleaning and Data Preparation.</h3>
+
+<p>There is a heirarchy we often talked about in information and knowledge management. Information &lt; Data &lt; Knowledge. Within that heirarchy are levels. Scanned paper documents. OCR-ed documents. Spreadsheets with commentary littered all over them and inconsistent representations of what&rsquo;s &ldquo;missing.&rdquo;</p>
+
+<h3 id="creating-algorithms-from-methods">Creating Algorithms from Methods.</h3>
+
+<p>Most often domain scientists simply aren&rsquo;t computer people. In this case, a data scientist works directly with the domain scientist, walking through their research methods with them and gathering the specifics that can turn their ideas into code.</p>
+
+<h3 id="visualization-especially-geographic-and-interactive">Visualization, especially Geographic and Interactive.</h3>
+
+<p>Visualization requires a specialized skillset that most scientists, even the coders, don&rsquo;t have. Visualization tools available to the domain scientist often produce &ldquo;rough drafts&rdquo; of graphics, and are limited to &ldquo;canned&rdquo; representations that require customization to represent data effectively. Visualization is - to some extent - an art, but there are scientific principles as well that the data scientist will learn that help them:</p>
+
+<ul>
+<li>Produce fair, unbiased visual representations of data.</li>
+<li>Show the most relevant correlations for the problem at hand.</li>
+<li>Produce visual representations that reproduce in different media effectively.</li>
+</ul>
+
+<p>Spatial (geographic) representations are even more specialized, as map projections, layering, and reproduction issues make producing effective maps its own subfield of visualization.</p>
+
+<h3 id="machine-learning-data-mining">Machine Learning &amp; Data Mining</h3>
+
+<p>Machine learning, text mining, and data mining are their own separate fields of study. They are part of &ldquo;data science,&rdquo; but require a significant amount of specialization. Machine learning refers to different methods of having a machine develop its own algorithm for categorizing or classifying elements of a dataset. Machine learning and data mining are not well distinguished, but machine learning techniques increasingly favor &ldquo;unsupervised&rdquo; learning algorithms.</p>
+
+<h3 id="sharing-collaboration-and-information-and-knowledge-management">Sharing, Collaboration, and Information and Knowledge Management</h3>
+
+<p>Like machine learning and data mining, I mentally separate this task because it requires a different skillset, and typically you&rsquo;re working with a team or a professional organization.  Skills the data scientist uses here tend to fall into the &ldquo;library sciences.&rdquo; Building or setting up an effective system for sharing and knowledge management means:</p>
+
+<ul>
+<li>Building an online, generally web-based system. Often the backbone of this is a CMS, but it will be heavily customized.</li>
+<li>Making common domain-dependent data transforms available online.</li>
+<li>Enabling indexing, search, and selection (and not naïve implementations - most sciences have their own cataloging systems you need to respect).</li>
+<li><a href="http://ebiquity.umbc.edu/blogger/2008/05/28/provenance-tracking-in-science-data-processing-systems/">Keeping track of provenançe information</a>.</li>
+<li>Version management.</li>
+<li>Authentication and authorization.</li>
+<li>Distinguishing content types.</li>
+<li>Integration with existing sharing systems, including legacy systems, Dropbox, and Google Drive.</li>
+<li>Effective presentation of data.</li>
+<li>Data storage at scale.</li>
+<li>API Access</li>
+</ul>
+
+<h2 id="data-science-tools">Data Science Tools</h2>
+
+<p>This is not meant to be exhaustive <em>at all</em>. It is just a sampling of the tools that are out there, and to some extent a list of tools I have used in the past to get things done. It is in the same general order as the section above. Where possible I have listed Python libraries and standalone tools, but some of the libraries here are in other languages, but they are widely used. I do not cover R at all, because it is its own ecosystem, and there are tens of thousands of packages for R that do everything you want.</p>
+
+<h5 id="tools-for-working-with-larger-and-more-complex-excel-like-data">Tools for working with larger and more complex excel-like data</h5>
+
+<ul>
+<li><a href="http://pandas.pydata.org/">Pandas</a> - General purpose toolkit for dealing with tabular (Excel like) data for data science tasks.</li>
+<li><a href="https://sqlite.org/">SQLite</a> - Tabular database format that handles large datasets, but still works on your desktop.</li>
+<li><a href="https://www.postgresql.org/about/">PostgreSQL</a> - Enterprise-grade database system.</li>
+</ul>
+
+<h5 id="tools-for-working-with-spatial-geographic-data">Tools for working with spatial (geographic) data:</h5>
+
+<ul>
+<li><a href="http://www.postgis.net/">PostGIS</a> - Geospatial extensions for Postgres</li>
+<li><a href="https://carto.com/">Carto</a> - Commercial tool for geospatial data mining.</li>
+<li><a href="https://mapbox.com/">Mapbox</a> - Commercial cartography and tile-based web map system.</li>
+<li><a href="http://leafletjs.com/">Leaflet</a> - Library for composing interactive web maps from online sources and your own data.</li>
+<li><a href="http://www.qgis.org/en/site/forusers/download.html">qGIS</a> - Graphical GIS tool for all things geospatial and mapping.</li>
+</ul>
+
+<h5 id="tools-for-working-with-unusual-datasets">Tools for working with unusual datasets</h5>
+
+<ul>
+<li><a href="https://rethinkdb.com/">RethinkDB</a> - Database that deals well with realtime streams. In transition from commercial to open source. Take care when using.</li>
+<li><a href="https://www.mongodb.com/">MongoDB</a> - Database that handles large amounts of unstructured and semi-structured data. Some caveats when using in production.</li>
+<li><a href="http://couchdb.apache.org/">CouchDB</a> - Similar to, but different than MongoDB.</li>
+<li><a href="http://cassandra.apache.org/">Cassandra</a> - Graph and relationship database.</li>
+</ul>
+
+<h5 id="tools-for-creating-performant-code-with-large-datasets">Tools for creating performant code with large datasets</h5>
+
+<ul>
+<li><a href="http://pandas.pydata.org/">Pandas</a> - A note that Pandas is largely backed by performant C code. Translating your algorithm to C for performance reasons when it uses Pandas well is usually not needed.</li>
+<li><a href="http://spark.apache.org/">Apache Spark</a> - A general high-performance data processing system</li>
+<li><a href="https://www.scipy.org/">SciPy and Numpy</a> - Scriptable, C-based numerical algorithms that operate on compact, machine-level data structures.</li>
+<li><a href="http://cython.org/">Cython</a> - Take parts of your Python program and compile them with C for performance.</li>
+<li><a href="https://mathema.tician.de/software/pyopencl/">PyOpenCL</a> - Numerical and statistical processing on your graphics card.</li>
+</ul>
+
+<p>Note that any of the database systems from above also fall into this category.</p>
+
+<h5 id="tools-for-cleaning-data">Tools for cleaning data</h5>
+
+<ul>
+<li><a href="http://odo.pydata.org/en/latest/">ODO</a> - Python library to transform data between different formats.</li>
+<li><a href="http://openrefine.org/">OpenRefine</a> - Explore and clean data in a graphic user interface</li>
+<li><a href="http://pandas.pydata.org/">Pandas</a> - General purpose Python-based toolkit for dealing with tabular (Excel like) data for data science tasks.</li>
+<li><a href="https://scrapy.org/">Scrapy</a> - Python library to scrape the web and extract items from web pages</li>
+<li><a href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> - Same as scrapy, but different.</li>
+<li><a href="http://scrubadub.readthedocs.io/en/stable/index.html">Scrubadub</a> - Remove personally identifiable information</li>
+<li><a href="http://crsmithdev.com/arrow/">Arrow</a> - Make sense of and manipulate times and dates</li>
+<li><a href="https://github.com/rhiever/datacleaner">DataCleaner</a> - Python library to impute, drop, and general cleaning of missing and ugly data</li>
+<li><a href="https://github.com/NathanEpstein/Dora">Dora</a> - Python library similar to DataCleaner.</li>
+</ul>
+
+<h5 id="tools-for-visualization">Tools for Visualization</h5>
+
+<ul>
+<li><a href="https://processing.org/">Processing</a> - Build interactive visualizations interactively. <a href="https://www.amazon.com/gp/product/0596514557?ie=UTF8&amp;tag=processing09-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596514557">Great O&rsquo;Reilly book, Visualizing Data</a></li>
+<li><a href="https://d3js.org/">D3</a> - Build interactive visualizations on the web</li>
+<li><a href="http://c3js.org/">C3</a> - Charts from D3.</li>
+<li><a href="http://bokeh.pydata.org/en/latest/">Bokeh</a> - Similar to D3, but in Python.</li>
+<li><a href="http://matplotlib.org/">matplotlib</a> - The original Python data visualization toolkit</li>
+<li><a href="http://leafletjs.com/">Leaflet</a> - Work with web-based maps.</li>
+<li><a href="https://www.mapbox.com/">MapBox</a> - See the section on cartographic tools.</li>
+<li><a href="http://www.qgis.org/en/site/forusers/download.html">qGIS</a> - See the section on cartographic tools.</li>
+<li><a href="http://www.vtk.org/">VTK</a> - Heavy-duty visualization toolkit often used in the medical, chemical, and physical research spaces.</li>
+</ul>
+
+<h5 id="some-data-mining-and-ml-tools">Some data mining and ML tools</h5>
+
+<ul>
+<li><a href="http://www.cs.waikato.ac.nz/ml/weka/">Weka</a> - There&rsquo;s also an <a href="http://www.cs.waikato.ac.nz/ml/weka/book.html">excellent, accessible book</a> on the Weka ML and Data mining toolkit</li>
+<li><a href="http://scikit-learn.org/">SciKitLearn</a> - A Python-based suite of ML and data mining tools.</li>
+<li><a href="http://orange.biolab.si/">Orange</a> - Another Python-based suite of data mining tools, also with a GUI.</li>
+<li><a href="https://www.tensorflow.org/">TensorFlow</a> - Multidimensional mathematical modeling with graphs.</li>
+</ul>
+
+<h5 id="tools-for-sharing-collaboration-and-information-and-knowledge-management">Tools for Sharing, Collaboration, and Information and Knowledge Management</h5>
+
+<ul>
+<li><a href="https://www.djangoproject.com/">Django</a> - The ultimate batteries-included Python-based web framework.</li>
+<li><a href="http://www.django-rest-framework.org/">Django REST Framework</a> - Create REST APIs with Django-based websites.</li>
+<li><a href="https://irods.org/">IRODS</a> - Enterprise-grade data storage and management, including metadata management and rule-based data processing.</li>
+<li><a href="http://cassandra.apache.org/">Cassandra (useful for metadata and relationship storage)</a> - Again, I often store and query metadata in Cassandra</li>
+<li><a href="https://about.gitlab.com/downloads/">GitLab</a> - An open-source alternative to GitHub that you can set up on your own servers.</li>
+<li><a href="https://github.com/recipy/recipy">ReciPy</a> - Provenance tracking for Python.</li>
+<li><a href="http://prov.readthedocs.io/en/latest/">Prov</a> - Python implementation of the W3C provenance model</li>
+<li><a href="https://github.com/logpy/logpy">Kanren (useful for implementing business logic on metadata and provenance info)</a> - Logic programming for Python, often useful for rule-based actions and queries on scientific metadata.</li>
+</ul>
+
+	</p>
+
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jeffersonheard-github-io';
+    var disqus_identifier = 'https:\/\/jeffersonheard.github.io\/2017\/01\/being-a-data-scientist-my-experience-and-toolset\/';
+    var disqus_title = 'Being a Data Scientist: My Experience and Toolset';
+    var disqus_url = 'https:\/\/jeffersonheard.github.io\/2017\/01\/being-a-data-scientist-my-experience-and-toolset\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+		</div>
+
+		<!-- Footer -->
+<footer id="footer">
+	<ul class="icons">
+		
+		
+		
+		<li><a href="//twitter.com/jeffersonheard" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		
+		
+		<li><a href="//github.com/jeffersonheard" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
+		
+		
+		<li><a href="https://linkedin.com/injeffersonheard" target="_blank" class="icon fa-linkedin-square"><span class="label">Linkedin</span></a></li>
+		
+		
+		
+		
+		<li><a href="https://jeffersonheard.github.io/#contact-form" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		
+		
+		<li><a href="https://jeffersonheard.github.io/index.xml" class="icon fa-rss" type="application/rss+xml"><span class="label">RSS</span></a></li>
+		
+	</ul>
+
+	<ul class="copyright">
+		
+		<li>&copy; 2016 Jefferson Heard</li>
+		
+	</ul>
+</footer>
+
+<!-- Scripts -->
+<script src="https://jeffersonheard.github.io/js/jquery.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/jquery.poptrox.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/skel.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/util.js"></script>
+
+<script src="https://jeffersonheard.github.io/js/main.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-68674847-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+	</body>
+</html>

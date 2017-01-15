@@ -3,7 +3,12 @@
   
   <url>
     <loc>https://jeffersonheard.github.io/</loc>
-    <lastmod>2017-01-07T00:00:00+00:00</lastmod>
+    <lastmod>2017-01-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffersonheard.github.io/2017/01/being-a-data-scientist-my-experience-and-toolset/</loc>
+    <lastmod>2017-01-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -37,22 +42,12 @@
   </url>
   
   <url>
-    <loc>https://jeffersonheard.github.io/2016/11/an-intro-to-open-source-cartography/</loc>
-    <lastmod>2016-11-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jeffersonheard.github.io/2016/11/creating-new-fields-and-widgets-for-mozillas-react-jsonschema-form/</loc>
     <lastmod>2016-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://jeffersonheard.github.io/2016/11/hydroshare-part-1-overview-of-a-long-project/</loc>
-    <lastmod>2016-11-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffersonheard.github.io/2016/11/playing-around-with-maps-with-mapnik-and-python/</loc>
     <lastmod>2016-11-21T00:00:00+00:00</lastmod>
   </url>
   

@@ -9,6 +9,209 @@
     <atom:link href="https://jeffersonheard.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Being a Data Scientist: My Experience and Toolset</title>
+      <link>https://jeffersonheard.github.io/2017/01/being-a-data-scientist-my-experience-and-toolset/</link>
+      <pubDate>Sat, 14 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffersonheard.github.io/2017/01/being-a-data-scientist-my-experience-and-toolset/</guid>
+      <description>
+
+&lt;p&gt;If I had to use a few words to give myself a title for my position at UNC, I might not have said I was a data scientist. When I was starting my career there was no such thing, but looking at my CV / Resume, I have:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Worked at a billion dollar company, writing the integration process that pushed 40+ large datasets through complex models and analytics to produce one large modeled data product.&lt;/li&gt;
+&lt;li&gt;Done graduate work in text mining and data mining.&lt;/li&gt;
+&lt;li&gt;Wrote a innovative search engine from scratch and worked to commercialize it with two professors (it was their patent, but I was the programmer in the end).&lt;/li&gt;
+&lt;li&gt;Worked at UNC, Duke, and NC State University through &lt;a href=&#34;http://www.renci.org&#34;&gt;Renci&lt;/a&gt; doing data mining, cartography, and interactive and static information visualization for various domain scientists.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I have done dozens of projects, and apparently I&amp;rsquo;ve amassed a fair bit of knowledge along the way that in some ways I have totally missed. Sometimes I answer a question and I think, &amp;ldquo;How did I know that, anyway?&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Well, yesterday I started mentoring at &lt;a href=&#34;https://thinkful.com&#34;&gt;Thinkful&lt;/a&gt; in their &lt;a href=&#34;https://www.thinkful.com/bootcamp/data-science/flexible/&#34;&gt;Flexible Data Science Bootcamp&lt;/a&gt;, and I have to say that I love it already.  I like their approach, because it blends 1-on-1 time with remote learning and goes out of its way to support its mentors in being good educators and not just experts.&lt;/p&gt;
+
+&lt;p&gt;But as I dig through my data science know-how I want to share it with more than just one student at a time, so this is the first in a series of posts about what it&amp;rsquo;s like to be a data scientist, or more accurately perhaps what &lt;em&gt;I&lt;/em&gt; did as a data scientist and how that might relate to a new person doing data science in the field.&lt;/p&gt;
+
+&lt;p&gt;Some of it will include direct examples of doing data science projects in Python, and some of it will be more about the tools of the trade and how to work with open source tools to do data science. And some posts, like this one, will be more about &amp;ldquo;life as a data scientist,&amp;rdquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;what-i-did-as-a-data-scientist-at-renci&#34;&gt;What I did as a Data Scientist at Renci&lt;/h2&gt;
+
+&lt;p&gt;I would say that most of what I did at Renci fell into two camps.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Take a set of requirements from a domain scientist and work, typically from an experimental methods section (published or in progress) and translate that into code.&lt;/li&gt;
+&lt;li&gt;Develop systems for collaboration, dataset sharing, and access to HPC resources for research groups of &lt;strong&gt;domain scientists&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;what-s-a-domain-scientist&#34;&gt;What&amp;rsquo;s a Domain Scientist?&lt;/h3&gt;
+
+&lt;p&gt;When I think of a domain scientist, or a domain &lt;em&gt;expert&lt;/em&gt; I typically think of someone outside general computer science, who may know something about programming, but need not, but has a question they&amp;rsquo;re trying to answer, a requirement they need to fulfill, or a body of work that they add to over time. They typically require scientific methods or knowledge of the science of information classification, accessibility, and archiving (think librarians). These include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Academic scientists at research institutions doing basic or applied research in any of the sciences: biology, medicine, public health, psychology, chemistry, physics, and so on.&lt;/li&gt;
+&lt;li&gt;Journalists who deal with polls, data, infographics, or who are science journalists who have to read, understand, and &lt;em&gt;fact-check&lt;/em&gt; the articles they published.&lt;/li&gt;
+&lt;li&gt;Corporate or independent consulting scientists of all flavors from geologists working in minerals to pharmacologists to compliance organizations like UL and Rand Corporation.&lt;/li&gt;
+&lt;li&gt;Nonprofit and NGOs like the World Bank employ scientists to rigorously analyze the effectiveness of their programs.&lt;/li&gt;
+&lt;li&gt;Scientists working at government labs or consortiums (like NIST or the FDA) on standards, testing, and auditing procedures.&lt;/li&gt;
+&lt;li&gt;Historians, librarians, and archivists concerned with preserving aging documents, bodies of records, and providing sound systems for accessing, referencing, and searching these records.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Any of these domain scientists can also be &lt;em&gt;data scientists&lt;/em&gt;, but they are different hats to wear and data science distinctly requires a focus on computation and algorithms.&lt;/p&gt;
+
+&lt;h2 id=&#34;when-does-a-domain-scientist-need-a-data-scientist&#34;&gt;When does a Domain Scientist need a Data Scientist?&lt;/h2&gt;
+
+&lt;h3 id=&#34;outgrowing-excel&#34;&gt;Outgrowing Excel.&lt;/h3&gt;
+
+&lt;p&gt;After you reach 100,000 rows, or when you have sheets with &amp;ldquo;lookup keys&amp;rdquo;, pivot tables, and formulae that rely on hidden sheets, you have likely outgrown Excel.  It&amp;rsquo;s not that Excel can&amp;rsquo;t handle it (although there &lt;em&gt;is&lt;/em&gt; a practical row limit). It&amp;rsquo;s that Excel sheets have a tendency to turn into &lt;em&gt;spaghetti code&lt;/em&gt; for a variety of reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Visual presentation trumps &amp;ldquo;source&amp;rdquo; and it&amp;rsquo;s often hard to find formulae and harder even to see what cells are being referenced by a formula.&lt;/li&gt;
+&lt;li&gt;Adding a variable or somtimes a column or a row can cause you to need to update multiple cells on multiple sheets to make all the calculations come out right, which is error prone.&lt;/li&gt;
+&lt;li&gt;You get in the situation where &amp;ldquo;it works, but I no longer know &lt;em&gt;why&lt;/em&gt; it works&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Plugging in different data is not simple.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;performance-on-large-or-unusual-datasets&#34;&gt;Performance on Large or Unusual Datasets.&lt;/h3&gt;
+
+&lt;p&gt;&amp;ldquo;Big Data&amp;rdquo; means something different to everyone, but generally it is unmanagable or hard to run your models on because running the model takes too long. When this happens, someone with an expertise in coding and data science can rewrite a scientist&amp;rsquo;s model so that they can manage data separately from managing the model, and so that they can run their model efficiently on appropriate hardware.&lt;/p&gt;
+
+&lt;h3 id=&#34;cleaning-and-data-preparation&#34;&gt;Cleaning and Data Preparation.&lt;/h3&gt;
+
+&lt;p&gt;There is a heirarchy we often talked about in information and knowledge management. Information &amp;lt; Data &amp;lt; Knowledge. Within that heirarchy are levels. Scanned paper documents. OCR-ed documents. Spreadsheets with commentary littered all over them and inconsistent representations of what&amp;rsquo;s &amp;ldquo;missing.&amp;rdquo;&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-algorithms-from-methods&#34;&gt;Creating Algorithms from Methods.&lt;/h3&gt;
+
+&lt;p&gt;Most often domain scientists simply aren&amp;rsquo;t computer people. In this case, a data scientist works directly with the domain scientist, walking through their research methods with them and gathering the specifics that can turn their ideas into code.&lt;/p&gt;
+
+&lt;h3 id=&#34;visualization-especially-geographic-and-interactive&#34;&gt;Visualization, especially Geographic and Interactive.&lt;/h3&gt;
+
+&lt;p&gt;Visualization requires a specialized skillset that most scientists, even the coders, don&amp;rsquo;t have. Visualization tools available to the domain scientist often produce &amp;ldquo;rough drafts&amp;rdquo; of graphics, and are limited to &amp;ldquo;canned&amp;rdquo; representations that require customization to represent data effectively. Visualization is - to some extent - an art, but there are scientific principles as well that the data scientist will learn that help them:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Produce fair, unbiased visual representations of data.&lt;/li&gt;
+&lt;li&gt;Show the most relevant correlations for the problem at hand.&lt;/li&gt;
+&lt;li&gt;Produce visual representations that reproduce in different media effectively.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Spatial (geographic) representations are even more specialized, as map projections, layering, and reproduction issues make producing effective maps its own subfield of visualization.&lt;/p&gt;
+
+&lt;h3 id=&#34;machine-learning-data-mining&#34;&gt;Machine Learning &amp;amp; Data Mining&lt;/h3&gt;
+
+&lt;p&gt;Machine learning, text mining, and data mining are their own separate fields of study. They are part of &amp;ldquo;data science,&amp;rdquo; but require a significant amount of specialization. Machine learning refers to different methods of having a machine develop its own algorithm for categorizing or classifying elements of a dataset. Machine learning and data mining are not well distinguished, but machine learning techniques increasingly favor &amp;ldquo;unsupervised&amp;rdquo; learning algorithms.&lt;/p&gt;
+
+&lt;h3 id=&#34;sharing-collaboration-and-information-and-knowledge-management&#34;&gt;Sharing, Collaboration, and Information and Knowledge Management&lt;/h3&gt;
+
+&lt;p&gt;Like machine learning and data mining, I mentally separate this task because it requires a different skillset, and typically you&amp;rsquo;re working with a team or a professional organization.  Skills the data scientist uses here tend to fall into the &amp;ldquo;library sciences.&amp;rdquo; Building or setting up an effective system for sharing and knowledge management means:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Building an online, generally web-based system. Often the backbone of this is a CMS, but it will be heavily customized.&lt;/li&gt;
+&lt;li&gt;Making common domain-dependent data transforms available online.&lt;/li&gt;
+&lt;li&gt;Enabling indexing, search, and selection (and not naïve implementations - most sciences have their own cataloging systems you need to respect).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://ebiquity.umbc.edu/blogger/2008/05/28/provenance-tracking-in-science-data-processing-systems/&#34;&gt;Keeping track of provenançe information&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Version management.&lt;/li&gt;
+&lt;li&gt;Authentication and authorization.&lt;/li&gt;
+&lt;li&gt;Distinguishing content types.&lt;/li&gt;
+&lt;li&gt;Integration with existing sharing systems, including legacy systems, Dropbox, and Google Drive.&lt;/li&gt;
+&lt;li&gt;Effective presentation of data.&lt;/li&gt;
+&lt;li&gt;Data storage at scale.&lt;/li&gt;
+&lt;li&gt;API Access&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;data-science-tools&#34;&gt;Data Science Tools&lt;/h2&gt;
+
+&lt;p&gt;This is not meant to be exhaustive &lt;em&gt;at all&lt;/em&gt;. It is just a sampling of the tools that are out there, and to some extent a list of tools I have used in the past to get things done. It is in the same general order as the section above. Where possible I have listed Python libraries and standalone tools, but some of the libraries here are in other languages, but they are widely used. I do not cover R at all, because it is its own ecosystem, and there are tens of thousands of packages for R that do everything you want.&lt;/p&gt;
+
+&lt;h5 id=&#34;tools-for-working-with-larger-and-more-complex-excel-like-data&#34;&gt;Tools for working with larger and more complex excel-like data&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/&#34;&gt;Pandas&lt;/a&gt; - General purpose toolkit for dealing with tabular (Excel like) data for data science tasks.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sqlite.org/&#34;&gt;SQLite&lt;/a&gt; - Tabular database format that handles large datasets, but still works on your desktop.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.postgresql.org/about/&#34;&gt;PostgreSQL&lt;/a&gt; - Enterprise-grade database system.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;tools-for-working-with-spatial-geographic-data&#34;&gt;Tools for working with spatial (geographic) data:&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.postgis.net/&#34;&gt;PostGIS&lt;/a&gt; - Geospatial extensions for Postgres&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://carto.com/&#34;&gt;Carto&lt;/a&gt; - Commercial tool for geospatial data mining.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mapbox.com/&#34;&gt;Mapbox&lt;/a&gt; - Commercial cartography and tile-based web map system.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://leafletjs.com/&#34;&gt;Leaflet&lt;/a&gt; - Library for composing interactive web maps from online sources and your own data.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.qgis.org/en/site/forusers/download.html&#34;&gt;qGIS&lt;/a&gt; - Graphical GIS tool for all things geospatial and mapping.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;tools-for-working-with-unusual-datasets&#34;&gt;Tools for working with unusual datasets&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rethinkdb.com/&#34;&gt;RethinkDB&lt;/a&gt; - Database that deals well with realtime streams. In transition from commercial to open source. Take care when using.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mongodb.com/&#34;&gt;MongoDB&lt;/a&gt; - Database that handles large amounts of unstructured and semi-structured data. Some caveats when using in production.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://couchdb.apache.org/&#34;&gt;CouchDB&lt;/a&gt; - Similar to, but different than MongoDB.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cassandra.apache.org/&#34;&gt;Cassandra&lt;/a&gt; - Graph and relationship database.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;tools-for-creating-performant-code-with-large-datasets&#34;&gt;Tools for creating performant code with large datasets&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/&#34;&gt;Pandas&lt;/a&gt; - A note that Pandas is largely backed by performant C code. Translating your algorithm to C for performance reasons when it uses Pandas well is usually not needed.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://spark.apache.org/&#34;&gt;Apache Spark&lt;/a&gt; - A general high-performance data processing system&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.scipy.org/&#34;&gt;SciPy and Numpy&lt;/a&gt; - Scriptable, C-based numerical algorithms that operate on compact, machine-level data structures.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cython.org/&#34;&gt;Cython&lt;/a&gt; - Take parts of your Python program and compile them with C for performance.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mathema.tician.de/software/pyopencl/&#34;&gt;PyOpenCL&lt;/a&gt; - Numerical and statistical processing on your graphics card.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note that any of the database systems from above also fall into this category.&lt;/p&gt;
+
+&lt;h5 id=&#34;tools-for-cleaning-data&#34;&gt;Tools for cleaning data&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://odo.pydata.org/en/latest/&#34;&gt;ODO&lt;/a&gt; - Python library to transform data between different formats.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://openrefine.org/&#34;&gt;OpenRefine&lt;/a&gt; - Explore and clean data in a graphic user interface&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/&#34;&gt;Pandas&lt;/a&gt; - General purpose Python-based toolkit for dealing with tabular (Excel like) data for data science tasks.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://scrapy.org/&#34;&gt;Scrapy&lt;/a&gt; - Python library to scrape the web and extract items from web pages&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/&#34;&gt;BeautifulSoup&lt;/a&gt; - Same as scrapy, but different.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://scrubadub.readthedocs.io/en/stable/index.html&#34;&gt;Scrubadub&lt;/a&gt; - Remove personally identifiable information&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://crsmithdev.com/arrow/&#34;&gt;Arrow&lt;/a&gt; - Make sense of and manipulate times and dates&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rhiever/datacleaner&#34;&gt;DataCleaner&lt;/a&gt; - Python library to impute, drop, and general cleaning of missing and ugly data&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/NathanEpstein/Dora&#34;&gt;Dora&lt;/a&gt; - Python library similar to DataCleaner.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;tools-for-visualization&#34;&gt;Tools for Visualization&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://processing.org/&#34;&gt;Processing&lt;/a&gt; - Build interactive visualizations interactively. &lt;a href=&#34;https://www.amazon.com/gp/product/0596514557?ie=UTF8&amp;amp;tag=processing09-20&amp;amp;linkCode=as2&amp;amp;camp=1789&amp;amp;creative=9325&amp;amp;creativeASIN=0596514557&#34;&gt;Great O&amp;rsquo;Reilly book, Visualizing Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://d3js.org/&#34;&gt;D3&lt;/a&gt; - Build interactive visualizations on the web&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://c3js.org/&#34;&gt;C3&lt;/a&gt; - Charts from D3.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bokeh.pydata.org/en/latest/&#34;&gt;Bokeh&lt;/a&gt; - Similar to D3, but in Python.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://matplotlib.org/&#34;&gt;matplotlib&lt;/a&gt; - The original Python data visualization toolkit&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://leafletjs.com/&#34;&gt;Leaflet&lt;/a&gt; - Work with web-based maps.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mapbox.com/&#34;&gt;MapBox&lt;/a&gt; - See the section on cartographic tools.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.qgis.org/en/site/forusers/download.html&#34;&gt;qGIS&lt;/a&gt; - See the section on cartographic tools.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.vtk.org/&#34;&gt;VTK&lt;/a&gt; - Heavy-duty visualization toolkit often used in the medical, chemical, and physical research spaces.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;some-data-mining-and-ml-tools&#34;&gt;Some data mining and ML tools&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.waikato.ac.nz/ml/weka/&#34;&gt;Weka&lt;/a&gt; - There&amp;rsquo;s also an &lt;a href=&#34;http://www.cs.waikato.ac.nz/ml/weka/book.html&#34;&gt;excellent, accessible book&lt;/a&gt; on the Weka ML and Data mining toolkit&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://scikit-learn.org/&#34;&gt;SciKitLearn&lt;/a&gt; - A Python-based suite of ML and data mining tools.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://orange.biolab.si/&#34;&gt;Orange&lt;/a&gt; - Another Python-based suite of data mining tools, also with a GUI.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt; - Multidimensional mathematical modeling with graphs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;tools-for-sharing-collaboration-and-information-and-knowledge-management&#34;&gt;Tools for Sharing, Collaboration, and Information and Knowledge Management&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;Django&lt;/a&gt; - The ultimate batteries-included Python-based web framework.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.django-rest-framework.org/&#34;&gt;Django REST Framework&lt;/a&gt; - Create REST APIs with Django-based websites.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://irods.org/&#34;&gt;IRODS&lt;/a&gt; - Enterprise-grade data storage and management, including metadata management and rule-based data processing.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cassandra.apache.org/&#34;&gt;Cassandra (useful for metadata and relationship storage)&lt;/a&gt; - Again, I often store and query metadata in Cassandra&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://about.gitlab.com/downloads/&#34;&gt;GitLab&lt;/a&gt; - An open-source alternative to GitHub that you can set up on your own servers.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/recipy/recipy&#34;&gt;ReciPy&lt;/a&gt; - Provenance tracking for Python.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://prov.readthedocs.io/en/latest/&#34;&gt;Prov&lt;/a&gt; - Python implementation of the W3C provenance model&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/logpy/logpy&#34;&gt;Kanren (useful for implementing business logic on metadata and provenance info)&lt;/a&gt; - Logic programming for Python, often useful for rule-based actions and queries on scientific metadata.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Simplifying complex business logic with Python&#39;s Kanren</title>
       <link>https://jeffersonheard.github.io/2016/11/simplifying-complex-business-logic-with-pythons-kanren/</link>
       <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
@@ -1042,15 +1245,6 @@ I have adapted this code from my own projects, and although it works in those
 projects, deletion and cleanup in the post may have introduced errors
 unintentionally.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Playing around with maps with Mapnik and Python</title>
-      <link>https://jeffersonheard.github.io/2016/11/playing-around-with-maps-with-mapnik-and-python/</link>
-      <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://jeffersonheard.github.io/2016/11/playing-around-with-maps-with-mapnik-and-python/</guid>
-      <description></description>
     </item>
     
     <item>
