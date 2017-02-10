@@ -2840,15 +2840,11 @@ tax_bills_bbls_sample
 <pre><code class="language-python">print(next(iter(tax_bills_bbls_sample['address'])))
 geocoder = Nominatim()
 geocoder.geocode(next(iter(tax_bills_bbls_sample['address'])))
-
 </code></pre>
 
+<h5 id="output-6">Output</h5>
+
 <pre><code>3157  35TH ST. NY 11106
-
-
-
-
-
 Location(35th Street, Astoria, Queens County, NYC, New York, 11101, United States of America, (40.7628959, -73.9202263, 0.0))
 </code></pre>
 
@@ -2856,7 +2852,7 @@ Location(35th Street, Astoria, Queens County, NYC, New York, 11101, United State
 geocoded_addresses
 </code></pre>
 
-<h5 id="output-6">Output</h5>
+<h5 id="output-7">Output</h5>
 
 <pre><code>bbl
 4006480018    (35th Street, Astoria, Queens County, NYC, New...
@@ -2883,7 +2879,7 @@ Name: address, dtype: object
 print((loc.address, (loc.longitude, loc.latitude)))
 </code></pre>
 
-<h5 id="output-7">Output</h5>
+<h5 id="output-8">Output</h5>
 
 <pre><code>('35th Street, Astoria, Queens County, NYC, New York, 11101, United States of America', (-73.9202263, 40.7628959))
 </code></pre>
@@ -2896,7 +2892,7 @@ tax_bills_bbls_sample['longitude'] = geocoded_addresses.map(lambda l: l.longitud
 tax_bills_bbls_sample
 </code></pre>
 
-<h5 id="output-8">Output</h5>
+<h5 id="output-9">Output</h5>
 
 <div style="max-width: 100%; max-height: 300px; overflow: auto; font-family: 'Inconsolata', monospace; font-size: 10pt; line-height: 1.0em">
 <table border="1" class="dataframe">
