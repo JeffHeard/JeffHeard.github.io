@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jefferson Heard</title>
+    <title>Flask on Jefferson Heard</title>
     <link>https://jeffersonheard.github.io/tags/flask/index.xml</link>
-    <description>Recent content on Jefferson Heard</description>
+    <description>Recent content in Flask on Jefferson Heard</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <atom:link href="https://jeffersonheard.github.io/tags/flask/index.xml" rel="self" type="application/rss+xml" />

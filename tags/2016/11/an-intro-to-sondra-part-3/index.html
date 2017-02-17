@@ -1,0 +1,622 @@
+<!DOCTYPE HTML>
+
+<!-- 
+Strata by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>An Intro to Sondra: Part 3 &middot; Jefferson Heard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<meta name="description" content="Personal and professional website of Jefferson Heard">
+		<meta http-equiv="content-language" content="en-us" />
+
+		
+		<meta name="og:site_name" content="Jefferson Heard">
+		<meta name="og:title" content="An Intro to Sondra: Part 3">
+		<meta name="og:url" content="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/">
+		<meta name="og:image" content="https://jeffersonheard.github.io/images/portrait.jpg">
+		
+
+		<meta name="generator" content="Hugo 0.17" />
+
+		<!--[if lte IE 8]><script src='https://jeffersonheard.github.io/js/ie/html5shiv.js'></script><![endif]-->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://jeffersonheard.github.io/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="https://jeffersonheard.github.io//css/ie8.css"><![endif]-->
+
+		
+		
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+
+	<body id="top">
+		<!-- Header -->
+<header id="header">
+	<a href="https://jeffersonheard.github.io/" class="image avatar"><img src="https://jeffersonheard.github.io/images/portrait.jpg" alt="" /></a>
+	
+		<h1><strong>CTO &amp; Data Science Consultant</strong></h1>
+	
+
+	
+		<nav id="sidebar">
+			<ul>
+			
+				<li><a href="https://jeffersonheard.github.io/">Home</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/about">About</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/post">Blog</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/resume.pdf">Resume</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/cv.pdf">CV</a></li>
+			
+				<li><a href="https://www.365pronto.com">365 Pronto</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/sondra">Sondra Docs</a></li>
+			
+			</ul>
+		</nav>
+	
+</header>
+
+
+		<!-- Main -->
+		<div id="main">
+			
+	<span>
+		<h1>An Intro to Sondra: Part 3</h1>
+
+		<i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-18 00:00:00 &#43;0000 UTC">2016-11-18</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+	</span>
+
+	<p>
+	    
+
+<h2 id="accessing-schemas">Accessing Schemas</h2>
+
+<p>If you missed them, see my previous tutorials covering
+<a href="tutorial-1">first steps into Sondra</a> and <a href="tutorial-2">exposing your API to the web</a>.
+This tutorial will cover accessing the JSON-Schema that underlies the API. All Sondra
+APIs are based on JSON-Schema, and dictate not only what the documents must look like
+coming in and out of Sondra, but also how to access method calls and query datasets.</p>
+
+<p>First, let&rsquo;s start out with a simple call to the schema endpoint. A schema endpoint can
+be accessed from every level of the API including suite, application, collection, and
+document (although document schemas are typically the same as collection schemas).</p>
+
+<h3 id="schema-endpoints">Schema Endpoints</h3>
+
+<p>Let&rsquo;s look at this in a browser. Run the module in a terminal window, open your favorite browser, and
+surf to <a href="http://localhost:5000/api;schema">http://localhost:5000/api;schema</a>.</p>
+
+<pre><code class="language-json">{
+    &quot;title&quot;: &quot;Sondra-Based API&quot;,
+    &quot;definitions&quot;: {
+        &quot;filterOps&quot;: {
+            &quot;enum&quot;: [
+                &quot;with_fields&quot;,
+                &quot;count&quot;,
+                &quot;max&quot;,
+                &quot;min&quot;,
+                &quot;avg&quot;,
+                &quot;sample&quot;,
+                &quot;sum&quot;,
+                &quot;distinct&quot;,
+                &quot;contains&quot;,
+                &quot;pluck&quot;,
+                &quot;without&quot;,
+                &quot;has_fields&quot;,
+                &quot;order_by&quot;,
+                &quot;between&quot;
+            ]
+        },
+        &quot;timedelta&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;start&quot;,
+                &quot;end&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;hours&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;
+                },
+                &quot;days&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;
+                },
+                &quot;seconds&quot;: {
+                    &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;minutes&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;
+                }
+            }
+        },
+        &quot;spatialOps&quot;: {
+            &quot;enum&quot;: [
+                &quot;distance&quot;,
+                &quot;get_intersecting&quot;,
+                &quot;get_nearest&quot;
+            ]
+        }
+    },
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;id&quot;: &quot;http://localhost:5000/api;schema&quot;,
+    &quot;applications&quot;: {
+        &quot;todo-app&quot;: &quot;http://localhost:5000/api/todo-app&quot;
+    },
+    &quot;description&quot;: &quot;*No description provided.*&quot;
+}
+</code></pre>
+
+<p>That&rsquo;s pretty neat! A few basic datatypes exist in the definitions, mainly to define how filtering
+and query-sets work. We&rsquo;ll get into those later.  For now, we&rsquo;ll focus on what we just created.  The
+suite schema doesn&rsquo;t show us the data-type that we defined, but it does show a list of applications
+and their endpoints in <code>.applications</code>. Note that our application is no longer CamelCase, but has
+been turned into kabob-case. This is the default, but it can be configured otherwise. All levels
+of the API are turned from CamelCase or underscore_separation into kabob-case by default, for
+consistency, and because this is more typical of url patterns than the other case types.</p>
+
+<h3 id="application-schema">Application Schema</h3>
+
+<p>Let&rsquo;s check out the schema to todo-app.  We&rsquo;ll use the url
+in the schema followed by <code>;schema</code>. Sondra is very regular about the way it treats urls. Formatting
+and pragmas are handled using url parameters. This is different than changing the endpoint for the
+file-type, which is typical of many other frameworks. The reason for this is that often, there are
+multiple ways to render data and keep it in the same file type.  For instance, the <code>schema</code> and
+<code>json</code> types allow you to control the ordering and whether data is pretty-printed with lines and
+indentations. Other formats allow other parameters as we&rsquo;ll see later on.</p>
+
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;http://localhost:5000/api/todo-app;schema&quot;,
+  &quot;definitions&quot;: {},
+  &quot;collections&quot;: {
+    &quot;items&quot;: &quot;http://localhost:5000/api/todo-app/items&quot;
+  },
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;title&quot;: &quot;Todo App&quot;,
+  &quot;methods&quot;: {},
+  &quot;description&quot;: &quot;*No description provided.*&quot;
+}
+</code></pre>
+
+<p>This is the application schema.  Once again, this is rather succinct. There&rsquo;s not a lot of
+information in here, but if there were methods defined at the application level we would see them
+show up here.  One can also add application level schema fragment definitions in the class and
+they would show up here.</p>
+
+<h3 id="collection-schema">Collection Schema</h3>
+
+<p>Let&rsquo;s move on to the items themselves. Go to <a href="http://localhost:5000/api/todo-app/items;schema;indent=2">http://localhost:5000/api/todo-app/items;schema;indent=2</a>.</p>
+
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;Title&quot;,
+      &quot;description&quot;: &quot;The title of the item&quot;
+    },
+    &quot;complete&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;,
+      &quot;title&quot;: &quot;Complete&quot;,
+      &quot;default&quot;: false
+    },
+    &quot;created&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;Created&quot;,
+      &quot;format&quot;: &quot;date-time&quot;
+    },
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;ID&quot;,
+      &quot;description&quot;: &quot;The primary key.&quot;
+    }
+  },
+  &quot;methods&quot;: {
+    &quot;count&quot;: {
+      &quot;id&quot;: &quot;count&quot;,
+      &quot;oneOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_request&quot;
+        },
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_response&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Object Count&quot;,
+      &quot;definitions&quot;: {
+        &quot;method_request&quot;: {
+          &quot;type&quot;: &quot;null&quot;,
+          &quot;title&quot;: &quot;Object Count&quot;,
+          &quot;side_effects&quot;: false,
+          &quot;description&quot;: &quot;The number of objects in the collection.&quot;
+        },
+        &quot;method_response&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;title&quot;: &quot;Object Count&quot;,
+          &quot;properties&quot;: {
+            &quot;\_&quot;: {
+              &quot;type&quot;: &quot;number&quot;
+            }
+          },
+          &quot;description&quot;: &quot;The number of objects in the collection.&quot;
+        }
+      },
+      &quot;description&quot;: &quot;The number of objects in the collection.&quot;
+    },
+    &quot;key-list&quot;: {
+      &quot;id&quot;: &quot;key-list&quot;,
+      &quot;oneOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_request&quot;
+        },
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_response&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Keys&quot;,
+      &quot;definitions&quot;: {
+        &quot;method_request&quot;: {
+          &quot;type&quot;: &quot;null&quot;,
+          &quot;title&quot;: &quot;Keys&quot;,
+          &quot;side_effects&quot;: false,
+          &quot;description&quot;: &quot;*No description provided*&quot;
+        },
+        &quot;method_response&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;title&quot;: &quot;Keys&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;description&quot;: &quot;*No description provided*&quot;
+        }
+      },
+      &quot;description&quot;: &quot;*No description provided*&quot;
+    },
+    &quot;autocomplete&quot;: {
+      &quot;id&quot;: &quot;autocomplete&quot;,
+      &quot;oneOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_request&quot;
+        },
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_response&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Autocomplete&quot;,
+      &quot;definitions&quot;: {
+        &quot;method_request&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;title&quot;: &quot;Autocomplete&quot;,
+          &quot;properties&quot;: {
+            &quot;partial&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;title&quot;: &quot;Partial&quot;,
+              &quot;description&quot;: &quot;A regular expression to match on any and all of the autocomplete fields.&quot;
+            }
+          },
+          &quot;side_effects&quot;: false,
+          &quot;description&quot;: &quot;Search results based on a partial input as a regex&quot;
+        },
+        &quot;method_response&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;title&quot;: &quot;Autocomplete&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;k&quot;: {
+                &quot;type&quot;: &quot;string&quot;
+              },
+              &quot;v&quot;: {
+                &quot;type&quot;: &quot;string&quot;
+              }
+            }
+          },
+          &quot;description&quot;: &quot;Search results based on a partial input as a regex&quot;
+        }
+      },
+      &quot;description&quot;: &quot;Search results based on a partial input as a regex&quot;
+    },
+    &quot;key-map&quot;: {
+      &quot;id&quot;: &quot;key-map&quot;,
+      &quot;oneOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_request&quot;
+        },
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_response&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Key Map&quot;,
+      &quot;definitions&quot;: {
+        &quot;method_request&quot;: {
+          &quot;type&quot;: &quot;null&quot;,
+          &quot;title&quot;: &quot;Key Map&quot;,
+          &quot;side_effects&quot;: false,
+          &quot;description&quot;: &quot;*No description provided*&quot;
+        },
+        &quot;method_response&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;title&quot;: &quot;Key Map&quot;,
+          &quot;description&quot;: &quot;*No description provided*&quot;
+        }
+      },
+      &quot;description&quot;: &quot;*No description provided*&quot;
+    }
+  },
+  &quot;definitions&quot;: {
+    &quot;filterOps&quot;: {
+      &quot;enum&quot;: [
+        &quot;with_fields&quot;,
+        &quot;count&quot;,
+        &quot;max&quot;,
+        &quot;min&quot;,
+        &quot;avg&quot;,
+        &quot;sample&quot;,
+        &quot;sum&quot;,
+        &quot;distinct&quot;,
+        &quot;contains&quot;,
+        &quot;pluck&quot;,
+        &quot;without&quot;,
+        &quot;has_fields&quot;,
+        &quot;order_by&quot;,
+        &quot;between&quot;
+      ]
+    },
+    &quot;timedelta&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;required&quot;: [
+        &quot;start&quot;,
+        &quot;end&quot;
+      ],
+      &quot;properties&quot;: {
+        &quot;hours&quot;: {
+          &quot;type&quot;: &quot;integer&quot;
+        },
+        &quot;days&quot;: {
+          &quot;type&quot;: &quot;integer&quot;
+        },
+        &quot;seconds&quot;: {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        &quot;minutes&quot;: {
+          &quot;type&quot;: &quot;integer&quot;
+        }
+      }
+    },
+    &quot;spatialOps&quot;: {
+      &quot;enum&quot;: [
+        &quot;distance&quot;,
+        &quot;get_intersecting&quot;,
+        &quot;get_nearest&quot;
+      ]
+    }
+  },
+  &quot;template&quot;: &quot;{id}&quot;,
+  &quot;documentMethods&quot;: {
+    &quot;rel&quot;: {
+      &quot;id&quot;: &quot;\*rel&quot;,
+      &quot;oneOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_request&quot;
+        },
+        {
+          &quot;$ref&quot;: &quot;#/definitions/method_response&quot;
+        }
+      ],
+      &quot;title&quot;: &quot;Related Documents&quot;,
+      &quot;definitions&quot;: {
+        &quot;method_request&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;properties&quot;: {
+            &quot;app&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;title&quot;: &quot;App&quot;,
+              &quot;description&quot;: &quot;The slug of the application ``coll`` is in.&quot;
+            },
+            &quot;coll&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;title&quot;: &quot;Coll&quot;,
+              &quot;description&quot;: &quot;The slug of the collection to search for documents in.&quot;
+            },
+            &quot;related_key&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;title&quot;: &quot;Related Key&quot;,
+              &quot;description&quot;: &quot;The name of the key to search for this document in.If none, defaults to the first matching foreign key element.&quot;
+            }
+          },
+          &quot;required&quot;: [
+            &quot;app&quot;,
+            &quot;coll&quot;
+          ],
+          &quot;title&quot;: &quot;Related Documents&quot;,
+          &quot;description&quot;: &quot;Reverse relation.  Get a query set of all documents in a collection that have foreign keys that point to this document.&quot;,
+          &quot;side_effects&quot;: false
+        },
+        &quot;method_response&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;properties&quot;: {},
+          &quot;title&quot;: &quot;Related Documents&quot;,
+          &quot;description&quot;: &quot;Reverse relation.  Get a query set of all documents in a collection that have foreign keys that point to this document.&quot;
+        }
+      },
+      &quot;description&quot;: &quot;...&quot;
+    }
+  },
+  &quot;primary_key&quot;: &quot;id&quot;,
+  &quot;description&quot;: &quot;No Description Provided.&quot;,
+  &quot;title&quot;: &quot;Item&quot;,
+  &quot;id&quot;: &quot;http://localhost:5000/api/todo-app/items;schema&quot;
+}
+</code></pre>
+
+<p>That&rsquo;s a lot more information!. This may look very dense, but it contains all the methods and inherits
+all the schema from the application and suite objects as well. This allows buggy JSON schema parsers
+to find references without having to fetch other documents in the course of resolving references.</p>
+
+<p>Let&rsquo;s remove the methods for a moment and see what we have:</p>
+
+<pre><code class="language-json">{
+  &quot;template&quot;: &quot;{id}&quot;,
+  &quot;primary_key&quot;: &quot;id&quot;,
+  &quot;description&quot;: &quot;No Description Provided.&quot;,
+  &quot;title&quot;: &quot;Item&quot;,
+  &quot;id&quot;: &quot;http://localhost:5000/api/todo-app/items;schema&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [&quot;title&quot;],
+  &quot;properties&quot;: {
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;Title&quot;,
+      &quot;description&quot;: &quot;The title of the item&quot;
+    },
+    &quot;complete&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;,
+      &quot;title&quot;: &quot;Complete&quot;,
+      &quot;default&quot;: false
+    },
+    &quot;created&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;Created&quot;,
+      &quot;format&quot;: &quot;date-time&quot;
+    },
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;title&quot;: &quot;ID&quot;,
+      &quot;description&quot;: &quot;The primary key.&quot;
+    }
+  }
+}
+</code></pre>
+
+<p>JSON-Schema tells us what we&rsquo;re looking at here, but just to be clear, all Sondra has done is
+translated the code into JSON for the client. There are a few properties that are extra to JSON
+Schema, such as <code>template</code> and <code>primary_key</code>. These are defined by Sondra. Template describes how
+one would create a visual representation for a record. Primary key lets you know what data field to
+use to address documents as endpoints. If you had a document with id <code>00ab-00ac-00ad-00ae</code> then you
+would access it via the API as <code>http://localhost:5000/api/todo-app/items/00ab-00ac-00ad-00ae</code>.</p>
+
+	</p>
+
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jeffersonheard-github-io';
+    var disqus_identifier = 'https:\/\/jeffersonheard.github.io\/2016\/11\/an-intro-to-sondra-part-3\/';
+    var disqus_title = 'An Intro to Sondra: Part 3';
+    var disqus_url = 'https:\/\/jeffersonheard.github.io\/2016\/11\/an-intro-to-sondra-part-3\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+		</div>
+
+		<!-- Footer -->
+<footer id="footer">
+	<ul class="icons">
+		
+		
+		
+		<li><a href="//twitter.com/jeffersonheard" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		
+		
+		<li><a href="//github.com/jeffersonheard" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
+		
+		
+		<li><a href="https://linkedin.com/injeffersonheard" target="_blank" class="icon fa-linkedin-square"><span class="label">Linkedin</span></a></li>
+		
+		
+		
+		
+		<li><a href="https://jeffersonheard.github.io/#contact-form" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		
+		
+		<li><a href="https://jeffersonheard.github.io/index.xml" class="icon fa-rss" type="application/rss+xml"><span class="label">RSS</span></a></li>
+		
+	</ul>
+
+	<ul class="copyright">
+		
+		<li>&copy; 2016 Jefferson Heard</li>
+		
+	</ul>
+</footer>
+
+<!-- Scripts -->
+<script src="https://jeffersonheard.github.io/js/jquery.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/jquery.poptrox.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/skel.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/util.js"></script>
+
+<script src="https://jeffersonheard.github.io/js/main.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-68674847-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+	</body>
+</html>

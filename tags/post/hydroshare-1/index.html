@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.17" />
+  <meta name="author" content="Jefferson Heard">
+  <meta name="description" content="Technologist, CTO, experimental cook, and avid hiker">
+
+  <link rel="stylesheet" href="/css/highlight.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/academicons.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Arvo:400,700|Libre+Franklin|Roboto+Mono">
+  <link href="//fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+  <link rel="stylesheet" href="/css/hugo-academic.css">
+  
+
+  <link rel="alternate" href="https://jeffersonheard.github.io/index.xml" type="application/rss+xml" title="Jefferson Heard">
+  <link rel="feed" href="https://jeffersonheard.github.io/index.xml" type="application/rss+xml" title="Jefferson Heard">
+
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+
+  <link rel="canonical" href="https://jeffersonheard.github.io/post/hydroshare-1/">
+
+  
+
+  <title>Hydroshare Part 1: Experiences building software with a multidisciplinary team | Jefferson Heard</title>
+
+</head>
+<body id="top">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Jefferson Heard</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse" id="#navbar-collapse-1">
+
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li class="nav-item"><a href="/#top">Home</a></li>
+        
+        <li class="nav-item"><a href="/#projects">Projects</a></li>
+        
+        <li class="nav-item"><a href="https://www.365pronto.com">365 Pronto</a></li>
+        
+        <li class="nav-item"><a href="/#consulting">Consulting</a></li>
+        
+        <li class="nav-item"><a href="/#posts">Posts</a></li>
+        
+        <li class="nav-item"><a href="/#contact">Contact</a></li>
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+    
+
+    <h1 itemprop="name">Hydroshare Part 1: Experiences building software with a multidisciplinary team</h1>
+
+    
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    <time datetime="2016-11-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      Mon, Nov 21, 2016
+    </time>
+  </span>
+
+  
+  
+  
+  <span class="article-tags">
+    <i class="fa fa-tags"></i>
+    
+    <a class="article-tag-link" href="https://jeffersonheard.github.iotags/management">management</a
+    >, 
+    
+    <a class="article-tag-link" href="https://jeffersonheard.github.iotags/software">software</a
+    >, 
+    
+    <a class="article-tag-link" href="https://jeffersonheard.github.iotags/teams">teams</a
+    >, 
+    
+    <a class="article-tag-link" href="https://jeffersonheard.github.iotags/hydroshare">hydroshare</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fjeffersonheard.github.io%2fpost%2fhydroshare-1%2f"
+         target="_blank">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Hydroshare%20Part%201%3a%20Experiences%20building%20software%20with%20a%20multidisciplinary%20team&amp;url=https%3a%2f%2fjeffersonheard.github.io%2fpost%2fhydroshare-1%2f"
+         target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjeffersonheard.github.io%2fpost%2fhydroshare-1%2f&amp;title=Hydroshare%20Part%201%3a%20Experiences%20building%20software%20with%20a%20multidisciplinary%20team"
+         target="_blank">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fjeffersonheard.github.io%2fpost%2fhydroshare-1%2f&amp;title=Hydroshare%20Part%201%3a%20Experiences%20building%20software%20with%20a%20multidisciplinary%20team"
+         target="_blank">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Hydroshare%20Part%201%3a%20Experiences%20building%20software%20with%20a%20multidisciplinary%20team&amp;body=https%3a%2f%2fjeffersonheard.github.io%2fpost%2fhydroshare-1%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>The last project I worked on at UNC was as Chief Software Architect of the
+<a href="https://www.hydroshare.org">Hydroshare</a> project. It was the most challenging
+exercise I ever undertook at UNC, and I&rsquo;m proudest of it, despite the fact that
+I can&rsquo;t claim to have done everything <em>right</em>. In fact I made some blunders,
+but ones I hope I&rsquo;ve learned from.</p>
+
+<p>I left the Hydroshare project after I believed that it was on the right path,
+and handed my role off to two of the brightest people I know in software
+management and development at <a href="http://www.renci.org">Renci</a>.</p>
+
+<p>This will be the first post in a series of posts about the unique experiences of
+Hydroshare, and what I think it can teach us about building and organizing
+better teams.</p>
+
+<h2 id="the-hydroshare-system">The Hydroshare System</h2>
+
+<p>Hydroshare is essentially a content management system (CMS), like WordPress or
+Drupal, but on a particular brand of steroids. Where most CMSes are backed by a
+CDN (content distribution network) and a database and possibly a block store
+such as Amazon S3, this one had to be different to accommodate distributed
+computing resources and the management and curation of datasets and real-time
+data streams that sometimes breach the terabyte size boundary.</p>
+
+<p>Because of these and their consequent hosting requirements, nearness to compute
+resources, and rules about data provenance, developing a truly custom solution
+was essential.</p>
+
+<h2 id="challenge-a-distributed-fluid-heterogenous-team">Challenge: A distributed, fluid, heterogenous team</h2>
+
+<p>I would say my greatest challenge professionally is learning how to train
+people. No project before or since Hydroshare has ever given me as much
+experience training people to work together on a software project.</p>
+
+<p>Let me start off by saying that the Hydroshare team was in every way
+exceptional. The team and the experience with Hydroshare taught me the value of
+building teams that include non-software people in development roles, just as
+they are often included in &ldquo;high-level&rdquo; roles. My experience with including
+&ldquo;gifted amateurs&rdquo; on the Hydroshare team was that they often thought and thus
+wrote code in fundamentally different ways from the seasoned developers did, and
+that even on those occasions (not as often as you might think) that we rewrote
+their code to fit into the overall vision, we learned what assumptions we were
+making and built more usable, well-thought out software.</p>
+
+<p>The Hydroshare team was scattered across universities in every timezone in the
+US. San Diego, two Utah locations, Indiana, North Carolina, and Virginia (and
+I might be missing one!). Software development was mostly by graduate students
+and postdocs in hydrology, not computer science.</p>
+
+<p>The team, therefore, consisted largely of people doing their own research and
+devoting only a small part of their time to Hydroshare. Most team members
+initially wanted to contribute their hydrology research to the project and avoid
+core software development. To be clear, advanced software development <em>was</em> a
+distraction from their work. Why would a hydrologist need to know anything about
+building web-services or integrating with a content management system?</p>
+
+<p>Every person on our team who was not a software person was an eventual end-user
+of the application. I think that, if nothing else, gave people the motivation to
+learn more about writing code than they normally would. Our team consisted
+largely of data scientists. All of them had some rudimentary or even intermediate
+knowledge of R or Python and understood the purpose of self-contained scripts.</p>
+
+<p>In addition, most everyone had a development environment of <em>some</em> sort set up
+on their laptops by the time that we got going. This proved both a help and a
+hindrance, as the team knew enough to code their way, and in their own
+environment, which saved time explaining basics.  But the major challenge it
+left was the complete lack of portability of one person&rsquo;s development
+environment to the next.</p>
+
+<h3 id="running-while-we-learned-to-walk">Running while we learned to walk</h3>
+
+<p>One of the key points I will stress is that there <strong>is</strong> an effective way to
+manage a team like this, and that including non-software people does not equate
+to a slower development process.</p>
+
+<p>Hydroshare, when I came to it, was 18 months along. Another way to put this was
+that it was 18 months behind, but that isn&rsquo;t entirely accurate. The team had
+assembled a prototype from Drupal, but had gone as far as they could with it.
+It would be necessary for the success of Hydroshare to scrap the prototype and
+take things in a different direction, now that everyone knew what it was they
+wanted, at a basic level.</p>
+
+<p>Initially, the leaders were loathe to &ldquo;throw so much away,&rdquo; but in the end the
+enthusiasm of the core team for the new direction convinced everyone that we
+were doing the right thing. This meant &ldquo;starting from scratch&rdquo; 18 months into a
+five year project, but the team caught up and delivered on its milestones after
+the retooling.</p>
+
+<p>The keys to this success were:</p>
+
+<ul>
+<li><p><strong>Use distributed project management tools <strong>effectively</strong></strong>. (I stress the
+word &ldquo;effectively&rdquo; because for a time we over-used these tools and leaned on
+them too heavily, exaggerating their weaknesses as well as their strengths.</p></li>
+
+<li><p><strong>Use the overlap</strong> between the knowledge our developers already had through
+their domain work, and the needs of full-stack software development.**</p></li>
+
+<li><p><strong>Spend in-person time wisely</strong>, on training and &ldquo;code crunches&rdquo; based around
+features or details that require lots of coordination.</p></li>
+</ul>
+
+<h3 id="managing-distributed-development">Managing distributed development</h3>
+
+<p>We used a number of project management tools meant for Agile development. I have
+to say I was not that fond of any of them. In the end, I think our best toolset
+was a combination of:</p>
+
+<ul>
+<li><p>List building on <a href="https://www.trello.com">Trello</a></p></li>
+
+<li><p>A shared document and discussion space. We used Drive and Google Docs, but now
+that Slack is around I&rsquo;d probably choose that.</p></li>
+
+<li><p>A weekly developer meeting separate from the management meeting, where all
+questions were fair game, and managers didn&rsquo;t have to feel anxious about the
+&ldquo;sausage making&rdquo;</p></li>
+</ul>
+
+<h3 id="finding-and-using-the-overlap">Finding and Using the Overlap</h3>
+
+<p>I&rsquo;ll go over this in more detail on a later post, but I want to highlight that
+everyone on our team had some, even if only minimal, software development
+experience or interest. Some people were comfortable with R. Others wrote
+extensive models using Excel. Still others wrote high performance code in C
+surrounding simulation and environmental process modeling. But all of these
+people shared the ability to look at a problem methodically and break it down
+into tasks and sequence those tasks into steps.</p>
+
+<p>This common ground proved the essential thing that made us work together as
+developer and scientist alike. In the end, it was a matter of polling the group
+for the technologies the most felt most comfortable with, and making sure that
+everyone knew that programming knowledge and insights were for sharing. The
+scientists were encouraged to learn from each other and not treat the coders as
+&ldquo;special&rdquo; or &ldquo;keepers of the keys.&rdquo; I think this encouraged a more collegial
+atmosphere, and prevented two-thirds of our team from being &ldquo;requirements-
+generators&rdquo; instead of &ldquo;contributors&rdquo;</p>
+
+<p>This way, the team was often self-training. There were concepts that the
+software engineers had to introduce, and had to direct development on a broad
+level, but for day to day work, it was of little importance that an individual
+scientist was unaware of certain algorithms, scalability issues, or other
+fundamentals. We were able to architect the software at a high level to be
+forgiving of ongoing contributions.</p>
+
+<p>The training we did do brought everyone together and focused on specific
+technologies that were needed to do the job, and stressed their importance as
+part of the whole. Because of the way it was contexualized, it was more of a
+training of &ldquo;how to develop Hydroshare&rdquo; than &ldquo;full stack development 101,&rdquo; or
+&ldquo;Javascript basics,&rdquo; or &ldquo;A complete beginner&rsquo;s guide to Django.&rdquo;</p>
+
+<h3 id="spending-in-person-time-wisely">Spending In-Person Time Wisely.</h3>
+
+<p>We had a few &ldquo;code crunches&rdquo; or &ldquo;hackathons&rdquo; as part of the Hydroshare project.
+These varied in their effectiveness, but I want to analyze the effective ones
+from a software development point of view.</p>
+
+<p>Where we were most effective, we broke into small teams centered around a
+feature, including at least one &ldquo;software person&rdquo; with each team of scientists.
+The features and functionalities that lent themselves most to code crunches were
+things that were not yet fleshed out, and that required detail and in-person
+conversation to understand. Often these were things that the scientists
+understood in terms of their methods, but had never thought of procedurally or
+functionally.</p>
+
+<p>Then the conversation became both &ldquo;speccing&rdquo; and a certain amount of training
+(two ways) as the scientist-developers engaged with the software  developers.
+For the software developers, understanding from a deeper level about the users
+and the processes we were modeling was helpful in deciding metaphors for
+usability and for deciding whether the overall architecture would accommodate
+the cases they brought up. For the domain professionals, the scientists,
+learning more about coding both helped their ability to express features and
+requirements in a software-friendly way, and of course it improved their ability
+to contribute directly.</p>
+
+<h2 id="next">Next</h2>
+
+<p>To make an effective software team, we needed an effective toolchain. The next
+post will cover the toolchain, my reasons for selecting and promoting the
+technologies I did, and what went well and what was challenging about the stack.</p>
+
+    </div>
+
+  </article>
+
+  <nav>
+  <ul class="pager">
+    
+
+    
+  </ul>
+</nav>
+
+  
+
+
+</div>
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2016 Jefferson Heard 
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    
+
+  </body>
+</html>
+

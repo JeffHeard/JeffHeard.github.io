@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+
+<!-- 
+Strata by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>An Intro to Sondra: Part 2 &middot; Jefferson Heard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<meta name="description" content="Personal and professional website of Jefferson Heard">
+		<meta http-equiv="content-language" content="en-us" />
+
+		
+		<meta name="og:site_name" content="Jefferson Heard">
+		<meta name="og:title" content="An Intro to Sondra: Part 2">
+		<meta name="og:url" content="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/">
+		<meta name="og:image" content="https://jeffersonheard.github.io/images/portrait.jpg">
+		
+
+		<meta name="generator" content="Hugo 0.17" />
+
+		<!--[if lte IE 8]><script src='https://jeffersonheard.github.io/js/ie/html5shiv.js'></script><![endif]-->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://jeffersonheard.github.io/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="https://jeffersonheard.github.io//css/ie8.css"><![endif]-->
+
+		
+		
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+
+	<body id="top">
+		<!-- Header -->
+<header id="header">
+	<a href="https://jeffersonheard.github.io/" class="image avatar"><img src="https://jeffersonheard.github.io/images/portrait.jpg" alt="" /></a>
+	
+		<h1><strong>CTO &amp; Data Science Consultant</strong></h1>
+	
+
+	
+		<nav id="sidebar">
+			<ul>
+			
+				<li><a href="https://jeffersonheard.github.io/">Home</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/about">About</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/post">Blog</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/resume.pdf">Resume</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/cv.pdf">CV</a></li>
+			
+				<li><a href="https://www.365pronto.com">365 Pronto</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/sondra">Sondra Docs</a></li>
+			
+			</ul>
+		</nav>
+	
+</header>
+
+
+		<!-- Main -->
+		<div id="main">
+			
+	<span>
+		<h1>An Intro to Sondra: Part 2</h1>
+
+		<i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-15 00:00:00 &#43;0000 UTC">2016-11-15</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+	</span>
+
+	<p>
+	    <p>Part 2 of our tutorials on Sondra build on our sample application from part 1
+and covers exposing the API on the web. Basically we will add one more module,
+which creates a Flask app. The app I show below does very little more
+than the basic Flask app. It adds compression, because that&rsquo;s pretty standard
+these days and supported by almost all browsers.  It&rsquo;s also a good idea with
+APIs where responses can get very long.</p>
+
+<pre><code class="language-python">from flask import Flask
+from flask.ext.compress import Compress
+from sondra.flask import api_tree, init
+
+# Create the Flask instance and the suite.
+app = Flask(__name__)
+Compress(app)  # This is not necessary, but I find it generally helpful.
+app.debug = True
+app.suite = TodoSuite()
+init(app)
+
+# Register all the applications.
+TodoApp(app.suite)
+
+# Create all databases and tables.
+app.suite.validate()  # remember this call?
+app.suite.ensure_database_objects()  # and this one?
+
+# Attach the API to the /api/ endpoint.
+app.register_blueprint(api_tree, url_prefix='/api')
+
+if __name__ == '__main__':
+    app.run()
+
+</code></pre>
+
+<p>It&rsquo;s probably pretty obvious what&rsquo;s going on here.  This is the typical look of a Flask app, after
+all. The additional things we have to do are, in order:</p>
+
+<ol>
+<li>Attach the suite to the Flask app as <code>app.suite</code>.</li>
+<li><code>init</code> the app. This sets up CORS if it&rsquo;s been configured and makes sure that logging is handled correctly.</li>
+<li>Ensure the application objects exist in the database.</li>
+<li>Register the <code>api_tree</code> blueprint with Flask, typically at <code>/api</code>.</li>
+</ol>
+
+	</p>
+
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jeffersonheard-github-io';
+    var disqus_identifier = 'https:\/\/jeffersonheard.github.io\/2016\/11\/an-intro-to-sondra-part-2\/';
+    var disqus_title = 'An Intro to Sondra: Part 2';
+    var disqus_url = 'https:\/\/jeffersonheard.github.io\/2016\/11\/an-intro-to-sondra-part-2\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+		</div>
+
+		<!-- Footer -->
+<footer id="footer">
+	<ul class="icons">
+		
+		
+		
+		<li><a href="//twitter.com/jeffersonheard" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		
+		
+		<li><a href="//github.com/jeffersonheard" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
+		
+		
+		<li><a href="https://linkedin.com/injeffersonheard" target="_blank" class="icon fa-linkedin-square"><span class="label">Linkedin</span></a></li>
+		
+		
+		
+		
+		<li><a href="https://jeffersonheard.github.io/#contact-form" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		
+		
+		<li><a href="https://jeffersonheard.github.io/index.xml" class="icon fa-rss" type="application/rss+xml"><span class="label">RSS</span></a></li>
+		
+	</ul>
+
+	<ul class="copyright">
+		
+		<li>&copy; 2016 Jefferson Heard</li>
+		
+	</ul>
+</footer>
+
+<!-- Scripts -->
+<script src="https://jeffersonheard.github.io/js/jquery.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/jquery.poptrox.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/skel.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/util.js"></script>
+
+<script src="https://jeffersonheard.github.io/js/main.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-68674847-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+	</body>
+</html>

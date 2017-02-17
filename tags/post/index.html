@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+
+<!-- 
+Strata by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Posts &middot; Jefferson Heard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<meta name="description" content="Personal and professional website of Jefferson Heard">
+		<meta http-equiv="content-language" content="en-us" />
+
+		
+		<meta name="og:site_name" content="Jefferson Heard">
+		<meta name="og:title" content="Posts">
+		<meta name="og:url" content="https://jeffersonheard.github.io/post/">
+		<meta name="og:image" content="https://jeffersonheard.github.io/images/portrait.jpg">
+		
+
+		<meta name="generator" content="Hugo 0.17" />
+
+		<!--[if lte IE 8]><script src='https://jeffersonheard.github.io/js/ie/html5shiv.js'></script><![endif]-->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://jeffersonheard.github.io/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="https://jeffersonheard.github.io//css/ie8.css"><![endif]-->
+
+		
+		<link href="https://jeffersonheard.github.io/post/index.xml" rel="alternate" type="application/rss+xml" title="Jefferson Heard" />
+		<link href="https://jeffersonheard.github.io/post/index.xml" rel="feed" type="application/rss+xml" title="Jefferson Heard" />
+		
+		
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+
+	<body id="top">
+		<!-- Header -->
+<header id="header">
+	<a href="https://jeffersonheard.github.io/" class="image avatar"><img src="https://jeffersonheard.github.io/images/portrait.jpg" alt="" /></a>
+	
+		<h1><strong>CTO &amp; Data Science Consultant</strong></h1>
+	
+
+	
+		<nav id="sidebar">
+			<ul>
+			
+				<li><a href="https://jeffersonheard.github.io/">Home</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/about">About</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/post">Blog</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/resume.pdf">Resume</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/cv.pdf">CV</a></li>
+			
+				<li><a href="https://www.365pronto.com">365 Pronto</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/sondra">Sondra Docs</a></li>
+			
+			</ul>
+		</nav>
+	
+</header>
+
+
+		<!-- Main -->
+		<div id="main">
+			
+    
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2017/02/making-a-spreadsheet-with-addresses-into-data-on-a-map-part-1-geocoding/">Making a spreadsheet with addresses into data on a map (Part 1, Geocoding)</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2017-02-11 00:00:00 &#43;0000 UTC">2017-02-11</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/data-cleaning">data cleaning</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       
+       
+   
+
+
+</span>
+
+<p>Goal of this post This is the first in a series of doing something interesting with a larger geospatial dataset. At the beginning of this post, you will retrieve a CSV dataset containing addresses of varying quality. By the end of this post, you will have a map on GitHub that looks like this:
+This post is not about making a good map or a good visualization. The point of the map in this post is to do a visual sanity check on your work, while at the same time building towards an eventual goal (in a post yet to come) of creating an interactive visual map in [Leaflet]() with the ability to visually discern and interact with data on that map.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2017/01/being-a-data-scientist-my-experience-and-toolset/">Being a Data Scientist: My Experience and Toolset</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2017-01-14 00:00:00 &#43;0000 UTC">2017-01-14</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/data-science">data science</a>
+       
+       
+   
+
+
+</span>
+
+<p>If I had to use a few words to give myself a title for my position at UNC, I might not have said I was a data scientist. When I was starting my career there was no such thing, but looking at my CV / Resume, I have:
+ Worked at a billion dollar company, writing the integration process that pushed 40+ large datasets through complex models and analytics to produce one large modeled data product.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2017/01/recipes-chicken-or-turkey-soup-for-the-soul-and-everything-else/">Recipes: Chicken (or Turkey) Soup for the Soul and Everything Else</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2017-01-07 00:00:00 &#43;0000 UTC">2017-01-07</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/personal">personal</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/recipes">recipes</a>
+       
+       
+   
+
+
+</span>
+
+<p>I&rsquo;ve been sick for most of a month. This almost never happens to me. One cold followed by bronchitis, followed by another cold, followed by more bronchitis, but I&rsquo;m finally on the mend. Towards the end of being sick I get bored and antsy before I&rsquo;m well enough to go out, and that&rsquo;s when I make this soup.
+I have perfected my chicken soup over more than a decade of experimentation.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/12/sunday-brunch-fried-pears-and-pecans/">Sunday Brunch: Fried Pears and Pecans</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-12-03 00:00:00 &#43;0000 UTC">2016-12-03</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/personal">personal</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/recipes">recipes</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/brunch">brunch</a>
+       
+       
+   
+
+
+</span>
+
+<p>I should really start taking pictures if I&rsquo;m going to post recipes. But imagine if you will a plate of pear slices, fried until they are golden brown on both sides, the outside crispy, the inside smooth and sweet, and all of it covered in streusel that tastes amazing. Got it? Good. Here goes. Serves 1.
+Ingredients  1 pear 2 tbl butter Small handful of fresh sage leaves 1&frasl;4 cp crushed pecans 1&frasl;2 tsp cinnamon 1&frasl;2 tsp nutmeg Salt 1tbl Brown sugar  I slice my pear flat, with slices about 1&frasl;4 inch thick (half a cm).</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/12/saturday-night-dinners-lemongrass-curry-soup/">Saturday Night Dinners: Lemongrass Curry Soup</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-12-02 00:00:00 &#43;0000 UTC">2016-12-02</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/personal">personal</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/recipes">recipes</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/thai">thai</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/experiments">experiments</a>
+       
+       
+   
+
+
+</span>
+
+<p>I was going for something Thai-ish without following any particular recipe. What I came out with was pretty incredible. A lot like Tom Kha, but not exactly. Use a fairly light vegetable broth for this recipe: either a miso broth or I use the Swanson&rsquo;s organic vegetable broth. The taste of this one is at once hearty and very very full of Spring. The whole thing took about 35 minutes from start to finish.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/simplifying-complex-business-logic-with-pythons-kanren/">Simplifying complex business logic with Python&#39;s Kanren</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-27 00:00:00 &#43;0000 UTC">2016-11-27</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       
+       
+   
+
+
+</span>
+
+<p>So-called &ldquo;logic programming&rdquo; has been a niche programming topic since Prolog was introduced in the 80s. In my experience, most posts that cover logic programming introduce the core concepts and stop there. The examples they give are mostly toy problems. This post, then, will start with &ldquo;what you can do with logic programming in Python&rdquo; and move toward the core concepts that way.
+If you&rsquo;re looking for an explanation of unification or a history of logic programming, and why you should even write web-servers this way, there are plenty of posts that will extoll the virtues of logic programming over other methods.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/saturday-night-dinner-three-alarm-plate-of-awesome/">Saturday Night Dinner: Three-Alarm Plate of Awesome</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-26 00:00:00 &#43;0000 UTC">2016-11-26</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/personal">personal</a>
+        &middot;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/recipes">recipes</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/savory">savory</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/recipes">recipes</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/spicy">spicy</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/experiments">experiments</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/indian-and-pakistani-inspired-cuisine">indian and pakistani inspired cuisine</a>
+       
+       
+   
+
+
+</span>
+
+<p>What is a three-alarm plate of awesome? Roasted red peppers and roasted eggplant, tossed and fried in mustard oil, bay leaf, and spices (cayenne, cinnamon, turmeric). Served over polenta, and it was perfect.
+Recipe, and sorry, this one&rsquo;s a bit involved, because roasting peppers requires attention:
+ 2 red bell peppers 2 jalapeños 1 med. eggplant olive oil for brushing 1/2tsp cayenne 1/2tsp turmeric 1tbl mustard seed 1 bay leaf 1 shallot  Preheat the oven to 500 degrees, Coat the skin of the peppers in olive oil (lightly) and set down on a cookie sheet (you can use the bare oven, but be prepared for a mess if the pepper sags through).</p>
+<hr>
+
+    
+
+    
+    
+
+    
+
+    
+        <a class="button" rel="next" href="https://jeffersonheard.github.io//post/page/2/">
+            Older »
+        </a>
+    
+
+
+
+		</div>
+
+		<!-- Footer -->
+<footer id="footer">
+	<ul class="icons">
+		
+		
+		
+		<li><a href="//twitter.com/jeffersonheard" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		
+		
+		<li><a href="//github.com/jeffersonheard" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
+		
+		
+		<li><a href="https://linkedin.com/injeffersonheard" target="_blank" class="icon fa-linkedin-square"><span class="label">Linkedin</span></a></li>
+		
+		
+		
+		
+		<li><a href="https://jeffersonheard.github.io/#contact-form" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		
+		
+		<li><a href="https://jeffersonheard.github.io/post/index.xml" class="icon fa-rss" type="application/rss+xml"><span class="label">RSS</span></a></li>
+		
+	</ul>
+
+	<ul class="copyright">
+		
+		<li>&copy; 2016 Jefferson Heard</li>
+		
+	</ul>
+</footer>
+
+<!-- Scripts -->
+<script src="https://jeffersonheard.github.io/js/jquery.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/jquery.poptrox.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/skel.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/util.js"></script>
+
+<script src="https://jeffersonheard.github.io/js/main.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-68674847-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+	</body>
+</html>
