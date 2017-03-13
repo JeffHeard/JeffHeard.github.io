@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+
+<!-- 
+Strata by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Python &middot; Jefferson Heard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<meta name="description" content="Personal and professional website of Jefferson Heard">
+		<meta http-equiv="content-language" content="en-us" />
+
+		
+		<meta name="og:site_name" content="Jefferson Heard">
+		<meta name="og:title" content="Python">
+		<meta name="og:url" content="https://jeffersonheard.github.io/tags/python/">
+		<meta name="og:image" content="https://jeffersonheard.github.io/images/portrait.jpg">
+		
+
+		<meta name="generator" content="Hugo 0.18.1" />
+
+		<!--[if lte IE 8]><script src='https://jeffersonheard.github.io/js/ie/html5shiv.js'></script><![endif]-->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://jeffersonheard.github.io/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="https://jeffersonheard.github.io//css/ie8.css"><![endif]-->
+
+		
+		<link href="https://jeffersonheard.github.io/tags/python/index.xml" rel="alternate" type="application/rss+xml" title="Jefferson Heard" />
+		<link href="https://jeffersonheard.github.io/tags/python/index.xml" rel="feed" type="application/rss+xml" title="Jefferson Heard" />
+		
+		
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+	</head>
+
+	<body id="top">
+		<!-- Header -->
+<header id="header">
+	<a href="https://jeffersonheard.github.io/" class="image avatar"><img src="https://jeffersonheard.github.io/images/portrait.jpg" alt="" /></a>
+	
+		<h1><strong>CTO &amp; Data Science Consultant</strong></h1>
+	
+
+	
+		<nav id="sidebar">
+			<ul>
+			
+				<li><a href="https://jeffersonheard.github.io/">Home</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/about">About</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/post">Blog</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/resume.pdf">Resume</a></li>
+			
+				<li><a href="https://jeffersonheard.github.io/cv.pdf">CV</a></li>
+			
+				<li><a href="https://www.365pronto.com">365 Pronto</a></li>
+			
+			</ul>
+		</nav>
+	
+</header>
+
+
+		<!-- Main -->
+		<div id="main">
+			
+    
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2017/02/making-a-spreadsheet-with-addresses-into-data-on-a-map-part-1-geocoding/">Making a spreadsheet with addresses into data on a map (Part 1, Geocoding)</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2017-02-11 00:00:00 &#43;0000 UTC">2017-02-11</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/data-cleaning">data cleaning</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       
+       
+   
+
+
+</span>
+
+<p>Goal of this post This is the first in a series of doing something interesting with a larger geospatial dataset. At the beginning of this post, you will retrieve a CSV dataset containing addresses of varying quality. By the end of this post, you will have a map on GitHub that looks like this:
+This post is not about making a good map or a good visualization. The point of the map in this post is to do a visual sanity check on your work, while at the same time building towards an eventual goal (in a post yet to come) of creating an interactive visual map in [Leaflet]() with the ability to visually discern and interact with data on that map.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/simplifying-complex-business-logic-with-pythons-kanren/">Simplifying complex business logic with Python&#39;s Kanren</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-27 00:00:00 &#43;0000 UTC">2016-11-27</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       
+       
+   
+
+
+</span>
+
+<p>So-called &ldquo;logic programming&rdquo; has been a niche programming topic since Prolog was introduced in the 80s. In my experience, most posts that cover logic programming introduce the core concepts and stop there. The examples they give are mostly toy problems. This post, then, will start with &ldquo;what you can do with logic programming in Python&rdquo; and move toward the core concepts that way.
+If you&rsquo;re looking for an explanation of unification or a history of logic programming, and why you should even write web-servers this way, there are plenty of posts that will extoll the virtues of logic programming over other methods.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-4/">An Intro to Sondra: Part 4</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-20 00:00:00 &#43;0000 UTC">2016-11-20</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+</span>
+
+<p>Adding data in Python The simplest way to add data is through Python. Data can be added from Python even to private collections, and methods can be called without authentication. This means that code that calls methods and creates objects, perhaps as part of other methods, should do sufficient permission checking to cover both itself and the potential mutations to data caused by the methods and collections it calls.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-3/">An Intro to Sondra: Part 3</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-18 00:00:00 &#43;0000 UTC">2016-11-18</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+</span>
+
+<p>Accessing Schemas If you missed them, see my previous tutorials covering first steps into Sondra and exposing your API to the web. This tutorial will cover accessing the JSON-Schema that underlies the API. All Sondra APIs are based on JSON-Schema, and dictate not only what the documents must look like coming in and out of Sondra, but also how to access method calls and query datasets.
+First, let&rsquo;s start out with a simple call to the schema endpoint.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-2/">An Intro to Sondra: Part 2</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-15 00:00:00 &#43;0000 UTC">2016-11-15</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+</span>
+
+<p>Part 2 of our tutorials on Sondra build on our sample application from part 1 and covers exposing the API on the web. Basically we will add one more module, which creates a Flask app. The app I show below does very little more than the basic Flask app. It adds compression, because that&rsquo;s pretty standard these days and supported by almost all browsers. It&rsquo;s also a good idea with APIs where responses can get very long.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/11/an-intro-to-sondra-part-1/">An Intro to Sondra: Part 1</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-11-13 00:00:00 &#43;0000 UTC">2016-11-13</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+</span>
+
+<p>This tutorial serves as a basic introduction to Sondra, its data model, and how you can create an API. The classic example web API is that of a to-do list application. Our tutorial will build it up in stages, starting with the basic structure of an application, followed by data modeling, and then we&rsquo;ll add exposed methods to see how those work.
+Finally, you&rsquo;ll work through accessing the API via Javascript (ES2015) and Python.</p>
+<hr>
+
+    
+        <span>
+    <h1>
+        <a href="https://jeffersonheard.github.io/2016/10/sondra-schema-validated-api-and-orm-for-rethinkdb/">Sondra: Schema validated API and ORM for RethinkDB</a>
+    </h1>
+
+    <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<time datetime="2016-10-03 00:00:00 &#43;0000 UTC">2016-10-03</time>&nbsp;&nbsp;
+
+
+    
+    
+        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        
+        <a class="article-category-link" href="https://jeffersonheard.github.io/categories/coding">coding</a>
+        
+        
+    
+
+
+
+   
+   
+       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/sondra">sondra</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/python">python</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rethinkdb">rethinkdb</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/flask">flask</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/rest">rest</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/tutorials">tutorials</a>
+       &middot;
+       
+       <a class="article-category-link" href="https://jeffersonheard.github.io/tags/open-source">open source</a>
+       
+       
+   
+
+
+</span>
+
+<p></p>
+<hr>
+
+    
+
+    
+
+
+		</div>
+
+		<!-- Footer -->
+<footer id="footer">
+	<ul class="icons">
+		
+		
+		
+		<li><a href="//twitter.com/jeffersonheard" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		
+		
+		<li><a href="//github.com/jeffersonheard" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
+		
+		
+		<li><a href="https://linkedin.com/injeffersonheard" target="_blank" class="icon fa-linkedin-square"><span class="label">Linkedin</span></a></li>
+		
+		
+		
+		
+		<li><a href="https://jeffersonheard.github.io/#contact-form" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		
+		
+		<li><a href="https://jeffersonheard.github.io/tags/python/index.xml" class="icon fa-rss" type="application/rss+xml"><span class="label">RSS</span></a></li>
+		
+	</ul>
+
+	<ul class="copyright">
+		
+		<li>&copy; 2016 Jefferson Heard</li>
+		
+	</ul>
+</footer>
+
+<!-- Scripts -->
+<script src="https://jeffersonheard.github.io/js/jquery.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/jquery.poptrox.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/skel.min.js"></script>
+<script src="https://jeffersonheard.github.io/js/util.js"></script>
+
+<script src="https://jeffersonheard.github.io/js/main.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-68674847-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+	</body>
+</html>
